@@ -1,0 +1,1277 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_761427_campusdev.camdev_ValidationServerRequestFieldValue</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Script Include「camdev_ValidationServerRequest」から呼び出される。&#13;
+Script Includeから渡された引数に対して入力値のチェックを行う。</description>
+        <name>camdev_ValidationServerRequestFieldValue</name>
+        <script><![CDATA[var camdev_ValidationServerRequestFieldValue = Class.create();
+camdev_ValidationServerRequestFieldValue.prototype = {
+	
+	CLASSIFICATION_CREATE:'create',
+	CLASSIFICATION_UPDATE:'update',
+	
+	SERVER_TYPE_IA_GR:'IA-Gr',
+	SERVER_TYPE_BARE_METAL:'bare-metal',
+	
+    //add_2QSP1_str
+    SERVER_TYPE_CORE_OS: 'CoreOS',
+    //add_2QSP1_end	
+	
+	OS_TYPE_PREFIX_RHEL:'Red Hat Enterprise Linux',
+	OS_TYPE_PREFIX_WINDOWS:'Windows',
+	
+	HIGH_AVAILABILITY_CLUSTER_YES:'true',
+	
+	USAGE_NORMAL:'normal',
+		
+    initialize: function() {
+    },
+
+	/**
+	 * 新規NWケーブル接続有無のチェック
+	 * ＜機能＞
+	 * 新規NW追加：「無」かつ新規NWケーブル接続有無：「有」の場合、エラーとする。
+	 * 
+	 * @param newNetwork：新規NW追加の値
+	 * @param nwCableConnection：新規NWケーブル接続有無
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkNwCableConnection: function(newNetwork, nwCableConnection) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(newNetwork) && validationUtils.isNotEmpty(nwCableConnection)) {
+			if (newNetwork == 'false' && nwCableConnection == 'true') {
+				result = false;
+			}
+		}
+		return result;
+	},
+
+	/**
+	 * ホスト名（英名）の重複要素取得
+	 * ＜機能＞
+	 * ホスト名（英名）に重複がある場合、重複したホスト名の配列を返却する。
+	 * 
+	 * @param serverNameArray：ホスト名（英名）の配列
+	 * @return 重複したホスト名（英名）の配列
+	 */
+	getDuplicateServerNames: function(serverNameArray) {
+		var duplicateArray = serverNameArray.filter(function(value, i, array) {
+			return array.indexOf(value) === i && i !== array.lastIndexOf(value);
+		});
+		
+		if (duplicateArray == null || duplicateArray.length == 0) {
+			duplicateArray = [];
+		}
+		
+		return duplicateArray;
+	},
+
+	/**
+	 * 引き渡し希望日のチェック
+	 * ＜機能＞
+	 * 引き渡し希望日が前日以前（前日含む）の場合、エラーとする。
+	 * 
+	 * @param deliveryDate：引き渡し希望日の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkDeliveryDate: function(deliveryDate) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(deliveryDate)) {
+			var currentDate = new GlideDateTime();
+			currentDate.addDaysLocalTime(-1);
+			var durationDays = validationUtils.compareDate(deliveryDate, currentDate.getDate().toString());
+			if (durationDays <= 0) {
+				result = false;
+			}
+		}
+		return result;
+	},
+
+	/**
+	 * 使用OSの必須入力チェック（未選択）
+	 * ＜機能＞
+	 * 使用OSが未入力の場合、エラーとする。
+	 * 
+	 * @param osType：使用OSの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkOsTypeNotEmpty: function(osType) {
+		return new camdev_ValidationUtils().isNotEmpty(osType);
+	},
+
+	/**
+	 * サービス型番の必須入力チェック
+	 * ＜機能＞
+	 * サービス型番が未入力の場合、エラーとする。
+	 * 
+	 * @param serviceType：サービス型番の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkServiceTypeNotEmpty: function(serviceType) {
+		return new camdev_ValidationUtils().isNotEmpty(serviceType);
+	},
+
+	/**
+	 * RHEL用サービス型番の必須入力チェック（RHEL用）
+	 * ＜機能＞
+	 * 使用OSがRHEL時、サービス型番が未入力の場合、エラーとする。
+	 * 
+	 * @param osType：使用OSの値
+	 * @param serviceType：サービス型番の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkServiceTypeNotEmptyForRHEL: function(osType, serviceType) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(osType)
+			&& osType.startsWith(this.OS_TYPE_PREFIX_RHEL)
+			&& validationUtils.isEmpty(serviceType)) {
+			result = false;
+		}
+		return result;
+	},
+
+	/**
+	 * Windows用サービス型番の入力チェック
+	 * ＜機能＞
+	 * 使用OSがWindows時、サービス型番が入力されている場合、エラーとする。
+	 * 
+	 * @param osType：使用OSの値
+	 * @param serviceType：サービス型番の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkServiceTypeEmptyForWindows: function(osType, serviceType) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(osType)
+			&& osType.startsWith(this.OS_TYPE_PREFIX_WINDOWS)
+			&& validationUtils.isNotEmpty(serviceType)) {
+			result = false;
+		}
+		return result;
+	},
+
+	/**
+	 * サービス型番の選択値チェック
+	 * ＜機能＞
+	 * サービス型番の選択値が指定された値と合致した場合、エラーとする。
+	 * 
+	 * @param serviceType：サービス型番の値
+	 * @param errValue：エラーとする値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkServiceTypeErrorValue: function(serviceType, errValue) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(serviceType) && validationUtils.isNotEmpty(errValue)) {
+			if (serviceType == errValue) {
+				result = false;
+			}
+		}
+		return result;
+	},
+
+	/**
+	 * CPU総コア数の必須入力チェック
+	 * ＜機能＞
+	 * CPU総コア数が未入力の場合、エラーとする。
+	 * 
+	 * @param cpuCount：CPU総コア数の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkCpuCountNotEmpty: function(cpuCount) {
+		return new camdev_ValidationUtils().isNotEmpty(cpuCount);
+	},
+
+	/**
+	 * CPU総コア数の範囲チェック（RHEL用）
+	 * ＜機能＞
+	 * CPU総コア数が指定された範囲外の場合、エラーとする。
+	 * 
+	 * @param osType：使用OSの値
+	 * @param cpuCount：CPU総コア数の値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲内
+	 */
+	checkCpuCountRangeForRHEL: function(osType, cpuCount, min, max) {
+		var result = true;
+		if (osType.startsWith(this.OS_TYPE_PREFIX_RHEL)) {
+			result = new camdev_ValidationUtils().isNumericRange(cpuCount, min, max);
+		}
+		return result;
+	},
+
+	/**
+	 * CPU総コア数の範囲チェック（Windows用）
+	 * ＜機能＞
+	 * CPU総コア数が指定された範囲外の場合、エラーとする。
+	 * 
+	 * @param osType：使用OSの値
+	 * @param cpuCount：CPU総コア数の値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkCpuCountRangeForWindows: function(osType, cpuCount, min, max) {
+		var result = true;
+		if (osType.startsWith(this.OS_TYPE_PREFIX_WINDOWS)) {
+			result = new camdev_ValidationUtils().isNumericRange(cpuCount, min, max);
+		}
+		return result;
+	},
+
+	/**
+	 * CPU総コア数の最小値チェック
+	 * ＜機能＞
+	 * CPU総コア数が指定された最小値以上かどうかを判定する。
+	 * 
+	 * @param cpuCount：CPU総コア数の値
+	 * @param min：最小値
+	 * @return true:最小値以上／false：最小値未満
+	 */
+	checkCpuCountMin: function(cpuCount, min) {
+		return new camdev_ValidationUtils().isNumericMin(cpuCount, min);
+	},
+
+	/**
+	 * CPUソケット数の必須入力チェック
+	 * ＜機能＞
+	 * CPUソケット数が未入力の場合、エラーとする。
+	 * 
+	 * @param cpuSocketCount：CPUソケット数の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkCpuSocketCountNotEmpty: function(cpuSocketCount) {
+		return new camdev_ValidationUtils().isNotEmpty(cpuSocketCount);
+	},
+
+	/**
+	 * CPUソケット数のチェック
+	 * ＜機能＞
+	 * CPUソケット数でCPU総コア数を除算し、余りが出る場合または、CPUソケット数が0の場合、エラーとする。
+	 * 
+	 * @param cpuCount：CPU総コア数の値
+	 * @param cpuSocketCount：CPUソケット数の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkCpuSocketCount: function(cpuCount, cpuSocketCount) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(cpuCount) && validationUtils.isNotEmpty(cpuSocketCount)) {
+			var convCpuCount = parseInt(cpuCount);
+			var convCpuSocketCount = parseInt(cpuSocketCount);
+			if (convCpuSocketCount == 0 || ((convCpuCount % convCpuSocketCount) != 0)) {
+				result = false;
+			}
+		}
+		return result;
+	},
+
+	/**
+	 * メモリ（GiB）の必須入力チェック
+	 * ＜機能＞
+	 * メモリ（GiB）が未入力の場合、エラーとする。
+	 * 
+	 * @param memoryGib：メモリ（GiB）の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkMemoryGibNotEmpty: function(memoryGib) {
+		return new camdev_ValidationUtils().isNotEmpty(memoryGib);
+	},
+
+	/**
+	 * メモリ（GiB）の範囲チェック（RHEL用）
+	 * ＜機能＞
+	 * メモリ（GiB）が指定された範囲外の場合、エラーとする。
+	 * 
+	 * @param osType：使用OSの値
+	 * @param memoryGib：メモリ（GiB）の値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkMemoryGibRangeForRHEL: function(osType, memoryGib, min, max) {
+		var result = true;
+		if (osType.startsWith(this.OS_TYPE_PREFIX_RHEL)) {
+			result = new camdev_ValidationUtils().isNumericRange(memoryGib, min, max);
+		}
+		return result;
+	},
+
+	/**
+	 * メモリ（GiB）の範囲チェック（Windows用）
+	 * ＜機能＞
+	 * メモリ（GiB）が指定された範囲外の場合、エラーとする。
+	 * 
+	 * @param osType：使用OSの値
+	 * @param memoryGib：メモリ（GiB）の値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkMemoryGibRangeForWindows: function(osType, memoryGib, min, max) {
+		var result = true;
+		if (osType.startsWith(this.OS_TYPE_PREFIX_WINDOWS)) {
+			result = new camdev_ValidationUtils().isNumericRange(memoryGib, min, max);
+		}
+		return result;
+	},
+
+	/**
+	 * メモリ（GiB）の最小値チェック
+	 * ＜機能＞
+	 * メモリ（GiB）が指定された最小値以上かどうかを判定する。
+	 * 
+	 * @param memoryGib：メモリ（GiB）の値
+	 * @param min：最小値
+	 * @return true:最小値以上／false：最小値未満
+	 */
+	checkMemoryGibMin: function(memoryGib, min) {
+		return new camdev_ValidationUtils().isNumericMin(memoryGib, min);
+	},
+
+	/**
+	 * ディスク数の範囲チェック
+	 * ＜機能＞
+	 * ディスク数が1～10の範囲外の場合、エラーとする。
+	 * 
+	 * @param dickCount：ディスク数の値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkDiskCountRange: function(dickCount, min, max) {
+		return new camdev_ValidationUtils().isNumericRange(dickCount, min, max);
+	},
+
+	/**
+	 * RDM/共有ディスク数の範囲チェック
+	 * ＜機能＞
+	 * RDM/共有ディスク数が0～3の範囲外の場合、エラーとする。
+	 * 
+	 * @param rdmSharedDick：RDM/共有ディスク数の値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkRdmSharedDickRange: function(rdmSharedDick, min, max) {
+		return new camdev_ValidationUtils().isNumericRange(rdmSharedDick, min, max);
+	},
+
+	/**
+	 * 仮想NIC数の範囲チェック
+	 * ＜機能＞
+	 * 仮想NIC数が2～8の範囲外の場合、エラーとする。
+	 * 
+	 * @param virtualNicCount：仮想NIC数の値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkVirtualNicCountRange: function(virtualNicCount, min, max) {
+		return new camdev_ValidationUtils().isNumericRange(virtualNicCount, min, max);
+	},
+
+	/**
+	 * 仮想NIC数のチェック
+	 * ＜機能＞
+	 * 仮想NIC数が指定された値の場合、エラーとする。
+	 * 
+	 * @param virtualNicCount：仮想NIC数の値
+	 * @param value：値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkVirtualNicCount: function(virtualNicCount, value) {
+		var result = true;
+		if (virtualNicCount > value) {
+			result = false;
+		}
+		return result;
+	},
+
+	/**
+	 * アフィニティルール設定希望有無の必須入力チェック
+	 * ＜機能＞
+	 * アフィニティルール設定希望有無が未入力の場合、エラーとする。
+	 * 
+	 * @param affinityRule：アフィニティルール設定希望有無の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	//del_FY22_2Q_str カラムのfalse化に伴い削除
+	//checkAffinityRuleNotEmpty: function(affinityRule) {
+		//return new camdev_ValidationUtils().isNotEmpty(affinityRule);
+	//},
+	//del_FY22_2Q_end
+	
+	/**
+	 * データバックアップの設定希望有無の必須入力チェック
+	 * ＜機能＞
+	 * データバックアップの設定希望有無が未入力の場合、エラーとする。
+	 * 
+	 * @param backupConfig：データバックアップの設定希望有無の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkBackupConfigNotEmpty: function(backupConfig) {
+		return new camdev_ValidationUtils().isNotEmpty(backupConfig);
+	},
+
+	/**
+	 * 高可用クラスタ利用有無の必須入力チェック
+	 * ＜機能＞
+	 * 高可用クラスタ利用有無が未入力の場合、エラーとする。
+	 * 
+	 * @param highAvailabilityCluster：高可用クラスタ利用有無の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkHighAvailabilityClusterNotEmpty: function(highAvailabilityCluster) {
+		return new camdev_ValidationUtils().isNotEmpty(highAvailabilityCluster);
+	},
+
+	/**
+	 * サービス重要度の必須入力チェック
+	 * ＜機能＞
+	 * 高可用クラスタ利用有無が「有」でサービス重要度が未入力の場合、エラーとする。
+	 * 
+	 * @param highAvailabilityCluster：高可用クラスタ利用有無の値
+	 * @param serviceSeverity：サービス重要度の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkServiceSeverityNotEmpty: function(highAvailabilityCluster, serviceSeverity) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(highAvailabilityCluster)
+			&& highAvailabilityCluster == this.HIGH_AVAILABILITY_CLUSTER_YES
+			&& validationUtils.isEmpty(serviceSeverity)) {
+			result = false;
+		}
+		return result;
+	},
+
+	/**
+	 * ファイルシステムの必須入力チェック
+	 * ＜機能＞
+	 * 使用OS：RHELかつファイルシステムが未入力の場合、エラーとする。
+	 * 
+	 * @param osType：使用OSの値
+	 * @param fileSystem：ファイルシステムの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkFileSystemNotEmptyForRHEL: function(osType, fileSystem) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(osType)
+			&& osType.startsWith(this.OS_TYPE_PREFIX_RHEL)
+			&& validationUtils.isEmpty(fileSystem)) {
+			result = false;
+		}
+		return result;
+	},
+
+	/**
+	 * ファイルシステムの入力チェック
+	 * ＜機能＞
+	 * 使用OS：Windowsかつファイルシステムが入力されている場合、エラーとする。
+	 * 
+	 * @param osType：使用OSの値
+	 * @param fileSystem：ファイルシステムの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkFileSystemEmptyForWindows: function(osType, fileSystem) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(osType)
+			&& osType.startsWith(this.OS_TYPE_PREFIX_WINDOWS)
+			&& validationUtils.isNotEmpty(fileSystem)) {
+			result = false;
+		}
+		return result;
+	},
+
+	/**
+	 * 仮想ディスク容量（GiB）の必須入力チェック
+	 * ＜機能＞
+	 * 仮想ディスク容量（GiB）が未入力の場合、エラーとする。
+	 * 
+	 * @param capacityGib：仮想ディスク容量（GiB）の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkVirtualCapacityGibNotEmpty: function(capacityGib) {
+		return new camdev_ValidationUtils().isNotEmpty(capacityGib);
+	},
+
+	/**
+	 * 仮想ディスク容量（GiB）の範囲チェック（RHEL用）
+	 * ＜機能＞
+	 * 仮想ディスク容量（GiB）が指定された範囲外の場合、エラーとする。
+	 * 
+	 * @param capacityGib：仮想ディスク容量（GiB）の値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkVirtualCapacityGibRangeForRHEL: function(capacityGib, min, max) {
+		return new camdev_ValidationUtils().isNumericRange(capacityGib, min, max);
+	},
+
+	/**
+	 * 仮想ディスク容量（GiB）の範囲チェック（Windows用）
+	 * ＜機能＞
+	 * 仮想ディスク容量（GiB）が指定された範囲外の場合、エラーとする。
+	 * 
+	 * @param capacityGib：仮想ディスク容量（GiB）の値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkVirtualCapacityGibRangeForWindows: function(capacityGib, min, max) {
+		return new camdev_ValidationUtils().isNumericRange(capacityGib, min, max);
+	},
+
+	/**
+	 * 仮想ディスク容量（GiB）の範囲チェック（その他用）
+	 * ＜機能＞
+	 * 仮想ディスク容量（GiB）が指定された範囲外の場合、エラーとする。
+	 * 
+	 * @param capacityGib：仮想ディスク容量（GiB）の値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkVirtualCapacityGibRangeForOthers: function(capacityGib, min, max) {
+		return new camdev_ValidationUtils().isNumericRange(capacityGib, min, max);
+	},
+
+	/**
+	 * 仮想ディスク容量（GiB）の刻みルールチェック
+	 * ＜機能＞
+	 * 仮想ディスク容量（GiB）が指定された刻みの値でない場合、エラーとする。
+	 * 
+	 * @param capacityGib：仮想ディスク容量（GiB）の値
+	 * @param increments：刻み
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkVirtualCapacityGibIncrements: function(capacityGib, increments) {
+		return new camdev_ValidationUtils().isNumericIncrements(capacityGib, increments);
+	},
+
+	/**
+	 * 仮想ディスクIOPSの必須入力チェック
+	 * ＜機能＞
+	 * 仮想ディスクIOPSが未入力の場合、エラーとする。
+	 * 
+	 * @param iops：仮想ディスクIOPSの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkVirtualIopsNotEmpty: function(iops) {
+		return new camdev_ValidationUtils().isNotEmpty(iops);
+	},
+
+	/**
+	 * 仮想ディスクIOPSの範囲チェック
+	 * ＜機能＞
+	 * 仮想ディスクIOPSが指定された範囲の値でない場合、エラーとする。
+	 * 
+	 * @param iops：仮想ディスクIOPSの値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkVirtualIopsRange: function(iops, min, max) {
+		return new camdev_ValidationUtils().isNumericRange(iops, min, max);
+	},
+
+	/**
+	 * 仮想ディスクIOPSの刻みルールチェック
+	 * ＜機能＞
+	 * 仮想ディスクIOPSが指定された刻みの値でない場合、エラーとする。
+	 * 
+	 * @param iops：仮想ディスクIOPSの値
+	 * @param increments：刻み
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkVirtualIopsIncrements: function(iops, increments) {
+		return new camdev_ValidationUtils().isNumericIncrements(iops, increments);
+	},
+
+	/**
+	 * 仮想ディスクRW比率Readの必須入力チェック
+	 * ＜機能＞
+	 * 仮想ディスクRW比率Readが未入力の場合、エラーとする。
+	 * 
+	 * @param rwRateRead：仮想ディスクRW比率Readの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkVirtualRwRateReadNotEmpty: function(rwRateRead) {
+		return new camdev_ValidationUtils().isNotEmpty(rwRateRead);
+	},
+
+	/**
+	 * 仮想ディスクシステムバックアップ要否の必須入力チェック
+	 * ＜機能＞
+	 * 仮想ディスクバックアップ要否が未入力の場合、エラーとする。
+	 * 
+	 * @param systemBackup：仮想ディスクバックアップ要否の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkVirtualSystemBackupNotEmpty: function(systemBackup) {
+		return new camdev_ValidationUtils().isNotEmpty(systemBackup);
+	},
+
+	/**
+	 * RDMディスクIOPSの必須入力チェック
+	 * ＜機能＞
+	 * RDMディスクIOPSが未入力の場合、エラーとする。
+	 * 
+	 * @param iops：RDMディスクIOPSの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkRdmIopsNotEmpty: function(iops) {
+		return new camdev_ValidationUtils().isNotEmpty(iops);
+	},
+
+	/**
+	 * NIC詳細情報：接続先NIC名称の必須入力チェック
+	 * ＜機能＞
+	 * NIC詳細情報：接続先NIC名称が未入力の場合、エラーとする。
+	 * 
+	 * @param systemBackup：NIC詳細情報：接続先NIC名称の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkNicNwNameNotEmpty: function(nwName) {
+		return new camdev_ValidationUtils().isNotEmpty(nwName);
+	},
+
+	/**
+	 * NIC詳細情報：IPアドレスの必須入力チェック
+	 * ＜機能＞
+	 * NIC詳細情報：IPアドレスが未入力の場合、エラーとする。
+	 * 
+	 * @param ipAddress：NIC詳細情報：IPアドレスの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkNicIpAddressNotEmpty: function(ipAddress) {
+		return new camdev_ValidationUtils().isNotEmpty(ipAddress);
+	},
+
+	/**
+	 * NIC詳細情報：サブネットの必須入力チェック
+	 * ＜機能＞
+	 * NIC詳細情報：サブネットが未入力の場合、エラーとする。
+	 * 
+	 * @param subnet：NIC詳細情報：サブネットの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkNicSubnetNotEmpty: function(subnet) {
+		return new camdev_ValidationUtils().isNotEmpty(subnet);
+	},
+
+	/**
+	 * NIC詳細情報：ビットマスクの必須入力チェック
+	 * ＜機能＞
+	 * NIC詳細情報：ビットマスクが未入力の場合、エラーとする。
+	 * 
+	 * @param bitmask：NIC詳細情報：ビットマスクの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkNicBitmaskNotEmpty: function(bitmask) {
+		return new camdev_ValidationUtils().isNotEmpty(bitmask);
+	},
+
+	/**
+	 * NIC詳細情報：ビットマスクの必須入力チェック
+	 * ＜機能＞
+	 * NIC詳細情報：ビットマスクが1～32の範囲外の場合、エラーとする。
+	 * 
+	 * @param bitmask：NIC詳細情報：ビットマスクの値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkNicBitmaskRange: function(bitmask, min, max) {
+		return new camdev_ValidationUtils().isNumericRange(bitmask, min, max);
+	},
+
+	/**
+	 * NIC詳細情報：最大使用NW帯域の必須入力チェック
+	 * ＜機能＞
+	 * NIC詳細情報：最大使用NW帯域が未入力の場合、エラーとする。
+	 * 
+	 * @param maxNwBand：NIC詳細情報：最大使用NW帯域の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkNicMaxNwBandNotEmpty: function(maxNwBand) {
+		return new camdev_ValidationUtils().isNotEmpty(maxNwBand);
+	},
+
+	/**
+	 * NIC詳細情報：最大使用NW帯域の必須入力チェック
+	 * ＜機能＞
+	 * NIC詳細情報：最大使用NW帯域が1～32の範囲外の場合、エラーとする。
+	 * 
+	 * @param maxNwBand：NIC詳細情報：最大使用NW帯域の値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkNicMaxNwBandRange: function(maxNwBand, min, max) {
+		return new camdev_ValidationUtils().isNumericRange(maxNwBand, min, max);
+	},
+
+	/**
+	 * NIC詳細情報：データバックアップ使用NICの必須入力チェック
+	 * ＜機能＞
+	 * NIC詳細情報：データバックアップ使用NICが未入力の場合、エラーとする。
+	 * 
+	 * @param nicUsedBackup：NIC詳細情報：データバックアップ使用NICの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkNicUsedBackupNotEmpty: function(nicUsedBackup) {
+		return new camdev_ValidationUtils().isNotEmpty(nicUsedBackup);
+	},
+
+	/**
+	 * プロビ実行の必須入力チェック
+	 * ＜機能＞
+	 * プロビ実行が未入力の場合、エラーとする。
+	 * 
+	 * @param provisioningExecution：プロビ実行の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkProvisioningExecutionNotEmpty: function(provisioningExecution) {
+		return new camdev_ValidationUtils().isNotEmpty(provisioningExecution);
+	},
+
+	/**
+	 * 用途の必須入力チェック
+	 * ＜機能＞
+	 * 用途が未入力の場合、エラーとする。
+	 * 
+	 * @param usage：用途の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkUsageNotEmpty: function(usage) {
+		return new camdev_ValidationUtils().isNotEmpty(usage);
+	},
+
+	/**
+	 * Ansible接続用NIC番号の必須入力チェック
+	 * ＜機能＞
+	 * Ansible接続用NIC番号が未入力の場合、エラーとする。
+	 * 
+	 * @param ansibleNicNo：Ansible接続用NIC番号の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	//del_FY22_2Q_str カラムのfalse化に伴い削除
+	//checkAnsibleNicNoNotEmpty: function(ansibleNicNo) {
+		//return new camdev_ValidationUtils().isNotEmpty(ansibleNicNo);
+	//},
+	//del_FY22_2Q_end
+	
+	/**
+	 * Ansible接続用NIC番号の内容チェック
+	 * ＜機能＞
+	 * 用途が通常用かつAnsible接続用NIC番号が2以外の場合、エラーとする。
+	 * 
+	 * @param usage：用途の値
+	 * @param ansibleNicNo：Ansible接続用NIC番号の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkAnsibleNicNo: function(usage, ansibleNicNo) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(usage) && validationUtils.isNotEmpty(ansibleNicNo)) {
+			if (usage == this.USAGE_NORMAL && ansibleNicNo != '2') {
+				result = false;
+			}
+		}
+		return result;
+	},
+
+	/**
+	 * Ansible接続用GWの必須入力チェック
+	 * ＜機能＞
+	 * Ansible接続用GWが未入力の場合、エラーとする。
+	 * 
+	 * @param ansibleGw：Ansible接続用GWの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	//del_FY22_2Q_str カラムのfalse化に伴い削除
+	//checkAnsibleGwNotEmpty: function(ansibleGw) {
+		//return new camdev_ValidationUtils().isNotEmpty(ansibleGw);
+	//},
+	//del_FY22_2Q_end
+	
+	/**
+	 * カタログ名の必須入力チェック
+	 * ＜機能＞
+	 * カタログ名が未入力の場合、エラーとする。
+	 * 
+	 * @param catalogName：カタログ名の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkCatalogNotEmpty: function(catalogName) {
+		return new camdev_ValidationUtils().isNotEmpty(catalogName);
+	},
+
+	/**
+	 * 予約名の必須入力チェック
+	 * ＜機能＞
+	 * 予約名が未入力の場合、エラーとする。
+	 * 
+	 * @param reserveName：予約名の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkReserveNotEmpty: function(reserveName) {
+		return new camdev_ValidationUtils().isNotEmpty(reserveName);
+	},
+
+	/**
+	 * ネットワークパスの必須入力チェック
+	 * ＜機能＞
+	 * ネットワークパスが未入力の場合、エラーとする。
+	 * 
+	 * @param networkPathNic：ネットワークパスの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkNetworkPathNicNotEmpty: function(networkPathNic) {
+		return new camdev_ValidationUtils().isNotEmpty(networkPathNic);
+	},
+
+	/**
+	 * ネットワークパスの入力チェック
+	 * ＜機能＞
+	 * ネットワークパスの入力値に"|"が2つ以上含まれていない場合、エラーとする。
+	 * 
+	 * @param networkPathNic：ネットワークパスの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkNetworkPathNic: function(networkPathNic) {
+		var result = true;
+		if (new camdev_ValidationUtils().isNotEmpty(networkPathNic)) {
+			var pathArray = networkPathNic.match(/\|/g);
+			var count = 0;
+			if (pathArray != null) {
+				count = pathArray.length;
+			}
+			if (count < 2) {
+				result = false;
+			}
+		}
+		return result;
+	},
+
+	/**
+	 * ネットワークパスの重複要素取得
+	 * ＜機能＞
+	 * ネットワークパスに重複がある場合、重複したホスト名の配列を返却する。
+	 * 
+	 * @param nwPathNicArray：ネットワークパス情報の配列
+	 * @return 重複したネットワークパスの配列
+	 */
+	getDuplicateNetworkPathNics: function(nwPathNicArray) {
+		// Keyを集約した配列を作成
+		var nwPathNicKeyArray = nwPathNicArray.map(function(pathData) {
+			return pathData.key;
+		});
+		
+		// Keyが重複している情報を抽出
+		var duplicatePathArray = nwPathNicArray.filter(function (pathData, index) {
+			return nwPathNicKeyArray.indexOf(pathData.key) === index
+				&& index !== nwPathNicKeyArray.lastIndexOf(pathData.key);
+		});
+		if (duplicatePathArray == null || duplicatePathArray.length == 0) {
+			duplicatePathArray = [];
+		}
+		
+		return duplicatePathArray;
+	},
+
+	/**
+	 * ホストサーバ名の必須入力チェック
+	 * ＜機能＞
+	 * ホストサーバ名が未入力の場合、エラーとする。
+	 * 
+	 * @param hostServerName：ホストサーバ名の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkHostServerNameNotEmpty: function(hostServerName) {
+		return new camdev_ValidationUtils().isNotEmpty(hostServerName);
+	},
+
+	/**
+	 * ホストサーバ名の入力チェック
+	 * ＜機能＞
+	 * ホストサーバ名の先頭が「kk」で始まっていない場合、エラーとする。
+	 * 
+	 * @param hostServerName：ホストサーバ名の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkHostServerName: function(hostServerName) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(hostServerName) && !hostServerName.startsWith('kk')) {
+			result = false;
+		}
+		return result;
+	},
+
+	/**
+	 * クラスタ名の必須入力チェック
+	 * ＜機能＞
+	 * クラスタ名が未入力の場合、エラーとする。
+	 * 
+	 * @param clusterName：クラスタ名の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkClusterNameNotEmpty: function(clusterName) {
+		return new camdev_ValidationUtils().isNotEmpty(clusterName);
+	},
+
+	/**
+	 * ストレージパス（仮想ディスクX）の必須入力チェック
+	 * ＜機能＞
+	 * ストレージパス（仮想ディスクX）が未入力の場合、エラーとする。
+	 * 
+	 * @param storagePathVirtualDisk：ストレージパス（仮想ディスクX）の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkStoragePathVirtualDiskNotEmpty: function(storagePathVirtualDisk) {
+		return new camdev_ValidationUtils().isNotEmpty(storagePathVirtualDisk);
+	},
+
+	/**
+	 * VLAN IDの範囲チェック
+	 * ＜機能＞
+	 * VLAN IDが指定された値の範囲外の場合、エラーとする。
+	 * 
+	 * @param vlanId：VLAN IDの値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkVlanIdRange: function(vlanId, min, max) {
+		return new camdev_ValidationUtils().isNumericRange(vlanId, min, max);
+	},
+
+	/**
+	 * VLAN IDの相関チェック（ボンディング）
+	 * ＜機能＞
+	 * ボンディングが未選択かつVLAN IDが指定されている場合、エラーとする。
+	 * 
+	 * @param bonding：ボンディングの値
+	 * @param vlanId：VLAN IDの値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkVlanIdCorrelationBonding: function(bonding, vlanId) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isEmpty(bonding)
+			&& validationUtils.isNotEmpty(vlanId)) {
+			result = false;
+		}
+		return result;
+	},
+
+	/**
+	 * VLAN IDの相関チェック（VLAN No）
+	 * ＜機能＞
+	 * VLAN Noが指定されていてVLAN IDが未入力の場合、エラーとする。
+	 * 
+	 * @param vlanNo：VLAN Noの値
+	 * @param vlanId：VLAN IDの値
+	 * @return true:範囲内／false：範囲外
+	 */
+	checkVlanIdCorrelationVlanNo: function(vlanNo, vlanId) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(vlanNo)
+			&& validationUtils.isEmpty(vlanId)) {
+			result = false;
+		}
+		return result;
+	},
+
+	/**
+	 * DGW VLANの相関チェック（VLAN No）
+	 * ＜機能＞
+	 * 指定された値がDGW VLANに選択されており、VLAN Noが未選択の場合、エラーとする。
+	 * 
+	 * @param dgwVlan：DGW VLANの値
+	 * @param targetValue：指定値
+	 * @param vlanNo：VLAN Noの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkDgwVlanCorrelationVlanNo: function(dgwVlan, targetValue, vlanNo) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(dgwVlan)
+			&& dgwVlan === targetValue
+			&& validationUtils.isEmpty(vlanNo)) {
+			result = false;
+		}
+		return result;
+	},
+
+	/**
+	 * DGW VLAN IDの必須入力チェック
+	 * ＜機能＞
+	 * DGW VLAN IDが未入力の場合、エラーとする。
+	 * 
+	 * @param dgwVlanId：DGW VLAN IDの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkDgwVlanIdNotEmpty: function(dgwVlanId) {
+		return new camdev_ValidationUtils().isNotEmpty(dgwVlanId);
+	},
+
+	/**
+	 * Ansible接続の相関チェック
+	 * ＜機能＞
+	 * 以下のいずれかを満たす場合、エラーとする。
+	 *  ・指定された値がAnsible接続に選択されており、VLAN Noが選択されている場合
+	 *  ・指定された値がAnsible接続に選択されており、VLAN Noが未選択でボンディングが選択されている場合
+	 * 
+	 * @param ansibleConnection：Ansible接続の値
+	 * @param targetValue：指定値
+	 * @param vlanNo：VLAN Noの値
+	 * @param bonding：ボンディングの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkAnsibleConnectionCorrelation: function(ansibleConnection, targetValue, vlanNo, bonding) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(ansibleConnection)
+			&& ansibleConnection === targetValue
+			&& validationUtils.isNotEmpty(vlanNo)) {
+			result = false;
+		}
+		if (validationUtils.isNotEmpty(ansibleConnection)
+			&& ansibleConnection === targetValue
+			&& validationUtils.isEmpty(vlanNo)
+			&& validationUtils.isNotEmpty(bonding)) {
+			result = false;
+		}
+		return result;
+	},
+
+	/**
+	 * Ansible接続の必須入力チェック
+	 * ＜機能＞
+	 * Ansible接続が未入力の場合、エラーとする。
+	 * 
+	 * @param ansibleConnection：Ansible接続の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkAnsibleConnectionNotEmpty: function(ansibleConnection) {
+		return new camdev_ValidationUtils().isNotEmpty(ansibleConnection);
+	},
+
+	/**
+	 * Ansible接続の相関チェック（ボンディング：なしのNIC用）
+	 * ＜機能＞
+	 * 以下のすべてを満たす場合、エラーとする。
+	 *  ・接続先NW、IPアドレス、サブネット、ビットマスクが未入力
+	 *  ・ボンディングが未選択
+	 *  ・Ansible接続が指定された値以外
+	 * 
+	 * @param nwName：接続先NW名称の値
+	 * @param ipAddress：IPアドレスの値
+	 * @param subnet：サブネットの値
+	 * @param bitmask：ビットマスクの値
+	 * @param bonding：ボンディングの値
+	 * @param ansibleConnection：Ansible接続の値
+	 * @param targetValue：指定値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkAnsibleConnectionNotBonding: function(nwName, ipAddress, subnet, bitmask, bonding, ansibleConnection, targetValue) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(nwName)
+			&& validationUtils.isNotEmpty(ipAddress)
+			&& validationUtils.isNotEmpty(subnet)
+			&& validationUtils.isNotEmpty(bitmask)
+			&& validationUtils.isEmpty(bonding)
+			&& validationUtils.isNotEmpty(ansibleConnection)
+			&& ansibleConnection !== targetValue) {
+			result = false;
+		}
+		return result;
+	},
+
+//add_FY22_2Q_str
+		/**
+	 * NIC No.の内容チェック
+	 * ＜機能＞
+	 * 用途・NIC No.・Ansible Connectionがいずれも空でない場合、
+	 * 用途が通常用かつNIC No.が2かつAnsible Connectionが「With Connection」以外の場合、エラーとする。
+	 * 
+	 * @param usage：用途の値
+	 * @param nicNo：NIC No.の値
+ 	 * @param ansibleConnection：Ansible Connectionの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkNicNo: function(usage, nicNo, ansibleConnection) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isNotEmpty(usage) && validationUtils.isNotEmpty(nicNo) && validationUtils.isNotEmpty(ansibleConnection)) {
+			if (usage == this.USAGE_NORMAL && nicNo != '2' && ansibleConnection == '2') {
+				result = false;
+		}
+		}
+		return result;
+	},
+	
+	
+		/**
+	 * GWの必須入力チェック
+	 * ＜機能＞
+	 *  GQが未入力の場合、エラーとする。
+	 * 
+	 * @param gw：GWの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkGwNotEmpty: function(gw) {
+		return new camdev_ValidationUtils().isNotEmpty(gw);
+	},	
+//add_FY22_2Q_end	
+	
+	
+	/**
+	 * GWの相関チェック（ボンディング：なしのNIC用）
+	 * ＜機能＞
+	 * 以下のすべてを満たす場合、エラーとする。
+	 *  ・GWが未入力
+	 *  ・ボンディングが未選択
+	 * 
+	 * @param gw：GWの値
+	 * @param bonding：ボンディングの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkGwNotBonding: function(gw, bonding) {
+		var result = true;
+		var validationUtils = new camdev_ValidationUtils();
+		if (validationUtils.isEmpty(gw)
+			&& validationUtils.isEmpty(bonding)) {
+			result = false;
+		}
+		return result;
+	},
+
+	//add_FY22_2Q_start
+
+	/**
+	 * ノード種別の必須入力チェック（未選択）
+	 * ＜機能＞
+	 * ノード種別が未入力の場合、エラーとする。
+	 * 
+	 * @param nodeType：ノード種別の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkNodeTypeNotEmpty: function(nodeType) {
+		return new camdev_ValidationUtils().isNotEmpty(nodeType);
+	},
+
+	/**
+	 * ファイルシステムの必須入力チェック
+	 * ＜機能＞
+	 * 使用OS：ファイルシステムが未入力の場合、エラーとする。
+	 * 
+	 * @param fileSystem：ファイルシステムの値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkFileSystemNotEmpty: function(fileSystem) {
+		return new camdev_ValidationUtils().isNotEmpty(fileSystem);
+	},
+	
+		/**
+	 * OpenShiftディスクプロビジョニング_ディスク容量の最小値チェック
+	 * ＜機能＞
+	 * OpenShiftディスクプロビジョニング_ディスク容量が指定された最小値以上かどうかを判定する。
+	 * 
+	 * @param cpuCount：OpenShiftディスクプロビジョニング_ディスク容量の値
+	 * @param min：最小値
+	 * @return true:最小値以上／false：最小値未満
+	 */
+	checkOpenshiftDiskSize: function(cpuCount, min) {
+		return new camdev_ValidationUtils().isNumericMin(cpuCount, min);
+	},
+
+			/**
+	 * 容量(GiB)の最小値チェック
+	 * ＜機能＞
+	 * 容量(GiB)が指定された最小値以上かどうかを判定する。
+	 * 
+	 * @param cpuCount：容量(GiB)の値
+	 * @param min：最小値
+	 * @return true:最小値以上／false：最小値未満
+	 */
+	checkCapacityGib: function(capacityGib, min) {
+		return new camdev_ValidationUtils().isNumericMin(capacityGib, min);
+	},
+	/**
+	 * OVAファイル名の必須入力チェック（未選択）
+	 * ＜機能＞
+	 * OVAファイル名が未入力の場合、エラーとする。
+	 * 
+	 * @param nodeType：OVAファイル名の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkCoreOsOvaFileName: function(ovaFileName) {
+		return new camdev_ValidationUtils().isNotEmpty(ovaFileName);
+	},	
+		/**
+	 * OpenShiftディスクプロビジョニング_データストア名の必須入力チェック（未選択）
+	 * ＜機能＞
+	 * OpenShiftディスクプロビジョニング_データストア名が未入力の場合、エラーとする。
+	 * 
+	 * @param nodeType：OpenShiftディスクプロビジョニング_データストア名の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkOpenshiftDatastoreName: function(openshiftDatastoreName) {
+		return new camdev_ValidationUtils().isNotEmpty(openshiftDatastoreName);
+	},	
+	
+	//add_FY22_2Q_end
+	
+	//★add
+	/**
+	 *ディスクNo.1の存在チェック
+	 * ＜機能＞
+	 * ディスクNo.のうち、1が存在しない場合、エラーとする。
+	 * 
+	 * @param diskNo：ディスクNo.の値
+	 * @return true:エラーなし／false：エラー
+	 */
+	checkDiskNo1Exist: function(diskNo){
+	return new camdev_ValidationUtils().existDiskNo1(diskNo);
+
+	},
+	
+	
+	
+	//★add
+	
+	type: 'camdev_ValidationServerRequestFieldValue'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 02:59:06</sys_created_on>
+        <sys_id>fd9763f02f189510ea364ae72799b6c7</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>camdev_ValidationServerRequestFieldValue</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_include_fd9763f02f189510ea364ae72799b6c7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-09-09 00:20:41</sys_updated_on>
+    </sys_script_include>
+</record_update>

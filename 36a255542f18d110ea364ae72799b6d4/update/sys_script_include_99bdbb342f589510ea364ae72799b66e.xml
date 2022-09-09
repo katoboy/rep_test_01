@@ -1,0 +1,2057 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_761427_campusdev.camdev_ValidationServerRequest</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>UI Action「camdevInputComplete」、「camdevRequest」から呼び出される。&#13;
+現在開いているレコードやその配下のレコードの入力内容をチェックする。&#13;
+チェックに問題があればエラーメッセージを返す。&#13;
+問題が無ければそのまま終了、もしくは承認レコードを承認済みにして終了する。</description>
+        <name>camdev_ValidationServerRequest</name>
+        <script><![CDATA[var camdev_ValidationServerRequest = Class.create();
+camdev_ValidationServerRequest.prototype = {
+
+    TBL_SERVER_REQUEST_BASE: 'x_nttm8_campus_dev_01_server_request_base',
+    TBL_SERVER: 'x_nttm8_campus_dev_02_server',
+    TBL_DISK: 'x_nttm8_campus_dev_03_disk',
+    TBL_RDM_DISK: 'x_nttm8_campus_dev_04_rdm_disk',
+    TBL_NIC: 'x_nttm8_campus_dev_05_nic',
+    TBL_AFFINITY_RULE: 'x_nttm8_campus_dev_07_affinity_rule',
+
+    CLASSIFICATION_CREATE: 'create',
+    CLASSIFICATION_CHANGE: 'change',
+
+    SERVER_TYPE_IA_GR: 'IA-Gr',
+    SERVER_TYPE_BARE_METAL: 'bare-metal',
+
+    //add_FY22_2Q_str
+    SERVER_TYPE_CORE_OS: 'CoreOS',
+    //add_FY22_2Q_end
+
+    OS_TYPE_PREFIX_RHEL: 'Red Hat Enterprise Linux',
+    OS_TYPE_PREFIX_RHEL_7_2: 'Red Hat Enterprise Linux 7.2',
+    OS_TYPE_PREFIX_RHEL_7_3: 'Red Hat Enterprise Linux 7.3',
+    OS_TYPE_PREFIX_RHEL_7_6: 'Red Hat Enterprise Linux 7.6',
+    OS_TYPE_PREFIX_RHEL_8_2: 'Red Hat Enterprise Linux 8.2',
+    OS_TYPE_PREFIX_WINDOWS: 'Windows',
+    OS_TYPE_PREFIX_WINDOWS_2012_R2_SE: 'Windows Server 2012 R2 Standard Edition',
+    OS_TYPE_PREFIX_WINDOWS_2016_SE: 'Windows Server 2016 Standard Edition',
+    OS_TYPE_PREFIX_WINDOWS_2019_SE: 'Windows Server 2019 Standard Edition',
+    OS_TYPE_PREFIX_WINDOWS_2012_R2_DE: 'Windows Server 2012 R2 Datacenter Edition',
+    OS_TYPE_PREFIX_WINDOWS_2016_DE: 'Windows Server 2016 Datacenter Edition',
+    OS_TYPE_PREFIX_WINDOWS_2019_DE: 'Windows Server 2019 Datacenter Edition',
+
+    SERVICE_TYPE_SMALL: 'small',
+    SERVICE_TYPE_MEDIUM: 'medium',
+    SERVICE_TYPE_LARGE: 'large',
+
+    USAGE_NORMAL: 'normal',
+    USAGE_BRIDGE: 'bridge',
+
+    DGW_VLAN_NOT_TARGET: 'no',
+    DGW_VLAN_TARGET: 'yes',
+
+    BONDING_PRIMERY_VALUES: ['10', '20', '30'],
+    BONDING_SLAVE_VALUES: ['11', '21', '31'],
+
+    ANSIBLE_CONNECTION_NO_CONNECTION: '1',
+    ANSIBLE_CONNECTION_CONNECTION: '2',
+
+    ERR_MSG_KEY_001: 'camdev_00_ErrorMessage001',
+    ERR_MSG_KEY_002: 'camdev_00_ErrorMessage002',
+    ERR_MSG_KEY_003: 'camdev_00_ErrorMessage003',
+    ERR_MSG_KEY_004: 'camdev_00_ErrorMessage004',
+    ERR_MSG_KEY_005: 'camdev_00_ErrorMessage005',
+    ERR_MSG_KEY_006: 'camdev_00_ErrorMessage006',
+    ERR_MSG_KEY_007: 'camdev_00_ErrorMessage007',
+    ERR_MSG_KEY_008: 'camdev_00_ErrorMessage008',
+    ERR_MSG_KEY_009: 'camdev_00_ErrorMessage009',
+    ERR_MSG_KEY_010: 'camdev_00_ErrorMessage010',
+    ERR_MSG_KEY_011: 'camdev_00_ErrorMessage011',
+    ERR_MSG_KEY_012: 'camdev_00_ErrorMessage012',
+    ERR_MSG_KEY_013: 'camdev_00_ErrorMessage013',
+    ERR_MSG_KEY_014: 'camdev_00_ErrorMessage014',
+    ERR_MSG_KEY_015: 'camdev_00_ErrorMessage015',
+    ERR_MSG_KEY_016: 'camdev_00_ErrorMessage016',
+    ERR_MSG_KEY_017: 'camdev_00_ErrorMessage017',
+    ERR_MSG_KEY_018: 'camdev_00_ErrorMessage018',
+    ERR_MSG_KEY_019: 'camdev_00_ErrorMessage019',
+    ERR_MSG_KEY_020: 'camdev_00_ErrorMessage020',
+    ERR_MSG_KEY_021: 'camdev_00_ErrorMessage021',
+    ERR_MSG_KEY_022: 'camdev_00_ErrorMessage022',
+    ERR_MSG_KEY_023: 'camdev_00_ErrorMessage023',
+    ERR_MSG_KEY_024: 'camdev_00_ErrorMessage024',
+    ERR_MSG_KEY_025: 'camdev_00_ErrorMessage025',
+    ERR_MSG_KEY_026: 'camdev_00_ErrorMessage026',
+    ERR_MSG_KEY_027: 'camdev_00_ErrorMessage027',
+    ERR_MSG_KEY_028: 'camdev_00_ErrorMessage028',
+    ERR_MSG_KEY_029: 'camdev_00_ErrorMessage029',
+    ERR_MSG_KEY_030: 'camdev_00_ErrorMessage030',
+    ERR_MSG_KEY_031: 'camdev_00_ErrorMessage031',
+    ERR_MSG_KEY_032: 'camdev_00_ErrorMessage032',
+    ERR_MSG_KEY_033: 'camdev_00_ErrorMessage033',
+    ERR_MSG_KEY_034: 'camdev_00_ErrorMessage034',
+    ERR_MSG_KEY_035: 'camdev_00_ErrorMessage035',
+    ERR_MSG_KEY_036: 'camdev_00_ErrorMessage036',
+    //★add
+    //ホスト名({0})： [{1}]のNo.1が未設定です。
+    ERR_MSG_KEY_037: 'camdev_00_ErrorMessage037',
+    //
+    ERR_MSG_KEY_038: 'camdev_00_ErrorMessage038',
+    //★add
+
+    initialize: function() {},
+
+    /**
+     * サーバ払出申請依頼時チェック処理
+     * ＜機能＞
+     * 申請者がサーバ払出申請依頼を行う際のチェック処理を行う
+     * 
+     * @param svReqBaseSysId：サーバリクエスト基本情報のSysID
+     * @param classification：区分の値
+     * @param classificationDisplayValue：区分の値（画面表示値）
+     * @param serverType：サーバ種別の値
+     * @param newNw：新規NW追加の値
+     * @param nwCableConnection：新規NWケーブル接続有無の値
+     * @return エラー無しの場合：空／エラーの場合：エラーメッセージのKeyの配列
+     */
+    validationForServerRequest: function(svReqBaseSysId, classification, classificationDisplayValue, serverType, newNw, nwCableConnection) {
+        var errMsgs = [];
+        var validation = new camdev_ValidationServerRequestFieldValue();
+
+        if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_IA_GR) {
+            // 区分：新規・サーバ種別：IA-Gr
+            // 新規NWケーブル接続有無のチェック
+            if (!validation.checkNwCableConnection(newNw, nwCableConnection)) {
+                errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_003));
+            }
+
+            // サーバ情報のチェック処理
+            var newIaGrServerNameArray = [];
+            var newIaGrServers = new GlideRecord(this.TBL_SERVER);
+            newIaGrServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            newIaGrServers.query();
+            while (newIaGrServers.next()) {
+                var newIaGrServerNameEnglish = newIaGrServers.getValue('u_02_server_name_english') + '';
+                var newIaGrDeliveryDateLabel = newIaGrServers.getElement('u_02_delivery_date').getLabel();
+                var newIaGrDeliveryDate = newIaGrServers.getDisplayValue('u_02_delivery_date') + '';
+                var newIaGrOsTypeLabel = newIaGrServers.getElement('u_02_os_type').getLabel();
+                var newIaGrOsType = newIaGrServers.getValue('u_02_os_type');
+                var newIaGrOsTypeDisplay = newIaGrServers.getDisplayValue('u_02_os_type') + '';
+                var newIaGrServiceTypeLabel = newIaGrServers.getElement('u_02_service_type').getLabel();
+                var newIaGrServiceType = newIaGrServers.getValue('u_02_service_type');
+                var newIaGrCpuCountLabel = newIaGrServers.getElement('u_02_cpu_count').getLabel();
+                var newIaGrCpuCount = newIaGrServers.getValue('u_02_cpu_count') || '';
+                var newIaGrCpuSocketCountLabel = newIaGrServers.getElement('u_02_cpu_socket_count').getLabel();
+                var newIaGrCpuSocketCount = newIaGrServers.getValue('u_02_cpu_socket_count') || '';
+                var newIaGrMemoryGibLabel = newIaGrServers.getElement('u_02_memory_gib').getLabel();
+                var newIaGrMemoryGib = newIaGrServers.getValue('u_02_memory_gib') || '';
+                var newIaGrDiskCountLabel = newIaGrServers.getElement('u_02_disk_count').getLabel();
+                var newIaGrDiskCount = newIaGrServers.getValue('u_02_disk_count') || '';
+                var newIaGrRdmSharedDiskLabel = newIaGrServers.getElement('u_02_rdm_shared_disk').getLabel();
+                var newIaGrRdmSharedDisk = newIaGrServers.getValue('u_02_rdm_shared_disk') || '';
+                var newIaGrVirtualNicCountLabel = newIaGrServers.getElement('u_02_virtual_nic_count').getLabel();
+                var newIaGrVirtualNicCount = newIaGrServers.getValue('u_02_virtual_nic_count') || '';
+                //del_FY22_2Q_str カラムのfalse化に伴い削除
+                //                var newIaGrAffinityRuleLabel = newIaGrServers.getElement('u_02_affinity_rule').getLabel();
+                //                var newIaGrAffinityRule = newIaGrServers.getValue('u_02_affinity_rule');
+                //del_FY22_2Q_end
+                var newIaGrBackupConfigLabel = newIaGrServers.getElement('u_02_backup_config').getLabel();
+                var newIaGrBackupConfig = newIaGrServers.getValue('u_02_backup_config');
+                var newIaGrHighAvailabilityClusterLabel = newIaGrServers.getElement('u_02_high_availability_cluster').getLabel();
+                var newIaGrHighAvailabilityCluster = newIaGrServers.getValue('u_02_high_availability_cluster');
+                var newIaGrServiceSeverityLabel = newIaGrServers.getElement('u_02_service_severity').getLabel();
+                var newIaGrServiceSeverity = newIaGrServers.getValue('u_02_service_severity');
+                var newIaGrFileSystemLabel = newIaGrServers.getElement('u_02_file_system').getLabel();
+                var newIaGrFileSystem = newIaGrServers.getValue('u_02_file_system');
+                // 引き渡し希望日のチェック
+                if (!validation.checkDeliveryDate(newIaGrDeliveryDate)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_005, [newIaGrServerNameEnglish, newIaGrDeliveryDateLabel, newIaGrDeliveryDate]));
+                }
+                // 使用OSの必須チェック
+                if (!validation.checkOsTypeNotEmpty(newIaGrOsType)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrOsTypeLabel]));
+                }
+                // サービス型番の必須チェック（RHELの場合）
+                if (!validation.checkServiceTypeNotEmptyForRHEL(newIaGrOsType, newIaGrServiceType)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_002, [newIaGrServerNameEnglish, newIaGrOsTypeDisplay, newIaGrServiceTypeLabel]));
+                }
+                // サービス型番の必須チェック（Windowsの場合）
+                if (!validation.checkServiceTypeEmptyForWindows(newIaGrOsType, newIaGrServiceType)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_006, [newIaGrServerNameEnglish, newIaGrOsTypeDisplay, newIaGrServiceTypeLabel]));
+                }
+                // CPU総コア数の必須チェック
+                if (!validation.checkCpuCountNotEmpty(newIaGrCpuCount)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrCpuCountLabel]));
+                }
+                // CPUソケット数のチェック
+                if (!validation.checkCpuSocketCount(newIaGrCpuCount, newIaGrCpuSocketCount)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_010, [newIaGrServerNameEnglish, newIaGrCpuCount, newIaGrCpuSocketCount]));
+                }
+                // メモリ（GiB）の必須チェック
+                if (!validation.checkMemoryGibNotEmpty(newIaGrMemoryGib)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrMemoryGibLabel]));
+                }
+                // ディスク数の範囲チェック
+                if (newIaGrDiskCount != '' && !validation.checkDiskCountRange(newIaGrDiskCount, 1, 10)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_011, [newIaGrServerNameEnglish, newIaGrDiskCountLabel, String(newIaGrDiskCount), '1', '10']));
+                }
+                // RDM/共有ディスク数の範囲チェック
+                if (newIaGrRdmSharedDisk != '' && !validation.checkRdmSharedDickRange(newIaGrRdmSharedDisk, 0, 10)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_011, [newIaGrServerNameEnglish, newIaGrRdmSharedDiskLabel, String(newIaGrRdmSharedDisk), '0', '10']));
+                }
+                // 仮想NIC数の範囲チェック
+                if (newIaGrVirtualNicCount != '' && !validation.checkVirtualNicCountRange(newIaGrVirtualNicCount, 2, 8)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_011, [newIaGrServerNameEnglish, newIaGrVirtualNicCountLabel, String(newIaGrVirtualNicCount), '2', '8']));
+                }
+                //del_FY22_2Q_str
+                // アフィニティルール設定希望有無の必須チェック 廃止No.44
+                //                 if (!validation.checkAffinityRuleNotEmpty(newIaGrAffinityRule)) {
+                //                     errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrAffinityRuleLabel]));
+                //                 }
+                //del_FY22_2Q_end
+                // データバックアップの必須チェック
+                if (!validation.checkBackupConfigNotEmpty(newIaGrBackupConfig)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrBackupConfigLabel]));
+                }
+                // 高可用クラスタ利用有無の必須チェック
+                if (!validation.checkHighAvailabilityClusterNotEmpty(newIaGrHighAvailabilityCluster)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrHighAvailabilityClusterLabel]));
+                }
+                // サービス重要度の必須チェック
+                if (!validation.checkServiceSeverityNotEmpty(newIaGrHighAvailabilityCluster, newIaGrServiceSeverity)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_012, [newIaGrServerNameEnglish]));
+                }
+                // ファイルシステムの必須チェック（RHEL）
+                if (!validation.checkFileSystemNotEmptyForRHEL(newIaGrOsType, newIaGrFileSystem)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_002, [newIaGrServerNameEnglish, newIaGrOsTypeDisplay, newIaGrFileSystemLabel]));
+                }
+                // ファイルシステムの未入力チェック（Windows）
+                if (!validation.checkFileSystemEmptyForWindows(newIaGrOsType, newIaGrFileSystem)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_013, [newIaGrServerNameEnglish, newIaGrFileSystem]));
+                }
+
+                // ディスク情報の取得
+                //★add
+                var newIaGrDiskNo1ExistArray = [];
+
+                //★add
+                var newIaGrDisks = new GlideRecord(this.TBL_DISK);
+                newIaGrDisks.addQuery('u_03_server_info', newIaGrServers.getUniqueValue());
+                newIaGrDisks.orderBy('u_03_disk_no');
+                newIaGrDisks.query();
+                while (newIaGrDisks.next()) {
+                    var newIaGrDiskNoLabel = 'ディスク' + newIaGrDisks.getDisplayValue('u_03_disk_no') + 'の';
+                    var newIaGrCapacityGibLabel = newIaGrDisks.getElement('u_03_capacity_gib').getLabel();
+                    var newIaGrCapacityGib = newIaGrDisks.getValue('u_03_capacity_gib') || '';
+                    var newIaGrIopsLabel = newIaGrDisks.getElement('u_03_iops').getLabel();
+                    var newIaGrIops = newIaGrDisks.getValue('u_03_iops') || '';
+                    var newIaGrRwRateReadbLabel = newIaGrDisks.getElement('u_03_rw_rate_read').getLabel();
+                    var newIaGrRwRateRead = newIaGrDisks.getValue('u_03_rw_rate_read');
+                    var newIaGrSystemBackupLabel = newIaGrDisks.getElement('u_03_system_backup').getLabel();
+                    var newIaGrSystemBackup = newIaGrDisks.getValue('u_03_system_backup');
+
+                    //★add
+                    var newIaGrDiskNo = newIaGrDisks.getValue('u_03_disk_no');
+                    var newIaGrDiskLabel = 'ディスク';
+                    //★add
+
+                    // 容量（GiB）の必須入力チェック
+                    if (!validation.checkVirtualCapacityGibNotEmpty(newIaGrCapacityGib)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrDiskNoLabel + newIaGrCapacityGibLabel]));
+                    }
+                    // IOPSの必須入力チェック
+                    if (!validation.checkVirtualIopsNotEmpty(newIaGrIops)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrDiskNoLabel + newIaGrIopsLabel]));
+                    }
+                    // RW比率（Read）の必須入力チェック
+                    if (!validation.checkVirtualRwRateReadNotEmpty(newIaGrRwRateRead)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrDiskNoLabel + newIaGrRwRateReadbLabel]));
+                    }
+                    // システムバックアップ要否の必須入力チェック
+                    if (!validation.checkVirtualSystemBackupNotEmpty(newIaGrSystemBackup)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrDiskNoLabel + newIaGrSystemBackupLabel]));
+                    }
+                    //★add
+                    // ディスクNo.1の存在チェック
+                    if (!validation.checkDiskNo1Exist(newIaGrDiskNo)) {
+                        newIaGrDiskNo1ExistArray.push(newIaGrDiskNo);
+                    }
+                    //★add
+                }
+                //★add
+                //ディスクNo.1が存在しない場合、エラーメッセージを追加
+                if (newIaGrDiskNo1ExistArray.includes(false)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_037, [newIaGrServerNameEnglish, newIaGrDiskLabel]));
+                }
+                //★add
+
+                //★add
+                // RDMディスク情報の取得
+                var newIaGrRdmDiskNo1ExistArray = [];
+                var newIaGrRdmDisks = new GlideRecord(this.TBL_RDM_DISK);
+                newIaGrRdmDisks.addQuery('u_04_server_info', newIaGrServers.getUniqueValue());
+                newIaGrRdmDisks.orderBy('u_04_disk_no');
+                newIaGrRdmDisks.query();
+
+				while(newIaGrRdmDisks.next()){
+					var newIaGrRdmDiskNoLabel = 'RDMディスク' + newIaGrRdmDisks.getDisplayValue('u_04_disk_no') + 'の';
+					var newIaGrRdmDiskNo = newIaGrRdmDisks.getValue('u_04_disk_no');
+					var newIaGrRdmDiskLabel = 'RDMディスク';
+					// ディスクNo.1の存在チェック
+                    if (!validation.checkDiskNo1Exist(newIaGrRdmDiskNo)) {
+                        newIaGrRdmDiskNo1ExistArray.push(newIaGrDiskNo);
+				}
+				}
+                //ディスクNo.1が存在しない場合、エラーメッセージを追加
+                if (newIaGrDiskNo1ExistArray.includes(false)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_037, [newIaGrServerNameEnglish, newIaGrRdmDiskLabel]));					
+				}
+					//★add
+				
+                // ネットワーク情報の取得
+                //add_FY22_2Q_str
+                var ansibleConnectionEmptyArrays = [];
+                var ansibleConnectionObjectArrays = [];
+                var gwEmptyArrays = [];
+                //add_FY22_2Q_end
+				//★add	
+                var newIaGrNicNo1ExistArray = [];
+				//★add	
+					
+                var newIaGrNics = new GlideRecord(this.TBL_NIC);
+                newIaGrNics.addQuery('u_05_server_info', newIaGrServers.getUniqueValue());
+                newIaGrNics.orderBy('u_05_nic_no');
+                newIaGrNics.query();
+                while (newIaGrNics.next()) {
+                    var newIaGrNicNoLabel = 'NIC' + newIaGrNics.getDisplayValue('u_05_nic_no') + 'の';
+                    var newIaGrNwNameLabel = newIaGrNics.getElement('u_05_nw_name').getLabel();
+                    var newIaGrNwName = newIaGrNics.getValue('u_05_nw_name');
+                    var newIaGrIpAddressLabel = newIaGrNics.getElement('u_05_ip_address').getLabel();
+                    var newIaGrIpAddress = newIaGrNics.getValue('u_05_ip_address');
+                    var newIaGrSubnetLabel = newIaGrNics.getElement('u_05_subnet').getLabel();
+                    var newIaGrSubnet = newIaGrNics.getValue('u_05_subnet');
+                    var newIaGrBitmaskLabel = newIaGrNics.getElement('u_05_bitmask').getLabel();
+                    var newIaGrBitmask = newIaGrNics.getValue('u_05_bitmask') || '';
+                    var newIaGrMaxNwBandLabel = newIaGrNics.getElement('u_05_max_nw_band').getLabel();
+                    var newIaGrMaxNwBand = newIaGrNics.getValue('u_05_max_nw_band') || '';
+                    var newIaGrNicUsedBackupLabel = newIaGrNics.getElement('u_05_nic_used_backup').getLabel();
+                    var newIaGrNicUsedBackup = newIaGrNics.getValue('u_05_nic_used_backup');
+                    //add_FY22_2Q_str
+                    var newIaGrAnsibleConnection = newIaGrNics.getValue('u_05_ansible_connection');
+                    var newIaGrGw = newIaGrNics.getValue('u_05_gw');
+                    var newIaGrGwLabel = newIaGrNics.getElement('u_05_gw').getLabel();
+                    var newIaGrNicNo = newIaGrNics.getValue('u_05_nic_no');
+					
+					//★add
+					var newIaGrNicLabel = 'NIC';
+					//★add
+
+                    // NIC No.の入力チェック
+                    //用途の取得（02テーブル）
+                    var newIaGrRefUsage = '';
+                    var newIaGrServerInfoSysId = newIaGrNics.getValue('u_05_server_info');
+                    var newIaGrNicsGetUsage = new GlideRecord(this.TBL_SERVER);
+                    newIaGrNicsGetUsage.addQuery('sys_id', newIaGrServerInfoSysId);
+                    newIaGrNicsGetUsage.query();
+                    if (newIaGrNicsGetUsage.next()) {
+                        newIaGrRefUsage = newIaGrNicsGetUsage.getElement('u_02_usage');
+                        if (!validation.checkNicNo(newIaGrRefUsage, newIaGrNicNo, newIaGrAnsibleConnection)) {
+                            errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_017, [newIaGrServerNameEnglish]));
+                        }
+                    }
+
+                    //add_FY22_2Q_end					
+
+                    // 接続先NW（名称）の必須入力チェック
+                    if (!validation.checkNicNwNameNotEmpty(newIaGrNwName)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrNicNoLabel + newIaGrNwNameLabel]));
+                    }
+                    // IPアドレスの必須入力チェック
+                    if (!validation.checkNicIpAddressNotEmpty(newIaGrIpAddress)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrNicNoLabel + newIaGrIpAddressLabel]));
+                    }
+                    // サブネットの必須入力チェック
+                    if (!validation.checkNicSubnetNotEmpty(newIaGrSubnet)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrNicNoLabel + newIaGrSubnetLabel]));
+                    }
+                    // ビットマスクの必須入力チェック
+                    if (!validation.checkNicBitmaskNotEmpty(newIaGrBitmask)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrNicNoLabel + newIaGrBitmaskLabel]));
+                    }
+                    // ビットマスクの範囲チェック
+                    if (newIaGrBitmask != '' && !validation.checkNicBitmaskRange(newIaGrBitmask, 1, 32)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_009, [newIaGrServerNameEnglish, newIaGrNicNoLabel + newIaGrBitmaskLabel, String(newIaGrBitmask), '1', '32']));
+                    }
+                    // 最大使用NW帯域の必須入力チェック
+                    if (!validation.checkNicMaxNwBandNotEmpty(newIaGrMaxNwBand)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrNicNoLabel + newIaGrMaxNwBandLabel]));
+                    }
+                    // 最大使用NW帯域の範囲チェック
+                    if (newIaGrMaxNwBand != '' && !validation.checkNicMaxNwBandRange(newIaGrMaxNwBand, 1, 10000)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_009, [newIaGrServerNameEnglish, newIaGrNicNoLabel + newIaGrMaxNwBandLabel, String(newIaGrMaxNwBand), '1', '10000']));
+                    }
+                    // バックアップ使用NICの必須入力チェック
+                    if (!validation.checkNicUsedBackupNotEmpty(newIaGrNicUsedBackup)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrNicNoLabel + newIaGrNicUsedBackupLabel]));
+                    }
+                    //add_FY22_2Q_str
+                    // Ansible接続の必須入力チェック
+                    if (!validation.checkAnsibleConnectionNotEmpty(newIaGrAnsibleConnection)) {
+                        ansibleConnectionEmptyArrays.push(newIaGrNics.getUniqueValue());
+                    }
+                    // Ansible接続が接続ありの場合、配列に設定
+                    if (newIaGrAnsibleConnection == this.ANSIBLE_CONNECTION_CONNECTION) {
+                        ansibleConnectionObjectArrays.push(newIaGrNics.getUniqueValue());
+                    }
+                    // GWの必須入力チェック ※Ansible接続が"接続有"の場合
+                    if (newIaGrAnsibleConnection == this.ANSIBLE_CONNECTION_CONNECTION) {
+                        if (!validation.checkGwNotEmpty(newIaGrGw)) {
+                            errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newIaGrServerNameEnglish, classificationDisplayValue, newIaGrNicNoLabel + newIaGrGwLabel]));
+                        }
+                    }
+                }
+                // Ansible接続の横断チェック
+                if (ansibleConnectionObjectArrays.length == 0) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_029, [newIaGrServerNameEnglish]));
+                } else if (ansibleConnectionObjectArrays.length >= 2) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_030, [newIaGrServerNameEnglish, String(ansibleConnectionObjectArrays.length)]));
+                }
+                // Ansible接続の未入力レコードがある場合、エラーメッセージを追加
+                if (ansibleConnectionEmptyArrays.length > 0) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_031, [newIaGrServerNameEnglish, String(ansibleConnectionEmptyArrays.length), classificationDisplayValue]));
+                }
+                //add_FY22_2Q_end
+
+                newIaGrServerNameArray.push(newIaGrServerNameEnglish);
+            }
+
+            // ホスト名（英名）の重複チェック
+            var newIaGrDuplicateServerNames = validation.getDuplicateServerNames(newIaGrServerNameArray);
+            if (newIaGrDuplicateServerNames.length >= 1) {
+                for (var newIaGrIdx = 0; newIaGrIdx < newIaGrDuplicateServerNames.length; newIaGrIdx++) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_004, [newIaGrDuplicateServerNames[newIaGrIdx]]));
+                }
+            }
+
+
+            //add_FY22_2Q_str
+        } else if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_CORE_OS) {
+            // 区分：新規・サーバ種別：CoreOS
+            if (!validation.checkNwCableConnection(newNw, nwCableConnection)) {
+                errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_003));
+            }
+
+            // サーバ情報のチェック処理
+            var newCoreOsServerNameArray = [];
+            var newCoreOsServers = new GlideRecord(this.TBL_SERVER);
+            newCoreOsServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            newCoreOsServers.query();
+            while (newCoreOsServers.next()) {
+                var newCoreOsServerNameEnglish = newCoreOsServers.getValue('u_02_server_name_english') + '';
+                var newCoreOsDeliveryDateLabel = newCoreOsServers.getElement('u_02_delivery_date').getLabel();
+                var newCoreOsDeliveryDate = newCoreOsServers.getDisplayValue('u_02_delivery_date') + '';
+                var newCoreOsOsTypeLabel = newCoreOsServers.getElement('u_02_os_type').getLabel();
+                var newCoreOsOsType = newCoreOsServers.getValue('u_02_os_type');
+                var newCoreOsOsTypeDisplay = newCoreOsServers.getDisplayValue('u_02_os_type') + '';
+                var newCoreOsServiceTypeLabel = newCoreOsServers.getElement('u_02_service_type').getLabel();
+                var newCoreOsServiceType = newCoreOsServers.getValue('u_02_service_type');
+                var newCoreOsCpuCountLabel = newCoreOsServers.getElement('u_02_cpu_count').getLabel();
+                var newCoreOsCpuCount = newCoreOsServers.getValue('u_02_cpu_count') || '';
+                var newCoreOsCpuSocketCountLabel = newCoreOsServers.getElement('u_02_cpu_socket_count').getLabel();
+                var newCoreOsCpuSocketCount = newCoreOsServers.getValue('u_02_cpu_socket_count') || '';
+                var newCoreOsMemoryGibLabel = newCoreOsServers.getElement('u_02_memory_gib').getLabel();
+                var newCoreOsMemoryGib = newCoreOsServers.getValue('u_02_memory_gib') || '';
+                var newCoreOsDiskCountLabel = newCoreOsServers.getElement('u_02_disk_count').getLabel();
+                var newCoreOsDiskCount = newCoreOsServers.getValue('u_02_disk_count') || '';
+                var newCoreOsRdmSharedDiskLabel = newCoreOsServers.getElement('u_02_rdm_shared_disk').getLabel();
+                var newCoreOsRdmSharedDisk = newCoreOsServers.getValue('u_02_rdm_shared_disk') || '';
+                var newCoreOsVirtualNicCountLabel = newCoreOsServers.getElement('u_02_virtual_nic_count').getLabel();
+                var newCoreOsVirtualNicCount = newCoreOsServers.getValue('u_02_virtual_nic_count') || '';
+                var newCoreOsBackupConfigLabel = newCoreOsServers.getElement('u_02_backup_config').getLabel();
+                var newCoreOsBackupConfig = newCoreOsServers.getValue('u_02_backup_config');
+                var newCoreOsHighAvailabilityClusterLabel = newCoreOsServers.getElement('u_02_high_availability_cluster').getLabel();
+                var newCoreOsHighAvailabilityCluster = newCoreOsServers.getValue('u_02_high_availability_cluster');
+                var newCoreOsServiceSeverityLabel = newCoreOsServers.getElement('u_02_service_severity').getLabel();
+                var newCoreOsServiceSeverity = newCoreOsServers.getValue('u_02_service_severity');
+                var newCoreOsFileSystemLabel = newCoreOsServers.getElement('u_02_file_system').getLabel();
+                var newCoreOsFileSystem = newCoreOsServers.getValue('u_02_file_system');
+                var newCoreOsNodeTypeLabel = newCoreOsServers.getElement('u_02_node_type').getLabel();
+                var newCoreOsNodeType = newCoreOsServers.getValue('u_02_node_type');
+                // 引き渡し希望日のチェック
+                if (!validation.checkDeliveryDate(newCoreOsDeliveryDate)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_005, [newCoreOsServerNameEnglish, newCoreOsDeliveryDateLabel, newCoreOsDeliveryDate]));
+                }
+                // 使用OSの必須チェックは不要の為削除
+
+                // サービス型番の必須チェック（RHELの場合）
+                if (!validation.checkServiceTypeNotEmptyForRHEL(newCoreOsOsType, newCoreOsServiceType)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_002, [newCoreOsServerNameEnglish, newCoreOsOsTypeDisplay, newCoreOsServiceTypeLabel]));
+                }
+                // サービス型番の必須チェック（Windowsの場合）
+                if (!validation.checkServiceTypeEmptyForWindows(newCoreOsOsType, newCoreOsServiceType)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_006, [newCoreOsServerNameEnglish, newCoreOsOsTypeDisplay, newCoreOsServiceTypeLabel]));
+                }
+                // CPU総コア数の必須チェック
+                if (!validation.checkCpuCountNotEmpty(newCoreOsCpuCount)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsCpuCountLabel]));
+                }
+                // CPUソケット数のチェック
+                if (!validation.checkCpuSocketCount(newCoreOsCpuCount, newCoreOsCpuSocketCount)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_010, [newCoreOsServerNameEnglish, newCoreOsCpuCount, newCoreOsCpuSocketCount]));
+                }
+                // メモリ（GiB）の必須チェック
+                if (!validation.checkMemoryGibNotEmpty(newCoreOsMemoryGib)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsMemoryGibLabel]));
+                }
+                // ディスク数の範囲チェック
+                if (newCoreOsDiskCount != '' && !validation.checkDiskCountRange(newCoreOsDiskCount, 1, 10)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_011, [newCoreOsServerNameEnglish, newCoreOsDiskCountLabel, String(newCoreOsDiskCount), '1', '10']));
+                }
+                // RDM/共有ディスク数の範囲チェック
+                if (newCoreOsRdmSharedDisk != '' && !validation.checkRdmSharedDickRange(newCoreOsRdmSharedDisk, 0, 3)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_011, [newCoreOsServerNameEnglish, newCoreOsRdmSharedDiskLabel, String(newCoreOsRdmSharedDisk), '0', '3']));
+                }
+                // 仮想NIC数の範囲チェック
+                if (newCoreOsVirtualNicCount != '' && !validation.checkVirtualNicCountRange(newCoreOsVirtualNicCount, 2, 8)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_011, [newCoreOsServerNameEnglish, newCoreOsVirtualNicCountLabel, String(newCoreOsVirtualNicCount), '2', '8']));
+                }
+                // アフィニティルール設定希望有無の必須チェックは不要の為削除
+
+                // データバックアップの必須チェック
+                if (!validation.checkBackupConfigNotEmpty(newCoreOsBackupConfig)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsBackupConfigLabel]));
+                }
+
+                // 高可用クラスタ利用有無の必須チェックはCoreOSでは不要 No.49
+
+                // サービス重要度の必須チェックはCoreOSでは不要 No.50
+
+                // ファイルシステムの必須チェック（RHEL）はCoreOSでは不要
+
+                // ファイルシステムの未入力チェック（Windows）はCoreOSでは不要
+
+                // ファイルシステムの必須チェック
+                if (!validation.checkFileSystemNotEmpty(newCoreOsFileSystem)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsFileSystemLabel]));
+                }
+                // ノード種別の必須チェック
+                if (!validation.checkNodeTypeNotEmpty(newCoreOsNodeType)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsNodeTypeLabel]));
+                }
+
+                // ディスク情報の取得
+                var newCoreOsDisks = new GlideRecord(this.TBL_DISK);
+                newCoreOsDisks.addQuery('u_03_server_info', newCoreOsServers.getUniqueValue());
+                newCoreOsDisks.orderBy('u_03_disk_no');
+                newCoreOsDisks.query();
+                while (newCoreOsDisks.next()) {
+                    var newCoreOsDiskNoLabel = 'ディスク' + newCoreOsDisks.getDisplayValue('u_03_disk_no') + 'の';
+                    var newCoreOsCapacityGibLabel = newCoreOsDisks.getElement('u_03_capacity_gib').getLabel();
+                    var newCoreOsCapacityGib = newCoreOsDisks.getValue('u_03_capacity_gib') || '';
+                    var newCoreOsIopsLabel = newCoreOsDisks.getElement('u_03_iops').getLabel();
+                    var newCoreOsIops = newCoreOsDisks.getValue('u_03_iops') || '';
+                    var newCoreOsRwRateReadbLabel = newCoreOsDisks.getElement('u_03_rw_rate_read').getLabel();
+                    var newCoreOsRwRateRead = newCoreOsDisks.getValue('u_03_rw_rate_read');
+                    var newCoreOsSystemBackupLabel = newCoreOsDisks.getElement('u_03_system_backup').getLabel();
+                    var newCoreOsSystemBackup = newCoreOsDisks.getValue('u_03_system_backup');
+                    // 容量（GiB）の必須入力チェック
+                    if (!validation.checkVirtualCapacityGibNotEmpty(newCoreOsCapacityGib)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsDiskNoLabel + newCoreOsCapacityGibLabel]));
+                    }
+                    // IOPSの必須入力チェック
+                    if (!validation.checkVirtualIopsNotEmpty(newCoreOsIops)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsDiskNoLabel + newCoreOsIopsLabel]));
+                    }
+                    // RW比率（Read）の必須入力チェック
+                    if (!validation.checkVirtualRwRateReadNotEmpty(newCoreOsRwRateRead)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsDiskNoLabel + newCoreOsRwRateReadbLabel]));
+                    }
+                    // システムバックアップ要否の必須入力チェックは不要 No.64
+                }
+
+                // ネットワーク情報の取得
+                var newCoreOsNics = new GlideRecord(this.TBL_NIC);
+                newCoreOsNics.addQuery('u_05_server_info', newCoreOsServers.getUniqueValue());
+                newCoreOsNics.orderBy('u_05_nic_no');
+                newCoreOsNics.query();
+                while (newCoreOsNics.next()) {
+                    var newCoreOsNicNoLabel = 'NIC' + newCoreOsNics.getDisplayValue('u_05_nic_no') + 'の';
+                    var newCoreOsNwNameLabel = newCoreOsNics.getElement('u_05_nw_name').getLabel();
+                    var newCoreOsNwName = newCoreOsNics.getValue('u_05_nw_name');
+                    var newCoreOsIpAddressLabel = newCoreOsNics.getElement('u_05_ip_address').getLabel();
+                    var newCoreOsIpAddress = newCoreOsNics.getValue('u_05_ip_address');
+                    var newCoreOsSubnetLabel = newCoreOsNics.getElement('u_05_subnet').getLabel();
+                    var newCoreOsSubnet = newCoreOsNics.getValue('u_05_subnet');
+                    var newCoreOsBitmaskLabel = newCoreOsNics.getElement('u_05_bitmask').getLabel();
+                    var newCoreOsBitmask = newCoreOsNics.getValue('u_05_bitmask') || '';
+                    var newCoreOsMaxNwBandLabel = newCoreOsNics.getElement('u_05_max_nw_band').getLabel();
+                    var newCoreOsMaxNwBand = newCoreOsNics.getValue('u_05_max_nw_band') || '';
+                    var newCoreOsNicUsedBackupLabel = newCoreOsNics.getElement('u_05_nic_used_backup').getLabel();
+                    var newCoreOsNicUsedBackup = newCoreOsNics.getValue('u_05_nic_used_backup');
+                    // 接続先NW（名称）の必須入力チェック
+                    if (!validation.checkNicNwNameNotEmpty(newCoreOsNwName)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsNicNoLabel + newCoreOsNwNameLabel]));
+                    }
+                    // IPアドレスの必須入力チェック
+                    if (!validation.checkNicIpAddressNotEmpty(newCoreOsIpAddress)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsNicNoLabel + newCoreOsIpAddressLabel]));
+                    }
+                    // サブネットの必須入力チェック
+                    if (!validation.checkNicSubnetNotEmpty(newCoreOsSubnet)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsNicNoLabel + newCoreOsSubnetLabel]));
+                    }
+                    // ビットマスクの必須入力チェック
+                    if (!validation.checkNicBitmaskNotEmpty(newCoreOsBitmask)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsNicNoLabel + newCoreOsBitmaskLabel]));
+                    }
+                    // ビットマスクの範囲チェック
+                    if (newCoreOsBitmask != '' && !validation.checkNicBitmaskRange(newCoreOsBitmask, 1, 32)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_009, [newCoreOsServerNameEnglish, newCoreOsNicNoLabel + newCoreOsBitmaskLabel, String(newCoreOsBitmask), '1', '32']));
+                    }
+                    // 最大使用NW帯域の必須入力チェック
+                    if (!validation.checkNicMaxNwBandNotEmpty(newCoreOsMaxNwBand)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsNicNoLabel + newCoreOsMaxNwBandLabel]));
+                    }
+                    // 最大使用NW帯域の範囲チェック
+                    if (newCoreOsMaxNwBand != '' && !validation.checkNicMaxNwBandRange(newCoreOsMaxNwBand, 1, 10000)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_009, [newCoreOsServerNameEnglish, newCoreOsNicNoLabel + newCoreOsMaxNwBandLabel, String(newCoreOsMaxNwBand), '1', '10000']));
+                    }
+                    // バックアップ使用NICの必須入力チェック
+                    if (!validation.checkNicUsedBackupNotEmpty(newCoreOsNicUsedBackup)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationDisplayValue, newCoreOsNicNoLabel + newCoreOsNicUsedBackupLabel]));
+                    }
+                }
+
+                newCoreOsServerNameArray.push(newCoreOsServerNameEnglish);
+            }
+            // ホスト名（英名）の重複チェック
+
+            var newCoreOsDuplicateServerNames = validation.getDuplicateServerNames(newCoreOsServerNameArray);
+            if (newCoreOsDuplicateServerNames.length >= 1) {
+                for (var newCoreOsIdx = 0; newCoreOsIdx < newCoreOsDuplicateServerNames.length; newCoreOsIdx++) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_004, [newCoreOsDuplicateServerNames[newCoreOsIdx]]));
+                }
+            }
+            //add_FY22_2Q_end
+
+        } else if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_BARE_METAL) {
+            // 区分：新規・サーバ種別：ベアメタル
+            // 新規NWケーブル接続有無のチェック
+            if (!validation.checkNwCableConnection(newNw, nwCableConnection)) {
+                errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_003));
+            }
+
+            // サーバ情報のチェック処理
+            var newBareServerNameArray = [];
+            var newBareServers = new GlideRecord(this.TBL_SERVER);
+            newBareServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            newBareServers.query();
+            while (newBareServers.next()) {
+                var newBareServerNameEnglish = newBareServers.getValue('u_02_server_name_english') + '';
+                var newBareDeliveryDateLabel = newBareServers.getElement('u_02_delivery_date').getLabel();
+                var newBareDeliveryDate = newBareServers.getDisplayValue('u_02_delivery_date') + '';
+                var newBareOsTypeLabel = newBareServers.getElement('u_02_os_type').getLabel();
+                var newBareOsType = newBareServers.getValue('u_02_os_type');
+                var newBareServiceTypeLabel = newBareServers.getElement('u_02_service_type').getLabel();
+                var newBareServiceType = newBareServers.getValue('u_02_service_type');
+                var newBareServiceTypeDisplay = newBareServers.getDisplayValue('u_02_service_type') + '';
+                var newBareCpuCountLabel = newBareServers.getElement('u_02_cpu_count').getLabel();
+                var newBareCpuCount = newBareServers.getValue('u_02_cpu_count');
+                var newBareMemoryGibLabel = newBareServers.getElement('u_02_memory_gib').getLabel();
+                var newBareMemoryGib = newBareServers.getValue('u_02_memory_gib') || '';
+                var newBareDiskCountLabel = newBareServers.getElement('u_02_disk_count').getLabel();
+                var newBareDiskCount = newBareServers.getValue('u_02_disk_count') || '';
+                var newBareRdmSharedDiskLabel = newBareServers.getElement('u_02_rdm_shared_disk').getLabel();
+                var newBareRdmSharedDisk = newBareServers.getValue('u_02_rdm_shared_disk') || '';
+                var newBareVirtualNicCountLabel = newBareServers.getElement('u_02_virtual_nic_count').getLabel();
+                var newBareVirtualNicCount = newBareServers.getValue('u_02_virtual_nic_count') || '';
+                //del_FY22_2Q_str カラムのfalse化に伴い削除
+                //                var newBareAffinityRuleLabel = newBareServers.getElement('u_02_affinity_rule').getLabel();
+                //                var newBareAffinityRule = newBareServers.getValue('u_02_affinity_rule');
+                //del_FY22_2Q_end
+                var newBareBackupConfigLabel = newBareServers.getElement('u_02_backup_config').getLabel();
+                var newBareBackupConfig = newBareServers.getValue('u_02_backup_config');
+                var newBareHighAvailabilityClusterLabel = newBareServers.getElement('u_02_high_availability_cluster').getLabel();
+                var newBareHighAvailabilityCluster = newBareServers.getValue('u_02_high_availability_cluster');
+                var newBareServiceSeverityLabel = newBareServers.getElement('u_02_service_severity').getLabel();
+                var newBareServiceSeverity = newBareServers.getValue('u_02_service_severity');
+                var newBareFileSystemLabel = newBareServers.getElement('u_02_file_system').getLabel();
+                var newBareFileSystem = newBareServers.getValue('u_02_file_system');
+                // 引き渡し希望日のチェック
+                if (!validation.checkDeliveryDate(newBareDeliveryDate)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_005, [newBareServerNameEnglish, classificationDisplayValue, newBareDeliveryDateLabel]));
+                }
+                // 使用OSの必須チェック
+                if (!validation.checkOsTypeNotEmpty(newBareOsType)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareOsTypeLabel]));
+                }
+                // サービス型番の必須チェック
+                if (!validation.checkServiceTypeNotEmpty(newBareServiceType)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_007, [newBareServerNameEnglish, newBareServiceTypeLabel]));
+                }
+                // サービス型番の入力値チェック
+                if (!validation.checkServiceTypeErrorValue(newBareServiceType, 'medium')) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_007, [newBareServerNameEnglish, newBareServiceTypeLabel]));
+                }
+                // CPU総コア数の必須チェック
+                if (!validation.checkCpuCountNotEmpty(newBareCpuCount)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareCpuCountLabel]));
+                }
+                // メモリ（GiB）の必須チェック
+                if (!validation.checkMemoryGibNotEmpty(newBareMemoryGib)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareMemoryGibLabel]));
+                }
+                // ディスク数の範囲チェック
+                if (newBareDiskCount != '' && !validation.checkDiskCountRange(newBareDiskCount, 1, 10)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_011, [newBareServerNameEnglish, newBareDiskCountLabel, String(newBareDiskCount), '1', '10']));
+                }
+                // RDM/共有ディスク数の範囲チェック
+                if (newBareRdmSharedDisk != '' && !validation.checkRdmSharedDickRange(newBareRdmSharedDisk, 0, 10)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_011, [newBareServerNameEnglish, newBareRdmSharedDiskLabel, String(newBareRdmSharedDisk), '0', '10']));
+                }
+                // データバックアップの必須チェック
+                if (!validation.checkBackupConfigNotEmpty(newBareBackupConfig)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareBackupConfigLabel]));
+                }
+                // 高可用クラスタ利用有無の必須チェック
+                if (!validation.checkHighAvailabilityClusterNotEmpty(newBareHighAvailabilityCluster)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareHighAvailabilityClusterLabel]));
+                }
+                // サービス重要度の必須チェック
+                if (!validation.checkServiceSeverityNotEmpty(newBareHighAvailabilityCluster, newBareServiceSeverity)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_012, [newBareServerNameEnglish]));
+                }
+                // ファイルシステムの必須チェック（RHEL）
+                if (!validation.checkFileSystemNotEmptyForRHEL(newBareOsType, newBareFileSystem)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareFileSystemLabel]));
+                }
+                // ファイルシステムの未入力チェック（Windows）
+                if (!validation.checkFileSystemEmptyForWindows(newBareOsType, newBareFileSystem)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_013, [newBareServerNameEnglish, newBareFileSystem]));
+                }
+
+                // ディスク情報の取得			
+                var newBareDisks = new GlideRecord(this.TBL_DISK);
+                newBareDisks.addQuery('u_03_server_info', newBareServers.getUniqueValue());
+                newBareDisks.orderBy('u_03_disk_no');
+                newBareDisks.query();
+                while (newBareDisks.next()) {
+                    var newBareDiskNoLabel = 'ディスク' + newBareDisks.getDisplayValue('u_03_disk_no') + 'の';
+                    var newBareCapacityGibLabel = newBareDisks.getElement('u_03_capacity_gib').getLabel();
+                    var newBareCapacityGib = newBareDisks.getValue('u_03_capacity_gib') || '';
+                    var newBareRwRateReadbLabel = newBareDisks.getElement('u_03_rw_rate_read').getLabel();
+                    var newBareRwRateRead = newBareDisks.getValue('u_03_rw_rate_read');
+                    var newBareSystemBackupLabel = newBareDisks.getElement('u_03_system_backup').getLabel();
+                    var newBareSystemBackup = newBareDisks.getValue('u_03_system_backup');
+                    // 容量（GiB）の必須入力チェック
+                    if (!validation.checkVirtualCapacityGibNotEmpty(newBareCapacityGib)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareDiskNoLabel + newBareCapacityGibLabel]));
+                    }
+                    // RW比率（Read）の必須入力チェック
+                    if (!validation.checkVirtualRwRateReadNotEmpty(newBareRwRateRead)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareDiskNoLabel + newBareRwRateReadbLabel]));
+                    }
+                    // システムバックアップ要否の必須入力チェック
+                    if (!validation.checkVirtualSystemBackupNotEmpty(newBareSystemBackup)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareDiskNoLabel + newBareSystemBackupLabel]));
+                    }
+                }
+
+                // ネットワーク情報の取得
+                var nicNoArrays = [];
+                var dwgBondingPrimeryArrays = [];
+                var dwgBondingSlaveArrays = [];
+                //add_FY22_2Q_str
+                ansibleConnectionEmptyArrays = [];
+                ansibleConnectionObjectArrays = [];
+                //add_FY22_2Q_end				
+                var newBareNics = new GlideRecord(this.TBL_NIC);
+                newBareNics.addQuery('u_05_server_info', newBareServers.getUniqueValue());
+                newBareNics.orderBy('u_05_nic_no');
+                newBareNics.query();
+                while (newBareNics.next()) {
+                    var newBareNicNo = newBareNics.getValue('u_05_nic_no') + '';
+                    var newBareNicNoLabel = 'NIC' + newBareNics.getDisplayValue('u_05_nic_no') + 'の';
+                    var newBareNwNameLabel = newBareNics.getElement('u_05_nw_name').getLabel();
+                    var newBareNwName = newBareNics.getValue('u_05_nw_name');
+                    var newBareIpAddressLabel = newBareNics.getElement('u_05_ip_address').getLabel();
+                    var newBareIpAddress = newBareNics.getValue('u_05_ip_address');
+                    var newBareSubnetLabel = newBareNics.getElement('u_05_subnet').getLabel();
+                    var newBareSubnet = newBareNics.getValue('u_05_subnet');
+                    var newBareBitmaskLabel = newBareNics.getElement('u_05_bitmask').getLabel();
+                    var newBareBitmask = newBareNics.getValue('u_05_bitmask') || '';
+                    var newBareMaxNwBandLabel = newBareNics.getElement('u_05_max_nw_band').getLabel();
+                    var newBareMaxNwBand = newBareNics.getValue('u_05_max_nw_band') || '';
+                    var newBareBonding = newBareNics.getValue('u_05_bonding');
+                    var newBareVlanNo = newBareNics.getValue('u_05_vlan_no') || '';
+                    var newBareGw = newBareNics.getValue('u_05_gw');
+                    var newBareAnsibleConnection = newBareNics.getValue('u_05_ansible_connection');
+
+                    // NIC Noを配列に格納
+                    nicNoArrays.push(newBareNicNo);
+
+                    // ボンディング：「副」以外の場合、入力チェックを実施
+                    if (this.BONDING_SLAVE_VALUES.indexOf(newBareBonding) == -1) {
+                        // 接続先NW（名称）の必須入力チェック
+                        if (!validation.checkNicNwNameNotEmpty(newBareNwName)) {
+                            errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareNicNoLabel + newBareNwNameLabel]));
+                        }
+                        // IPアドレスの必須入力チェック
+                        if (!validation.checkNicIpAddressNotEmpty(newBareIpAddress)) {
+                            errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareNicNoLabel + newBareIpAddressLabel]));
+                        }
+                        // サブネットの必須入力チェック
+                        if (!validation.checkNicSubnetNotEmpty(newBareSubnet)) {
+                            errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareNicNoLabel + newBareSubnetLabel]));
+                        }
+                        // ビットマスクの必須入力チェック
+                        if (!validation.checkNicBitmaskNotEmpty(newBareBitmask)) {
+                            errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newBareServerNameEnglish, classificationDisplayValue, newBareNicNoLabel + newBareBitmaskLabel]));
+                        }
+                        // ビットマスクの範囲チェック
+                        if (newBareBitmask != '' && !validation.checkNicBitmaskRange(newBareBitmask, 1, 32)) {
+                            errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_009, [newBareServerNameEnglish, newBareNicNoLabel + newBareBitmaskLabel, String(newBareBitmask), '1', '32']));
+                        }
+                        // 最大使用NW帯域の範囲チェック
+                        if (newBareMaxNwBand != '' && !validation.checkNicMaxNwBandRange(newBareMaxNwBand, 1, 10000)) {
+                            errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_009, [newBareServerNameEnglish, newBareNicNoLabel + newBareMaxNwBandLabel, String(newBareMaxNwBand), '1', '10000']));
+                        }
+                    }
+
+                    // ボンディングの値をプライマリ、スレイブに分割
+                    if (newBareVlanNo === '1' && this.BONDING_PRIMERY_VALUES.indexOf(newBareBonding) != -1) {
+                        dwgBondingPrimeryArrays.push(newBareNicNo);
+                    } else if (this.BONDING_SLAVE_VALUES.indexOf(newBareBonding) != -1) {
+                        dwgBondingSlaveArrays.push(newBareNicNo);
+                    }
+
+                    // Ansible接続とGWの相関チェック（ボンディング：なしのNIC用）
+                    if (newBareVlanNo == '' && !validation.checkGwNotBonding(newBareGw, newBareBonding)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_035, [newBareServerNameEnglish, 'NIC' + newBareNicNo]));
+                    }
+                    //add_FY22_2Q_str
+                    // Ansible接続の必須入力チェック
+                    if (!validation.checkAnsibleConnectionNotEmpty(newBareAnsibleConnection)) {
+                        ansibleConnectionEmptyArrays.push(newBareNics.getUniqueValue());
+                    }
+                    // Ansible接続が接続ありの場合、配列に設定
+                    if (newBareAnsibleConnection == this.ANSIBLE_CONNECTION_CONNECTION) {
+                        ansibleConnectionObjectArrays.push(newBareNics.getUniqueValue());
+                    }
+                    //add_FY22_2Q_end	
+                }
+
+                // 同一NIC Noの重複チェック
+                var nicNoCountObject = {};
+                for (var nicIdx = 0; nicIdx < nicNoArrays.length; nicIdx++) {
+                    var elm = nicNoArrays[nicIdx];
+                    nicNoCountObject[elm] = (nicNoCountObject[elm] || 0) + 1;
+                }
+                for (var nicNo in nicNoCountObject) {
+                    if (parseInt(nicNoCountObject[nicNo]) > 3) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_023, [newBareServerNameEnglish, 'NIC' + nicNo, String(nicNoCountObject[nicNo])]));
+                    }
+                }
+
+                // ボンディングIF番号の正副チェック
+                if (dwgBondingPrimeryArrays.length != dwgBondingSlaveArrays.length) {
+                    var primaryNics = '';
+                    for (var prmyIdx = 0; prmyIdx < dwgBondingPrimeryArrays.length; prmyIdx++) {
+                        if (prmyIdx > 0) {
+                            primaryNics += ',';
+                        }
+                        primaryNics += 'NIC' + dwgBondingPrimeryArrays[prmyIdx];
+                    }
+                    var slaveNics = '';
+                    for (var slvIdx = 0; slvIdx < dwgBondingSlaveArrays.length; slvIdx++) {
+                        if (slvIdx > 0) {
+                            slaveNics += ',';
+                        }
+                        slaveNics += 'NIC' + dwgBondingSlaveArrays[slvIdx];
+                    }
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_036, [newBareServerNameEnglish, primaryNics, slaveNics]));
+                }
+
+                newBareServerNameArray.push(newBareServerNameEnglish);
+            }
+
+            // ホスト名（英名）の重複チェック
+            var newBareDuplicateServerNames = validation.getDuplicateServerNames(newBareServerNameArray);
+            if (newBareDuplicateServerNames.length >= 1) {
+                for (var newBareIdx = 0; newBareIdx < newBareDuplicateServerNames.length; newBareIdx++) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_004, [newBareDuplicateServerNames[newBareIdx]]));
+                }
+            }
+            //add_FY22_2Q_str
+            // Ansible接続の横断チェック
+            if (ansibleConnectionObjectArrays.length == 0) {
+                errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_029, [newBareServerNameEnglish]));
+            } else if (ansibleConnectionObjectArrays.length >= 2) {
+                errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_030, [newBareServerNameEnglish, String(ansibleConnectionObjectArrays.length)]));
+            }
+
+            // Ansible接続の未入力レコードがある場合、エラーメッセージを追加
+            if (ansibleConnectionEmptyArrays.length > 0) {
+                errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_031, [newBareServerNameEnglish, String(ansibleConnectionEmptyArrays.length), classificationDisplayValue]));
+            }
+            //add_FY22_2Q_end
+
+
+
+
+        } else if (classification == this.CLASSIFICATION_CHANGE && serverType == this.SERVER_TYPE_IA_GR) {
+            // 区分：変更・サーバ種別：IA-Gr
+            // 新規NWケーブル接続有無のチェック
+            if (!validation.checkNwCableConnection(newNw, nwCableConnection)) {
+                errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_003));
+            }
+
+            // サーバ情報のチェック処理
+            var updIaGrServerNameArray = [];
+            var updIaGrServers = new GlideRecord(this.TBL_SERVER);
+            updIaGrServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            updIaGrServers.query();
+            while (updIaGrServers.next()) {
+                var updIaGrServerNameEnglish = updIaGrServers.getValue('u_02_server_name_english') + '';
+                var updIaGrDeliveryDateLabel = updIaGrServers.getElement('u_02_delivery_date').getLabel();
+                var updIaGrDeliveryDate = updIaGrServers.getDisplayValue('u_02_delivery_date') + '';
+                // 引き渡し希望日のチェック
+                if (!validation.checkDeliveryDate(updIaGrDeliveryDate)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_005, [updIaGrServerNameEnglish, updIaGrDeliveryDateLabel, updIaGrDeliveryDate]));
+                }
+
+                updIaGrServerNameArray.push(updIaGrServerNameEnglish);
+            }
+
+            // ホスト名（英名）の重複チェック
+            var updIaGrDuplicateServerNames = validation.getDuplicateServerNames(updIaGrServerNameArray);
+            if (updIaGrDuplicateServerNames.length >= 1) {
+                for (var updIaGrIdx = 0; newBareIdx < updIaGrDuplicateServerNames.length; newBareIdx++) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_004, [updIaGrDuplicateServerNames[newBareIdx]]));
+                }
+            }
+
+        } else if (classification == this.CLASSIFICATION_CHANGE && serverType == this.SERVER_TYPE_BARE_METAL) {
+            // 区分：変更・サーバ種別：ベアメタル
+            // 新規NWケーブル接続有無のチェック
+            if (!validation.checkNwCableConnection(newNw, nwCableConnection)) {
+                errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_003));
+            }
+
+            // サーバ情報のチェック処理
+            var updBareServerNameArray = [];
+            var updBareServers = new GlideRecord(this.TBL_SERVER);
+            updBareServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            updBareServers.query();
+            while (updBareServers.next()) {
+                var updBareServerNameEnglish = updBareServers.getValue('u_02_server_name_english') + '';
+                var updBareDeliveryDateLabel = updBareServers.getElement('u_02_delivery_date').getLabel();
+                var updBareDeliveryDate = updBareServers.getDisplayValue('u_02_delivery_date') + '';
+                // 引き渡し希望日のチェック
+                if (!validation.checkDeliveryDate(updBareDeliveryDate)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_005, [updBareServerNameEnglish, updBareDeliveryDateLabel, updBareDeliveryDate]));
+                }
+
+                updBareServerNameArray.push(updBareServerNameEnglish);
+            }
+
+            // ホスト名（英名）の重複チェック
+            var updBareDuplicateServerNames = validation.getDuplicateServerNames(updBareServerNameArray);
+            if (updBareDuplicateServerNames.length >= 1) {
+                for (var updBareIdx = 0; updBareIdx < updBareDuplicateServerNames.length; updBareIdx++) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_004, [updBareDuplicateServerNames[updBareIdx]]));
+                }
+            }
+
+
+            //add_FY22_2Q_str
+
+
+        } else if (classification == this.CLASSIFICATION_CHANGE && serverType == this.SERVER_TYPE_CORE_OS) {
+            // 区分：変更・サーバ種別：CoreOS
+            // 新規NWケーブル接続有無のチェック
+            if (!validation.checkNwCableConnection(newNw, nwCableConnection)) {
+                errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_003));
+            }
+
+            // サーバ情報のチェック処理
+            var updCoreOsServerNameArray = [];
+            var updCoreOsServers = new GlideRecord(this.TBL_SERVER);
+            updCoreOsServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            updCoreOsServers.query();
+            while (updCoreOsServers.next()) {
+                var updCoreOsServerNameEnglish = updCoreOsServers.getValue('u_02_server_name_english') + '';
+                var updCoreOsDeliveryDateLabel = updCoreOsServers.getElement('u_02_delivery_date').getLabel();
+                var updCoreOsDeliveryDate = updCoreOsServers.getDisplayValue('u_02_delivery_date') + '';
+                // 引き渡し希望日のチェック
+                if (!validation.checkDeliveryDate(updCoreOsDeliveryDate)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_005, [updCoreOsServerNameEnglish, updCoreOsDeliveryDateLabel, updCoreOsDeliveryDate]));
+                }
+
+                updCoreOsServerNameArray.push(updCoreOsServerNameEnglish);
+            }
+
+            // ホスト名（英名）の重複チェック
+            var updCoreOsDuplicateServerNames = validation.getDuplicateServerNames(updCoreOsServerNameArray);
+            if (updCoreOsDuplicateServerNames.length >= 1) {
+
+                for (var updCoreOsIdx = 0; updCoreOsIdx < updCoreOsDuplicateServerNames.length; updCoreOsIdx++) {
+
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_004, [updCoreOsDuplicateServerNames[updCoreOsIdx]]));
+                }
+            }
+
+
+            //add_FY22_2Q_end		
+
+        }
+
+
+        return errMsgs;
+    },
+
+    /**
+     * サーバ払出申請依頼時チェック処理（警告チェック用）
+     * ＜機能＞
+     * 申請者がサーバ払出申請依頼を行う際の警告チェック処理を行う
+     * 
+     * @param svReqBaseSysId：サーバリクエスト基本情報のSysID
+     * @param classification：区分の値
+     * @param classificationDisplayValue：区分の値（画面表示値）
+     * @param serverType：サーバ種別の値
+     * @return エラー無しの場合：空／エラーの場合：エラーメッセージのKeyの配列
+     */
+    validationForServerRequestWarning: function(svReqBaseSysId, classification, classificationDisplayValue, serverType) {
+        var warnMsgs = [];
+        var validation = new camdev_ValidationServerRequestFieldValue();
+
+        if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_IA_GR) {
+            // 区分：新規・サーバ種別：IA-Gr
+            // サーバ情報のチェック処理
+            var newIaGrServers = new GlideRecord(this.TBL_SERVER);
+            newIaGrServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            newIaGrServers.query();
+            while (newIaGrServers.next()) {
+                var newIaGrServerNameEnglish = newIaGrServers.getValue('u_02_server_name_english') + '';
+                var newIaGrOsType = newIaGrServers.getValue('u_02_os_type');
+                var newIaGrServiceType = newIaGrServers.getValue('u_02_service_type');
+                var newIaGrCpuCountLabel = newIaGrServers.getElement('u_02_cpu_count').getLabel();
+                var newIaGrCpuCount = newIaGrServers.getValue('u_02_cpu_count') || '';
+                var newIaGrMemoryGibLabel = newIaGrServers.getElement('u_02_memory_gib').getLabel();
+                var newIaGrMemoryGib = newIaGrServers.getValue('u_02_memory_gib') || '';
+                // CPU総コア数の範囲チェック（RHELの場合）
+                var newIaGrCpuCountRange = this._getCpuCountRangeForRHEL(newIaGrOsType, newIaGrServiceType);
+                if (newIaGrCpuCount != '' && !validation.checkCpuCountRangeForRHEL(newIaGrOsType, newIaGrCpuCount, newIaGrCpuCountRange.min, newIaGrCpuCountRange.max)) {
+                    warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_008, [newIaGrServerNameEnglish, newIaGrCpuCountLabel, String(newIaGrCpuCount), String(newIaGrCpuCountRange.min), String(newIaGrCpuCountRange.max)]));
+                }
+                // CPU総コア数の範囲チェック（Windowsの場合）
+                if (newIaGrCpuCount != '' && !validation.checkCpuCountRangeForWindows(newIaGrOsType, newIaGrCpuCount, 2, 32)) {
+                    warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_008, [newIaGrServerNameEnglish, newIaGrCpuCountLabel, String(newIaGrCpuCount), '2', '32']));
+                }
+                // メモリ（GiB）の範囲チェック（RHELの場合）
+                var newIaGrMemoryGibRange = this._getMemoryGibRangeForRHEL(newIaGrOsType, newIaGrServiceType);
+                if (newIaGrMemoryGib != '' && !validation.checkMemoryGibRangeForRHEL(newIaGrOsType, newIaGrMemoryGib, newIaGrMemoryGibRange.min, newIaGrMemoryGibRange.max)) {
+                    warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_008, [newIaGrServerNameEnglish, newIaGrMemoryGibLabel, String(newIaGrMemoryGib), String(newIaGrMemoryGibRange.min), String(newIaGrMemoryGibRange.max)]));
+                }
+                // メモリ（GiB）の範囲チェック（Windowsの場合）
+                if (newIaGrMemoryGib != '' && !validation.checkMemoryGibRangeForWindows(newIaGrOsType, newIaGrMemoryGib, 2, 128)) {
+                    warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_008, [newIaGrServerNameEnglish, newIaGrMemoryGibLabel, String(newIaGrMemoryGib), '2', '128']));
+                }
+
+                // ディスク情報の取得
+                var newIaGrDisks = new GlideRecord(this.TBL_DISK);
+                newIaGrDisks.addQuery('u_03_server_info', newIaGrServers.getUniqueValue());
+                newIaGrDisks.orderBy('u_03_disk_no');
+                newIaGrDisks.query();
+                while (newIaGrDisks.next()) {
+                    var newIaGrDiskNoLabel = 'ディスク' + newIaGrDisks.getDisplayValue('u_03_disk_no') + 'の';
+                    var newIaGrDiskNo = newIaGrDisks.u_03_disk_no;
+                    var newIaGrCapacityGibLabel = newIaGrDisks.getElement('u_03_capacity_gib').getLabel();
+                    var newIaGrCapacityGib = newIaGrDisks.getValue('u_03_capacity_gib') || '';
+                    var newIaGrIopsLabel = newIaGrDisks.getElement('u_03_iops').getLabel();
+                    var newIaGrIops = newIaGrDisks.getValue('u_03_iops') || '';
+                    // 容量（GiB）の範囲チェック
+                    var newIaGrVCapacityGibRange = this._getVirtualCapacityGibRangeForRHEL(newIaGrOsType, newIaGrServiceType);
+                    if (newIaGrDiskNo == 1) {
+                        // ディスク1かつRHELの場合
+                        if (newIaGrCapacityGib != '' &&
+                            newIaGrOsType.startsWith(this.OS_TYPE_PREFIX_RHEL) &&
+                            !validation.checkVirtualCapacityGibRangeForRHEL(newIaGrCapacityGib, newIaGrVCapacityGibRange.min, newIaGrVCapacityGibRange.max)) {
+                            warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_008, [newIaGrServerNameEnglish, newIaGrDiskNoLabel + newIaGrCapacityGibLabel, String(newIaGrCapacityGib), String(newIaGrVCapacityGibRange.min), String(newIaGrVCapacityGibRange.max)]));
+                        }
+                        // ディスク1かつWindowsの場合
+                        if (newIaGrCapacityGib != '' &&
+                            newIaGrOsType.startsWith(this.OS_TYPE_PREFIX_WINDOWS) &&
+                            !validation.checkVirtualCapacityGibRangeForWindows(newIaGrCapacityGib, 100, 1000)) {
+                            warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_008, [newIaGrServerNameEnglish, newIaGrDiskNoLabel + newIaGrCapacityGibLabel, String(newIaGrCapacityGib), '100', '1000']));
+                        }
+                    } else if (newIaGrDiskNo >= 2 && newIaGrDiskNo <= 10) {
+                        // ディスク2～10の場合
+                        if (newIaGrCapacityGib != '' &&
+                            !validation.checkVirtualCapacityGibRangeForOthers(newIaGrCapacityGib, 10, 10000)) {
+                            warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_008, [newIaGrServerNameEnglish, newIaGrDiskNoLabel + newIaGrCapacityGibLabel, String(newIaGrCapacityGib), '10', '10000']));
+                        }
+                    }
+                    // 容量（GiB）の刻みルールチェック
+                    if (newIaGrCapacityGib != '' &&
+                        !validation.checkVirtualCapacityGibIncrements(newIaGrCapacityGib, 10)) {
+                        warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_014, [newIaGrServerNameEnglish, newIaGrDiskNoLabel + newIaGrCapacityGibLabel, String(newIaGrCapacityGib), '10']));
+                    }
+                    // IOPSの範囲チェック
+                    if (newIaGrIops != '' && !validation.checkVirtualIopsRange(newIaGrIops, 1000, 10000)) {
+                        warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_008, [newIaGrServerNameEnglish, newIaGrDiskNoLabel + newIaGrIopsLabel, String(newIaGrIops), '1000', '10000']));
+                    }
+                    // IOPSの刻みルールチェック
+                    if (newIaGrIops != '' &&
+                        !validation.checkVirtualIopsIncrements(newIaGrIops, 1000)) {
+                        warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_014, [newIaGrServerNameEnglish, newIaGrDiskNoLabel + newIaGrIopsLabel, String(newIaGrIops), '1000']));
+                    }
+                }
+            }
+
+            //add_FY22_2Q_str
+        } else if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_CORE_OS) {
+            // 区分：新規・サーバ種別：CoreOS
+            // サーバ情報のチェック処理
+            var newCoreOsServers = new GlideRecord(this.TBL_SERVER);
+            newCoreOsServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            newCoreOsServers.query();
+            while (newCoreOsServers.next()) {
+                var newCoreOsServerNameEnglish = newCoreOsServers.getValue('u_02_server_name_english') + '';
+                var newCoreOsCpuCountLabel = newCoreOsServers.getElement('u_02_cpu_count').getLabel();
+                var newCoreOsCpuCount = newCoreOsServers.getValue('u_02_cpu_count') || '';
+                var newCoreOsMemoryGibLabel = newCoreOsServers.getElement('u_02_memory_gib').getLabel();
+                var newCoreOsMemoryGib = newCoreOsServers.getValue('u_02_memory_gib') || '';
+
+                // CPU総コア数の最小値チェック
+                if (newCoreOsCpuCount != '' && !validation.checkCpuCountMin(newCoreOsCpuCount, 1)) {
+                    warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_033, [newCoreOsServerNameEnglish, newCoreOsCpuCountLabel, String(newCoreOsCpuCount), '1']));
+                }
+                // メモリ（GiB）の最小値チェック
+                if (newCoreOsMemoryGib != '' && !validation.checkMemoryGibMin(newCoreOsMemoryGib, 1)) {
+                    warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_033, [newCoreOsServerNameEnglish, newCoreOsMemoryGibLabel, String(newCoreOsMemoryGib), '1']));
+                }
+                // ディスク情報の取得
+                var newCoreOsDisks = new GlideRecord(this.TBL_DISK);
+                newCoreOsDisks.addQuery('u_03_server_info', newCoreOsServers.getUniqueValue());
+                newCoreOsDisks.orderBy('u_03_disk_no');
+                newCoreOsDisks.query();
+
+                while (newCoreOsDisks.next()) {
+                    var newCoreOsDiskNoLabel = 'ディスク' + newCoreOsDisks.getDisplayValue('u_03_disk_no') + 'の';
+                    var newCoreOsDiskNo = newCoreOsDisks.u_03_disk_no;
+                    var newCoreOsCapacityGibLabel = newCoreOsDisks.getElement('u_03_capacity_gib').getLabel();
+                    var newCoreOsCapacityGib = newCoreOsDisks.getValue('u_03_capacity_gib') || '';
+                    var newCoreOsIopsLabel = newCoreOsDisks.getElement('u_03_iops').getLabel();
+                    var newCoreOsIops = newCoreOsDisks.getValue('u_03_iops') || '';
+
+                    // 容量（GiB）の刻みルールチェック
+                    if (newCoreOsCapacityGib != '' &&
+                        !validation.checkVirtualCapacityGibIncrements(newCoreOsCapacityGib, 10)) {
+                        warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_014, [newCoreOsServerNameEnglish, newCoreOsDiskNoLabel + newCoreOsCapacityGibLabel, String(newCoreOsCapacityGib), '10']));
+                    }
+
+                    // 容量(GiB)の最小値チェック
+                    if (newCoreOsCapacityGib != '' && !validation.checkCapacityGib(newCoreOsCapacityGib, 1)) {
+                        warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_033, [newCoreOsServerNameEnglish, newCoreOsCapacityGibLabel, String(newCoreOsCapacityGib), '1']));
+                    }
+
+
+                    // IOPSの範囲チェック
+                    if (newCoreOsIops != '' && !validation.checkVirtualIopsRange(newCoreOsIops, 1000, 10000)) {
+                        warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_008, [newCoreOsServerNameEnglish, newCoreOsDiskNoLabel + newCoreOsIopsLabel, String(newCoreOsIops), '1000', '10000']));
+                    }
+                    // IOPSの刻みルールチェック
+                    if (newCoreOsIops != '' &&
+                        !validation.checkVirtualIopsIncrements(newCoreOsIops, 1000)) {
+                        warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_014, [newCoreOsServerNameEnglish, newCoreOsDiskNoLabel + newCoreOsIopsLabel, String(newCoreOsIops), '1000']));
+                    }
+
+                }
+                //サーバリクエスト基本情報のチェック処理
+                var newCoreOsvReqBase = new GlideRecord(this.TBL_SERVER_REQUEST_BASE);
+                newCoreOsvReqBase.addQuery('sys_id', svReqBaseSysId);
+                newCoreOsvReqBase.query();
+
+                while (newCoreOsvReqBase.next()) {
+                    var newCoreOsOpenshiftDiskSize = newCoreOsvReqBase.getValue('u_01_openshift_disk_size');
+                    var newCoreOsOpenshiftDiskSizeLabel = newCoreOsvReqBase.getElement('u_01_openshift_disk_size').getLabel();
+                    // OpenShiftディスクプロビジョニング_ディスク容量の最小値チェック
+                    if (newCoreOsOpenshiftDiskSize != '' && !validation.checkOpenshiftDiskSize(newCoreOsOpenshiftDiskSize, 1)) {
+                        warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_033, [newCoreOsServerNameEnglish, newCoreOsOpenshiftDiskSizeLabel, String(newCoreOsOpenshiftDiskSize), '1']));
+                    }
+                }
+            }
+            //add_FY22_2Q_end
+
+        } else if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_BARE_METAL) {
+            // 区分：新規・サーバ種別：ベアメタル
+            // サーバ情報のチェック処理
+            var newBareServers = new GlideRecord(this.TBL_SERVER);
+            newBareServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            newBareServers.query();
+            while (newBareServers.next()) {
+                var newBareServerNameEnglish = newBareServers.getValue('u_02_server_name_english') + '';
+                var newBareOsType = newBareServers.getValue('u_02_os_type');
+                var newBareServiceType = newBareServers.getValue('u_02_service_type');
+                var newBareCpuCountLabel = newBareServers.getElement('u_02_cpu_count').getLabel();
+                var newBareCpuCount = newBareServers.getValue('u_02_cpu_count');
+                var newBareCpuSocketCountLabel = newBareServers.getElement('u_02_cpu_socket_count').getLabel();
+                var newBareCpuSocketCount = newBareServers.getValue('u_02_cpu_socket_count') || '';
+                var newBareMemoryGibLabel = newBareServers.getElement('u_02_memory_gib').getLabel();
+                var newBareMemoryGib = newBareServers.getValue('u_02_memory_gib') || '';
+                var newBareVirtualNicCountLabel = newBareServers.getElement('u_02_virtual_nic_count').getLabel();
+                var newBareVirtualNicCount = newBareServers.getValue('u_02_virtual_nic_count') || '';
+                //del_FY22_2Q_str カラムのfalse化に伴い削除
+                //                var newBareAffinityRuleLabel = newBareServers.getElement('u_02_affinity_rule').getLabel();
+                //                var newBareAffinityRule = newBareServers.getValue('u_02_affinity_rule');
+                //del_FY22_2Q_end
+                // CPU総コア数の最小値チェック
+                if (newBareCpuCount != '' && !validation.checkCpuCountMin(newBareCpuCount, 1)) {
+                    warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_033, [newBareServerNameEnglish, newBareCpuCountLabel, String(newBareCpuCount), '1']));
+                }
+                //del_FY22_2Q_str
+                // CPUソケット数の入力チェック（入力されている場合エラー）：廃止No.31
+                //                 if (validation.checkCpuSocketCountNotEmpty(newBareCpuSocketCount)) {
+                //                     warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_020, [newBareServerNameEnglish, newBareCpuSocketCountLabel]));
+                //                 }
+                //del_FY22_2Q_end
+                // メモリ（GiB）の最小値チェック
+                if (newBareMemoryGib != '' && !validation.checkMemoryGibMin(newBareMemoryGib, 1)) {
+                    warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_033, [newBareServerNameEnglish, newBareMemoryGibLabel, String(newBareMemoryGib), '1']));
+                }
+                //del_FY22_2Q_str				
+                // アフィニティルール設定希望有無の入力チェック（入力されている場合エラー）：廃止No.45
+                //                 if (validation.checkAffinityRuleNotEmpty(newBareAffinityRule)) {
+                //                     warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_020, [newBareServerNameEnglish, newBareAffinityRuleLabel]));
+                //                 }
+                //del_FY22_2Q_end
+                // ディスク情報の取得
+                var newBareDisks = new GlideRecord(this.TBL_DISK);
+                newBareDisks.addQuery('u_03_server_info', newBareServers.getUniqueValue());
+                newBareDisks.orderBy('u_03_disk_no');
+                newBareDisks.query();
+                while (newBareDisks.next()) {
+                    var newBareDiskNoLabel = 'ディスク' + newBareDisks.getDisplayValue('u_03_disk_no') + 'の';
+                    var newBareDiskNo = newBareDisks.u_03_disk_no;
+                    var newBareCapacityGibLabel = newBareDisks.getElement('u_03_capacity_gib').getLabel();
+                    var newBareCapacityGib = newBareDisks.getValue('u_03_capacity_gib') || '';
+                    var newBareIopsLabel = newBareDisks.getElement('u_03_iops').getLabel();
+                    var newBareIops = newBareDisks.getValue('u_03_iops') || '';
+                    // 容量（GiB）の範囲チェック
+                    if (newBareDiskNo == 1) {
+                        // ディスク1の場合
+                        if (newBareCapacityGib != '' &&
+                            !validation.checkVirtualCapacityGibRangeForOthers(newBareCapacityGib, 900, 900)) {
+                            warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_008, [newBareServerNameEnglish, newBareDiskNoLabel + newBareCapacityGibLabel, String(newBareCapacityGib), '900', '900']));
+                        }
+                    } else if (newBareDiskNo >= 2 && newBareDiskNo <= 10) {
+                        // ディスク2～10の場合
+                        if (newBareCapacityGib != '' &&
+                            !validation.checkVirtualCapacityGibRangeForOthers(newBareCapacityGib, 10, 10000)) {
+                            warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_008, [newBareServerNameEnglish, newBareDiskNoLabel + newBareCapacityGibLabel, String(newBareCapacityGib), '10', '10000']));
+                        }
+                    }
+                    // 容量（GiB）の刻みルールチェック
+                    if (newBareCapacityGib != '' &&
+                        !validation.checkVirtualCapacityGibIncrements(newBareCapacityGib, 10)) {
+                        warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_014, [newBareServerNameEnglish, newBareDiskNoLabel + newBareCapacityGibLabel, String(newBareCapacityGib), '10']));
+                    }
+                    // IOPSの入力チェック（入力されている場合エラー）
+                    if (validation.checkVirtualIopsNotEmpty(newBareIops)) {
+                        warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_020, [newBareServerNameEnglish, newBareDiskNoLabel + newBareIopsLabel]));
+                    }
+                }
+
+                // RDMディスク情報の取得
+                var newBareRdmDisks = new GlideRecord(this.TBL_RDM_DISK);
+                newBareRdmDisks.addQuery('u_04_server_info', newBareServers.getUniqueValue());
+                newBareRdmDisks.orderBy('u_04_disk_no');
+                newBareRdmDisks.query();
+                while (newBareRdmDisks.next()) {
+                    var newBareRdmDiskNoLabel = 'RDMディスク' + newBareRdmDisks.getDisplayValue('u_04_disk_no') + 'の';
+                    var newBareRdmIopsLabel = newBareRdmDisks.getElement('u_04_iops').getLabel();
+                    var newBareRdmIops = newBareRdmDisks.getValue('u_04_iops') || '';
+                    // IOPSの入力チェック（入力されている場合エラー）
+                    if (validation.checkRdmIopsNotEmpty(newBareRdmIops)) {
+                        warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_020, [newBareServerNameEnglish, newBareRdmDiskNoLabel + newBareRdmIopsLabel]));
+                    }
+                }
+                //del_FY22_2Q_str
+                // ネットワーク情報の取得：廃止 No.82
+                //                 var newBareNics = new GlideRecord(this.TBL_NIC);
+                //                 newBareNics.addQuery('u_05_server_info', newBareServers.getUniqueValue());
+                //                 newBareNics.orderBy('u_05_nic_no');
+                //                 newBareNics.query();
+                //                 while (newBareNics.next()) {
+                //                     var newBareNicNoLabel = 'NIC' + newBareNics.getDisplayValue('u_05_nic_no') + 'の';
+                //                     var newBareMaxNwBandLabel = newBareNics.getElement('u_05_max_nw_band').getLabel();
+                //                     var newBareMaxNwBand = newBareNics.getValue('u_05_max_nw_band') || '';
+                //                     // 最大使用NW帯域の入力チェック（入力されている場合エラー）
+                //                     if (validation.checkNicMaxNwBandNotEmpty(newBareMaxNwBand)) {
+                //                         warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_020, [newBareServerNameEnglish, newBareNicNoLabel + newBareMaxNwBandLabel]));
+                //                     }
+                //                 }
+                //del_FY22_2Q_end
+            }
+            // アフィニティルール情報のチェック（アフィニティルール情報が存在する場合エラー）
+            var affinityRulesArray = [];
+            var newBareAffinityRules = new GlideRecord(this.TBL_AFFINITY_RULE);
+            newBareAffinityRules.addQuery('u_07_request_form_number', svReqBaseSysId);
+            newBareAffinityRules.query();
+            if (newBareAffinityRules.next()) {
+                if (newBareAffinityRules.getRowCount() > 0) {
+                    warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_020, [newBareServerNameEnglish, 'アフィニティルール']));
+                }
+            }
+
+        } else if (classification == this.CLASSIFICATION_CHANGE && serverType == this.SERVER_TYPE_IA_GR) {
+            // 区分：変更・サーバ種別：IA-Gr
+            // サーバ情報のチェック処理
+            var updIaGrServers = new GlideRecord(this.TBL_SERVER);
+            updIaGrServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            updIaGrServers.query();
+            while (updIaGrServers.next()) {
+                var updIaGrServerNameEnglish = updIaGrServers.getValue('u_02_server_name_english') + '';
+                // ディスク情報の取得
+                var updIaGrDisks = new GlideRecord(this.TBL_DISK);
+                updIaGrDisks.addQuery('u_03_server_info', updIaGrServers.getUniqueValue());
+                updIaGrDisks.orderBy('u_03_disk_no');
+                updIaGrDisks.query();
+                while (updIaGrDisks.next()) {
+                    var updIaGrDiskLabel = 'ディスク' + updIaGrDisks.getDisplayValue('u_03_disk_no') + 'の';
+                    var updIaGrDiskNo = updIaGrDisks.u_03_disk_no;
+                    var updIaGrIopsLabel = updIaGrDisks.getElement('u_03_iops').getLabel();
+                    var updIaGrIops = updIaGrDisks.getValue('u_03_iops') || '';
+                    // IOPSの範囲チェック
+                    if (updIaGrIops != '' && !validation.checkVirtualIopsRange(updIaGrIops, 1000, 10000)) {
+                        warnMsgs.push(gs.getMessage(this.ERR_MSG_KEY_009, [updIaGrServerNameEnglish, updIaGrDiskLabel + updIaGrIopsLabel, String(updIaGrIops), '1000', '10000']));
+                    }
+                }
+            }
+        }
+
+        return warnMsgs;
+    },
+
+    /**
+     * CPU総コア数最小・最大値取得（RHEL用）
+     * ＜機能＞
+     * 使用OS＝RHELの場合に、サービス型番の値によってCPU総コア数の範囲チェック用最小・最大値を取得する。
+     * 
+     * @param osType：使用OSの値
+     * @param serviceType：サービス型番の値
+     * @return 最小値・最大値の設定された連想配列
+     */
+    _getCpuCountRangeForRHEL: function(osType, serviceType) {
+        var range = {};
+        range.min = 0;
+        range.max = 0;
+
+        // RHELの場合、サービス型番の値に応じて最小・最大値を設定
+        if (osType.startsWith(this.OS_TYPE_PREFIX_RHEL)) {
+            switch (serviceType) {
+                case this.SERVICE_TYPE_SMALL:
+                    range.min = 2;
+                    range.max = 8;
+                    break;
+                case this.SERVICE_TYPE_MEDIUM:
+                    range.min = 4;
+                    range.max = 16;
+                    break;
+                case this.SERVICE_TYPE_LARGE:
+                    range.min = 8;
+                    range.max = 32;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return range;
+    },
+
+    /**
+     * メモリ（GiB）最小・最大値取得（RHEL用）
+     * ＜機能＞
+     * 使用OS＝RHELの場合に、サービス型番の値によってメモリ（GiB）の範囲チェック用最小・最大値を取得する。
+     * 
+     * @param osType：使用OSの値
+     * @param serviceType：サービス型番の値
+     * @return 最小値・最大値の設定された連想配列
+     */
+    _getMemoryGibRangeForRHEL: function(osType, serviceType) {
+        var range = {};
+        range.min = 0;
+        range.max = 0;
+
+        // RHELの場合、サービス型番の値に応じて最小・最大値を設定
+        if (osType.startsWith(this.OS_TYPE_PREFIX_RHEL)) {
+            switch (serviceType) {
+                case this.SERVICE_TYPE_SMALL:
+                    range.min = 2;
+                    range.max = 32;
+                    break;
+                case this.SERVICE_TYPE_MEDIUM:
+                    range.min = 4;
+                    range.max = 64;
+                    break;
+                case this.SERVICE_TYPE_LARGE:
+                    range.min = 8;
+                    range.max = 128;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return range;
+    },
+
+    /**
+     * 仮想ディスク容量（GiB）最小・最大値取得（RHEL用）
+     * ＜機能＞
+     * 使用OS＝RHELの場合に、サービス型番の値によって仮想ディスク容量（GiB）の範囲チェック用最小・最大値を取得する。
+     * 
+     * @param osType：使用OSの値
+     * @param serviceType：サービス型番の値
+     * @return 最小値・最大値の設定された連想配列
+     */
+    _getVirtualCapacityGibRangeForRHEL: function(osType, serviceType) {
+        var range = {};
+        range.min = 0;
+        range.max = 0;
+
+        // RHELの場合、サービス型番の値に応じて最小・最大値を設定
+        if (osType.startsWith(this.OS_TYPE_PREFIX_RHEL)) {
+            switch (serviceType) {
+                case this.SERVICE_TYPE_SMALL:
+                    range.min = 100;
+                    range.max = 1000;
+                    break;
+                case this.SERVICE_TYPE_MEDIUM:
+                    range.min = 300;
+                    range.max = 1000;
+                    break;
+                case this.SERVICE_TYPE_LARGE:
+                    range.min = 600;
+                    range.max = 1000;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return range;
+    },
+
+    /**
+     * プロビジョニング情報入力完了時チェック処理
+     * ＜機能＞
+     * プロビジョニング担当がプロビジョニング情報入力完了を行う際のチェック処理を行う
+     * 
+     * @param svReqBaseSysId：サーバリクエスト基本情報のSysID
+     * @param classification：区分の値
+     * @param serverType：サーバ種別の値
+     * @return エラー無しの場合：空／エラーの場合：エラーメッセージのKeyの配列
+     */
+    validationForProvisioningInputComplete: function(svReqBaseSysId, classification, serverType) {
+        var errMsgs = [];
+        var validation = new camdev_ValidationServerRequestFieldValue();
+
+        if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_IA_GR) {
+            // 区分：新規・サーバ種別：IA-Gr
+            // サーバ情報のチェック処理
+            var newIaGrServers = new GlideRecord(this.TBL_SERVER);
+            newIaGrServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            newIaGrServers.query();
+            while (newIaGrServers.next()) {
+                var newIaGrServerNameEnglish = newIaGrServers.getValue('u_02_server_name_english') + '';
+                var newIaGrProbiExecLabel = newIaGrServers.getElement('u_02_provisioning_execution').getLabel();
+                var newIaGrProvisioningExecution = newIaGrServers.getValue('u_02_provisioning_execution');
+                var newIaGrUsageLabel = newIaGrServers.getElement('u_02_usage').getLabel();
+                var newIaGrUsage = newIaGrServers.getValue('u_02_usage');
+                //del_FY22_2Q_str カラムのfalse化に伴い削除
+                //                 var newIaGrAnsibleNicNoLabel = newIaGrServers.getElement('u_02_ansible_nic_no').getLabel();
+                //                 var newIaGrAnsibleNicNo = newIaGrServers.getValue('u_02_ansible_nic_no');
+                //                 var nicRefRecord = newIaGrServers.u_02_ansible_nic_no.getRefRecord();
+
+                //                 var newIaGrAnsibleNicNoValue = '';
+                //                 if (nicRefRecord.isValidRecord()) {
+                //                     newIaGrAnsibleNicNoValue = nicRefRecord.getValue('u_05_nic_no') + '';
+                //                }
+                //                var newIaGrAnsibleGwLabel = newIaGrServers.getElement('u_02_ansible_gw').getLabel();
+                //                var newIaGrAnsibleGw = newIaGrServers.getValue('u_02_ansible_gw');
+                ////del_FY22_2Q_end
+                var newIaGrCatalogNameLabel = newIaGrServers.getElement('u_02_catalog_name').getLabel();
+                var newIaGrCatalogName = newIaGrServers.getValue('u_02_catalog_name');
+                var newIaGrReserveNameLabel = newIaGrServers.getElement('u_02_reserve_name').getLabel();
+                var newIaGrReserveName = newIaGrServers.getValue('u_02_reserve_name');
+                // プロビ実行の必須チェック
+                if (!validation.checkProvisioningExecutionNotEmpty(newIaGrProvisioningExecution)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [newIaGrServerNameEnglish, newIaGrProbiExecLabel]));
+                }
+                //del_FY22_2Q_str
+                //                // 用途の必須チェック 申請者側に移植No.92
+                //                if (!validation.checkUsageNotEmpty(newIaGrUsage)) {
+                //                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [newIaGrServerNameEnglish, newIaGrUsageLabel]));
+                //                }
+                //                // Ansible接続用NIC番号の必須チェック 廃止No.95 
+                //                if (!validation.checkAnsibleNicNoNotEmpty(newIaGrAnsibleNicNo)) {
+                //                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [newIaGrServerNameEnglish, newIaGrAnsibleNicNoLabel]));
+                //                }
+                //                // Ansible接続用NIC番号の入力チェック 廃止No.97
+                //                if (!validation.checkAnsibleNicNo(newIaGrUsage, newIaGrAnsibleNicNoValue)) {
+                //                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_017, [newIaGrServerNameEnglish]));
+                //                }
+                //                // Ansible接続用GWの必須チェック 廃止No.98
+                //                if (!validation.checkAnsibleGwNotEmpty(newIaGrAnsibleGw)) {
+                //                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [newIaGrServerNameEnglish, newIaGrAnsibleGwLabel]));
+                //                }
+                //                // カタログ名の必須チェック 廃止No.100
+                //                if (!validation.checkCatalogNotEmpty(newIaGrCatalogName)) {
+                //                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [newIaGrServerNameEnglish, newIaGrCatalogNameLabel]));
+                //                }
+                //                // 予約名の必須チェック 廃止No.101
+                //                if (!validation.checkReserveNotEmpty(newIaGrReserveName)) {
+                //                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [newIaGrServerNameEnglish, newIaGrReserveNameLabel]));
+                //                }
+                //                // ネットワーク情報の取得
+                //                var newIaGrNics = new GlideRecord(this.TBL_NIC);
+                //                newIaGrNics.addQuery('u_05_server_info', newIaGrServers.getUniqueValue());
+                //                newIaGrNics.orderBy('u_05_nic_no');
+                //                newIaGrNics.query();    
+                //                while (newIaGrNics.next()) {
+                //                    var newIaGrNicNo = newIaGrNics.getValue('u_05_nic_no') + '';
+                //                    var newIaGrNicNoDisplay = newIaGrNics.getDisplayValue('u_05_nic_no') + '';
+                //                    var newIaGrNicNoLabel = 'NIC' + newIaGrNicNoDisplay + 'の';
+                //                    var newIaGrNwPathNicLabel = newIaGrNics.getElement('u_05_network_path_nic').getLabel();
+                //                    var newIaGrNwPathNic = newIaGrNics.getValue('u_05_network_path_nic');
+                //                    // ネットワークパスの必須入力チェック  廃止No.103
+                //                    if (!validation.checkNetworkPathNicNotEmpty(newIaGrNwPathNic)) {
+                //                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [newIaGrServerNameEnglish, newIaGrNicNoLabel + newIaGrNwPathNicLabel]));
+                //                    }
+                //                }
+                //del_FY22_2Q_end
+            }
+            //add_FY22_2Q_str
+            // 区分：新規・サーバ種別：CoreOS
+
+        } else if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_CORE_OS) {
+            //classificationの置換
+            if (classification == 'create') {
+                var classificationJp = '新規';
+            }
+            // サーバ情報のチェック処理
+            var newCoreOsServers = new GlideRecord(this.TBL_SERVER);
+            newCoreOsServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            newCoreOsServers.query();
+            while (newCoreOsServers.next()) {
+                var newCoreOsServerNameEnglish = newCoreOsServers.getValue('u_02_server_name_english') + '';
+                var newCoreOsProbiExecLabel = newCoreOsServers.getElement('u_02_provisioning_execution').getLabel();
+                var newCoreOsProvisioningExecution = newCoreOsServers.getValue('u_02_provisioning_execution');
+                var newCoreOsNodeTypeLabel = newCoreOsServers.getElement('u_02_node_type').getLabel();
+                var newCoreOsNodeType = newCoreOsServers.getValue('u_02_node_type');
+
+                // プロビ実行の必須チェック
+                if (!validation.checkProvisioningExecutionNotEmpty(newCoreOsProvisioningExecution)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [newCoreOsServerNameEnglish, newCoreOsProbiExecLabel]));
+                }
+                // ノード種別の必須チェック
+                if (!validation.checkNodeTypeNotEmpty(newCoreOsNodeType)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationJp, newCoreOsNodeTypeLabel]));
+                }
+
+                //サーバリクエスト基本情報のチェック処理
+                var newCoreOsvReqBase = new GlideRecord(this.TBL_SERVER_REQUEST_BASE);
+                newCoreOsvReqBase.addQuery('sys_id', svReqBaseSysId);
+                newCoreOsvReqBase.query();
+
+                while (newCoreOsvReqBase.next()) {
+                    var newCoreOsOvaFileName = newCoreOsvReqBase.getValue('u_01_ova_file_name');
+                    var newCoreOsOvaFileNameLabel = newCoreOsvReqBase.getElement('u_01_ova_file_name').getLabel();
+                    // OVAファイル名の必須チェック
+                    if (!validation.checkCoreOsOvaFileName(newCoreOsOvaFileName)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationJp, newCoreOsOvaFileNameLabel]));
+                    }
+                }
+
+            }
+            //add_FY22_2Q_end	
+        } else if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_BARE_METAL) {
+
+            // 区分：新規・サーバ種別：ベアメタル
+            // サーバ情報のチェック処理
+            var newBareServers = new GlideRecord(this.TBL_SERVER);
+            newBareServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            newBareServers.query();
+            while (newBareServers.next()) {
+                var baseRecord = newBareServers.u_02_request_form_number.getRefRecord();
+                var classificationDisplayValue = '';
+                if (baseRecord.isValidRecord()) {
+                    classificationDisplayValue = baseRecord.getDisplayValue('u_01_classification') + '';
+                }
+
+                var newBareServerNameEnglish = newBareServers.getValue('u_02_server_name_english') + '';
+                var newBareProbiExecLabel = newBareServers.getElement('u_02_provisioning_execution').getLabel();
+                var newBareProvisioningExecution = newBareServers.getValue('u_02_provisioning_execution');
+                var newBareUsage = newBareServers.getValue('u_02_usage');
+                //del_FY22_2Q_str カラムのfalse化に伴い削除
+                //                 var ansibleNicRecord = newBareServers.u_02_ansible_nic_no.getRefRecord();
+                //                 var newBareAnsibleNicNoValue = '';
+                //                 if (ansibleNicRecord.isValidRecord()) {
+                //                     newBareAnsibleNicNoValue = ansibleNicRecord.getValue('u_05_nic_no') + '';
+                //                 }
+                //del_FY22_2Q_end
+                // プロビ実行の必須チェック
+                if (!validation.checkProvisioningExecutionNotEmpty(newBareProvisioningExecution)) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [newBareServerNameEnglish, newBareProbiExecLabel]));
+                }
+                // Ansible接続用NIC番号の入力チェック 廃止No.95
+                //                 if (!validation.checkAnsibleNicNo(newBareUsage, newBareAnsibleNicNoValue)) {
+                //                     errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_017, [newBareServerNameEnglish]));
+                //                 }
+
+                // ネットワーク情報の取得
+                var dwgVlanEmptyArrays = [];
+                var dwgVlanObjectArrays = [];
+                var ansibleConnectionEmptyArrays = [];
+                var ansibleConnectionObjectArrays = [];
+                var newBareNics = new GlideRecord(this.TBL_NIC);
+                newBareNics.addQuery('u_05_server_info', newBareServers.getUniqueValue());
+                newBareNics.orderBy('u_05_nic_no');
+                newBareNics.query();
+                while (newBareNics.next()) {
+                    var newBareNicNoDisplay = newBareNics.getDisplayValue('u_05_nic_no') + '';
+                    var newBareNicNoLabel = 'NIC' + newBareNicNoDisplay;
+                    var newBareNwName = newBareNics.getValue('u_05_nw_name');
+                    var newBareIpAddress = newBareNics.getValue('u_05_ip_address');
+                    var newBareSubnet = newBareNics.getValue('u_05_subnet');
+                    var newBareBitmask = newBareNics.getValue('u_05_bitmask') || '';
+                    var newBareGw = newBareNics.getValue('u_05_gw');
+                    var newBareBonding = newBareNics.getValue('u_05_bonding');
+                    var newBareVlanNo = newBareNics.getValue('u_05_vlan_no') || '';
+                    var newBareVlanIdLabel = newBareNics.getElement('u_05_vlan_id').getLabel();
+                    var newBareVlanId = newBareNics.getValue('u_05_vlan_id') || '';
+                    var newBareDgwVlan = newBareNics.getValue('u_05_dgw_vlan');
+                    var newBareAnsibleConnection = newBareNics.getValue('u_05_ansible_connection');
+
+                    // VLAN IDの範囲チェック
+                    if (newBareVlanId != '' && !validation.checkVlanIdRange(newBareVlanId, 0, 4094)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_009, [newBareServerNameEnglish, newBareNicNoLabel + 'の' + newBareVlanIdLabel, String(newBareVlanId), '0', '4094']));
+                    }
+                    // VLAN IDとボンディングの相関チェック
+                    if (newBareVlanId != '' && !validation.checkVlanIdCorrelationBonding(newBareBonding, newBareVlanId)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_021, [newBareServerNameEnglish, newBareNicNoLabel]));
+                    }
+                    // VLAN IDとVLAN Noの相関チェック
+                    if (!validation.checkVlanIdCorrelationVlanNo(newBareVlanNo, newBareVlanId)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_022, [newBareServerNameEnglish, newBareNicNoLabel]));
+                    }
+                    // DGW VLANとVLAN Noの相関チェック
+                    if (!validation.checkDgwVlanCorrelationVlanNo(newBareDgwVlan, this.DGW_VLAN_TARGET, newBareVlanNo)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_027, [newBareServerNameEnglish]));
+                    }
+                    // DGW VLANの必須入力チェック
+                    if (!validation.checkDgwVlanIdNotEmpty(newBareDgwVlan)) {
+                        dwgVlanEmptyArrays.push(newBareNics.getUniqueValue());
+                    }
+                    // DGW VLANが対象の場合、配列に設定
+                    if (newBareDgwVlan === this.DGW_VLAN_TARGET) {
+                        dwgVlanObjectArrays.push(newBareNics.getUniqueValue());
+                    }
+
+                    // Ansible接続の相関チェック
+                    if (!validation.checkAnsibleConnectionCorrelation(newBareAnsibleConnection, this.ANSIBLE_CONNECTION_CONNECTION, newBareVlanNo, newBareBonding)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_028, [newBareServerNameEnglish, newBareNicNoLabel]));
+                    }
+                    // Ansible接続の相関チェック（ボンディング：なしのNIC用）
+                    if (newBareVlanNo !== '' &&
+                        !validation.checkAnsibleConnectionNotBonding(newBareNwName, newBareIpAddress, newBareSubnet, newBareBitmask, newBareBonding, newBareAnsibleConnection, this.ANSIBLE_CONNECTION_CONNECTION)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_034, [newBareServerNameEnglish, newBareNicNoLabel]));
+                    }
+                    // Ansible接続の必須入力チェック
+                    if (!validation.checkAnsibleConnectionNotEmpty(newBareAnsibleConnection)) {
+                        ansibleConnectionEmptyArrays.push(newBareNics.getUniqueValue());
+                    }
+                    // Ansible接続が接続ありの場合、配列に設定
+                    if (newBareAnsibleConnection == this.ANSIBLE_CONNECTION_CONNECTION) {
+                        ansibleConnectionObjectArrays.push(newBareNics.getUniqueValue());
+                    }
+                }
+
+                // DGW VLANの横断チェック
+                if (dwgVlanObjectArrays.length == 0) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_024, [newBareServerNameEnglish]));
+                } else if (dwgVlanObjectArrays.length >= 2) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_025, [newBareServerNameEnglish, String(dwgVlanObjectArrays.length), classificationDisplayValue]));
+                }
+
+                // DGW VLANの未入力レコードがある場合、エラーメッセージを追加
+                if (dwgVlanEmptyArrays.length > 0) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_026, [newBareServerNameEnglish, String(dwgVlanEmptyArrays.length), classificationDisplayValue]));
+                }
+
+                // Ansible接続の横断チェック
+                if (ansibleConnectionObjectArrays.length == 0) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_029, [newBareServerNameEnglish]));
+                } else if (ansibleConnectionObjectArrays.length >= 2) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_030, [newBareServerNameEnglish, String(ansibleConnectionObjectArrays.length)]));
+                }
+
+                // Ansible接続の未入力レコードがある場合、エラーメッセージを追加
+                if (ansibleConnectionEmptyArrays.length > 0) {
+                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_031, [newBareServerNameEnglish, String(ansibleConnectionEmptyArrays.length), classificationDisplayValue]));
+                }
+            }
+
+            //del_FY22_2Q_str カラムのfalse化に伴い削除
+            //         } else if (classification == this.CLASSIFICATION_CHANGE && serverType == this.SERVER_TYPE_IA_GR) {
+            //             // 区分：変更・サーバ種別：IA-Gr
+            //             // サーバ情報のチェック処理
+            //             var updIaGrServers = new GlideRecord(this.TBL_SERVER);
+            //             updIaGrServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            //             updIaGrServers.query();
+            //             while (updIaGrServers.next()) {
+            //                 var updIaGrServerNameEnglish = updIaGrServers.getValue('u_02_server_name_english') + '';
+            //                 var updIaGrAnsibleNicNoLabel = updIaGrServers.getElement('u_02_ansible_nic_no').getLabel();
+            //                 var updIaGrAnsibleNicNo = updIaGrServers.getValue('u_02_ansible_nic_no');
+            //                 // Ansible接続用NIC番号の必須チェック
+            //                 if (!validation.checkAnsibleNicNoNotEmpty(updIaGrAnsibleNicNo)) {
+            //                     errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [updIaGrServerNameEnglish, updIaGrAnsibleNicNoLabel]));
+            //                 }
+            //             }
+            //del_FY22_2Q_end
+
+        } else if (classification == this.CLASSIFICATION_CHANGE && serverType == this.SERVER_TYPE_BARE_METAL) {
+            // 区分：変更・サーバ種別：ベアメタル
+            // TODO：プロビ担当のVAN id以降の項目（チェック仕様黄色セル）が未対応
+        }
+
+        return errMsgs;
+    },
+
+    /**
+     * プロビジョニング情報入力完了時チェック処理（後チェック処理）
+     * ＜機能＞
+     * プロビジョニング担当がプロビジョニング情報入力完了を行う際の後チェック処理を行う
+     * 
+     * @param svReqBaseSysId：サーバリクエスト基本情報のSysID
+     * @param classification：区分の値
+     * @param serverType：サーバ種別の値
+     * @return エラー無しの場合：空／エラーの場合：メッセージのKeyの配列
+     */
+    postValidationForProvisioningInputComplete: function(svReqBaseSysId, classification, serverType) {
+        var msgs = [];
+        var validation = new camdev_ValidationServerRequestFieldValue();
+
+        //del_FY22_2Q_str
+        //        if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_IA_GR) {
+        //            // 区分：新規・サーバ種別：IA-Gr
+        //            // サーバ情報のチェック処理
+        //            var newIaGrServers = new GlideRecord(this.TBL_SERVER);
+        //            newIaGrServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+        //            newIaGrServers.query();
+        //            while (newIaGrServers.next()) {
+        //                var newIaGrServerNameEnglish = newIaGrServers.getValue('u_02_server_name_english') + '';
+        //                var newIaGrAnsibleNicNo = newIaGrServers.getValue('u_02_ansible_nic_no');
+        //
+        //                // ネットワーク情報の取得
+        //                var newIaGrNwPathNicArray = [];
+        //                var newIaGrNics = new GlideRecord(this.TBL_NIC);
+        //                newIaGrNics.addQuery('u_05_server_info', newIaGrServers.getUniqueValue());
+        //                newIaGrNics.orderBy('u_05_nic_no');
+        //                newIaGrNics.query();
+        //                while (newIaGrNics.next()) {
+        //                    var newIaGrNicNo = newIaGrNics.getValue('u_05_nic_no') + '';
+        //                    var newIaGrNicNoDisplay = newIaGrNics.getDisplayValue('u_05_nic_no') + '';
+        //                    var newIaGrNwPathNicLabel = newIaGrNics.getElement('u_05_network_path_nic').getLabel();
+        //                    var newIaGrNwPathNic = newIaGrNics.getValue('u_05_network_path_nic');
+        //                    // ネットワークパスが入力されている場合、配列に設定
+        //                    if (validation.checkNetworkPathNicNotEmpty(newIaGrNwPathNic)) {
+        //                        var nwPathNicData = {};
+        //                        nwPathNicData.key = newIaGrNwPathNic;
+        //                        nwPathNicData.nicNo = newIaGrNicNo;
+        //                        newIaGrNwPathNicArray.push(nwPathNicData);
+        //                    }
+        //                    // ネットワークパスの入力チェック 廃止No.104
+        //                    if (newIaGrNwPathNic != '' && !validation.checkNetworkPathNic(newIaGrNwPathNic)) {
+        //                        msgs.push(gs.getMessage(this.ERR_MSG_KEY_018, [newIaGrServerNameEnglish, newIaGrNicNoDisplay, newIaGrNwPathNic]));
+        //                    }
+        //                }
+        //
+        //                // ネットワークパスの重複チェック 廃止No.105
+        //                var newIaGrDuplicateNwPathNicArray = validation.getDuplicateNetworkPathNics(newIaGrNwPathNicArray);
+        //                if (newIaGrDuplicateNwPathNicArray.length >= 1) {
+        //                    for (var newIaGrIdx = 0; newIaGrIdx < newIaGrDuplicateNwPathNicArray.length; newIaGrIdx++) {
+        //                        msgs.push(gs.getMessage(this.ERR_MSG_KEY_019, [newIaGrServerNameEnglish, newIaGrNicNoDisplay, newIaGrDuplicateNwPathNicArray[newIaGrIdx].key]));
+        //                    }
+        //                }
+        //            }
+        //        }
+        //del_FY22_2Q_end
+
+        return msgs;
+    },
+
+    /**
+     * リソース割当情報入力完了時チェック処理
+     * ＜機能＞
+     * キャパシティ担当がリソース割当情報入力完了を行う際のチェック処理を行う
+     * 
+     * @param svReqBaseSysId：サーバリクエスト基本情報のSysID
+     * @param classification：区分の値
+     * @param serverType：サーバ種別の値
+     * @return エラー無しの場合：空／エラーの場合：エラーメッセージのKeyの配列
+     */
+    validationForResourceInputComplete: function(svReqBaseSysId, classification, serverType) {
+
+        var errMsgs = [];
+        var validation = new camdev_ValidationServerRequestFieldValue();
+
+        if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_IA_GR) {
+            // 区分：新規・サーバ種別：IA-Gr
+            // サーバ情報のチェック処理
+            var newIaGrServers = new GlideRecord(this.TBL_SERVER);
+            newIaGrServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            newIaGrServers.query();
+            while (newIaGrServers.next()) {
+                var newIaGrServerNameEnglish = newIaGrServers.getValue('u_02_server_name_english') + '';
+                var newIaGrHostServerNameLabel = newIaGrServers.getElement('u_02_hostserver_name').getLabel();
+                var newIaGrHostServerName = newIaGrServers.getValue('u_02_hostserver_name');
+                var newIaGrClusterNameLabel = newIaGrServers.getElement('u_02_cluster_name').getLabel();
+                var newIaGrClusterName = newIaGrServers.getValue('u_02_cluster_name');
+                //del_FY22_2Q_str
+                // ホストサーバ名の必須チェック  廃止No.92
+                //                if (!validation.checkHostServerNameNotEmpty(newIaGrHostServerName)) {
+                //                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [newIaGrServerNameEnglish, newIaGrHostServerNameLabel]));
+                //                }
+                //                // ホストサーバ名の入力チェック  廃止No.93
+                //                if (!validation.checkHostServerName(newIaGrHostServerName)) {
+                //                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_016, [newIaGrServerNameEnglish]));
+                //                }
+                //                // クラスタ名の必須入力チェック  廃止No.94
+                //                if (!validation.checkClusterNameNotEmpty(newIaGrClusterName)) {
+                //                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [newIaGrServerNameEnglish, newIaGrClusterNameLabel]));
+                //                }
+                //del_FY22_2Q_end
+                // ディスク情報の取得
+                var newIaGrDisks = new GlideRecord(this.TBL_DISK);
+                newIaGrDisks.addQuery('u_03_server_info', newIaGrServers.getUniqueValue());
+                newIaGrDisks.orderBy('u_03_disk_no');
+                newIaGrDisks.query();
+                while (newIaGrDisks.next()) {
+                    // ストレージパス（仮想ディスクX）の必須入力チェック 廃止No.102 
+                    var newIaGrDiskNoLabel = 'ディスク' + newIaGrDisks.getDisplayValue('u_03_disk_no') + 'の';
+                    var newIaGrStoragePathVirtualDiskLabel = newIaGrDisks.getElement('u_03_storage_path_virtual_disk').getLabel();
+                    var newIaGrStoragePathVirtualDisk = newIaGrDisks.getValue('u_03_storage_path_virtual_disk');
+                    //del_FY22_2Q_str
+                    //                    if (!validation.checkStoragePathVirtualDiskNotEmpty(newIaGrStoragePathVirtualDisk)) {
+                    //                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_015, [newIaGrServerNameEnglish, newIaGrDiskNoLabel + newIaGrStoragePathVirtualDiskLabel]));
+                    //                    }
+                    //del_FY22_2Q_end
+                }
+            }
+            //add_FY22_2Q_str
+        } else if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_CORE_OS) {
+            // 区分：新規・サーバ種別：CoreOS
+
+            //classificationの置換
+            if (classification == 'create') {
+                var classificationJp = '新規';
+            }
+            // サーバ情報の取得
+            var newCoreOsServers = new GlideRecord(this.TBL_SERVER);
+            newCoreOsServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            newCoreOsServers.query();
+            while (newCoreOsServers.next()) {
+                var newCoreOsServerNameEnglish = newCoreOsServers.getValue('u_02_server_name_english') + '';
+
+                //サーバリクエスト基本情報のチェック処理
+                var newCoreOsvReqBase = new GlideRecord(this.TBL_SERVER_REQUEST_BASE);
+                newCoreOsvReqBase.addQuery('sys_id', svReqBaseSysId);
+                newCoreOsvReqBase.query();
+
+                while (newCoreOsvReqBase.next()) {
+                    var newCoreOsOpenshiftDatastoreName = newCoreOsvReqBase.getValue('u_01_openshift_datastore_name');
+                    var newCoreOsOpenshiftDatastoreNameLabel = newCoreOsvReqBase.getElement('u_01_openshift_datastore_name').getLabel();
+                    // OpenShiftディスクプロビジョニング_データストア名の必須チェック
+                    if (!validation.checkOpenshiftDatastoreName(newCoreOsOpenshiftDatastoreName)) {
+                        errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_001, [newCoreOsServerNameEnglish, classificationJp, newCoreOsOpenshiftDatastoreNameLabel]));
+                    }
+                }
+            }
+            //add_FY22_2Q_end
+        } else if (classification == this.CLASSIFICATION_CREATE && serverType == this.SERVER_TYPE_BARE_METAL) {
+            // 区分：新規・サーバ種別：ベアメタル
+            // サーバ情報のチェック処理
+            var newBareServers = new GlideRecord(this.TBL_SERVER);
+            newBareServers.addQuery('u_02_request_form_number', svReqBaseSysId);
+            newBareServers.query();
+            //del_FY22_2Q_str
+            //            while (newBareServers.next()) {
+            //                var newBareServerNameEnglish = newBareServers.getValue('u_02_server_name_english') + '';
+            //                var newBareHostServerNameLabel = newBareServers.getElement('u_02_hostserver_name').getLabel();
+            //                var newBareHostServerName = newBareServers.getValue('u_02_hostserver_name');
+            //                // ホストサーバ名の入力チェック 廃止No.44
+            //                if (!validation.checkHostServerName(newBareHostServerName)) {
+            //                    errMsgs.push(gs.getMessage(this.ERR_MSG_KEY_016, [newBareServerNameEnglish, newBareHostServerName]));
+            //                }
+            //            }
+            //del_FY22_2Q_end
+        }
+
+        return errMsgs;
+    },
+
+    /**
+     * 自動化対象判定処理
+     * ＜機能＞
+     * 対象サーバが自動化対象かどうかを判定する。
+     * 
+     * @param svReqBaseSysId：サーバリクエスト基本情報のSysID
+     * @param classification：区分の値
+     * @param serverType：サーバ種別の値
+     * @param osType：使用OSの値
+     * @param usage：用途の値
+     * @return true：自動化対象／false:非自動化対象
+     */
+    isAutomation: function(classification, serverType, osType, usage) {
+
+        var automation = false;
+
+        if (classification != this.CLASSIFICATION_CREATE) {
+            return automation;
+        }
+
+        //add_2QSP3_str
+        if (serverType == this.SERVER_TYPE_CORE_OS) {
+            automation = true;
+            return automation;
+        }
+        //add_2QSP3_end
+
+        switch (osType) {
+            case this.OS_TYPE_PREFIX_RHEL_7_2:
+            case this.OS_TYPE_PREFIX_RHEL_7_3:
+            case this.OS_TYPE_PREFIX_RHEL_8_2:
+            case this.OS_TYPE_PREFIX_WINDOWS_2012_R2_SE:
+            case this.OS_TYPE_PREFIX_WINDOWS_2016_SE:
+            case this.OS_TYPE_PREFIX_WINDOWS_2019_SE:
+            case this.OS_TYPE_PREFIX_WINDOWS_2012_R2_DE:
+            case this.OS_TYPE_PREFIX_WINDOWS_2016_DE:
+            case this.OS_TYPE_PREFIX_WINDOWS_2019_DE:
+                if (usage == this.USAGE_NORMAL && serverType == this.SERVER_TYPE_IA_GR) {
+                    automation = true;
+                }
+                break;
+            case this.OS_TYPE_PREFIX_RHEL_7_6:
+                if ((usage == this.USAGE_NORMAL && serverType == this.SERVER_TYPE_IA_GR) ||
+                    (usage == this.USAGE_BRIDGE && serverType == this.SERVER_TYPE_IA_GR) ||
+                    serverType == this.SERVER_TYPE_BARE_METAL) {
+                    automation = true;
+                }
+                break;
+            default:
+                break;
+        }
+
+        return automation;
+    },
+
+    /**
+     * 自身に対する未承認の承認依頼レコード存在チェック
+     * ＜機能＞
+     * 自身に対する未承認の承認依頼レコードが存在するかどうかを判定する。
+     * 
+     * @param documentSysId：サーバ払出申請テーブルのSysID
+     * @param userSysId：操作ユーザのSysID
+     * @return true：存在する／false:存在しない
+     */
+    existMyApprovalRecord: function(documentSysId, userSysId) {
+
+        var exist = false;
+
+        var approvals = new GlideRecord('sysapproval_approver');
+        approvals.addQuery('document_id', documentSysId);
+        approvals.addQuery('approver', userSysId);
+        approvals.addQuery('state', 'requested');
+        approvals.query();
+        if (approvals.next()) {
+            exist = true;
+        }
+
+        return exist;
+    },
+
+    /**
+     * プロビジョニング担当用入力完了ボタン表示条件チェック
+     * ＜機能＞
+     * プロビジョニング担当の入力完了ボタンを表示できるかどうかをチェックする。
+     * 
+     * @param svReqBaseSysId：サーバリクエスト基本情報のSysID
+     * @return true：表示／false:非表示
+     */
+    isShowProvisioningInputCompleteBtn: function(svReqBaseSysId) {
+
+        var isShowBtn = false;
+
+        var svReqBase = new GlideRecord(this.TBL_SERVER_REQUEST_BASE);
+        if (svReqBase.get(svReqBaseSysId)) {
+            var autoProvStatus = svReqBase.getValue('u_01_automatic_provisioning_status');
+            var reqStatus = svReqBase.getValue('u_01_request_status');
+            var classification = svReqBase.getValue('u_01_classification');
+            var serverType = svReqBase.getValue('u_01_server_type');
+            if (autoProvStatus === '10' && reqStatus === '40' && classification === this.CLASSIFICATION_CREATE) {
+                isShowBtn = true;
+            }
+        }
+
+        return isShowBtn;
+    },
+
+    /**
+     * キャパシティ担当用入力完了ボタン表示条件チェック
+     * ＜機能＞
+     * キャパシティ担当の入力完了ボタンを表示できるかどうかをチェックする。
+     * 
+     * @param svReqBaseSysId：サーバリクエスト基本情報のSysID
+     * @return true：表示／false:非表示
+     */
+    isShowResourceInputCompleteBtn: function(svReqBaseSysId) {
+
+        var isShowBtn = false;
+
+        var svReqBase = new GlideRecord(this.TBL_SERVER_REQUEST_BASE);
+        if (svReqBase.get(svReqBaseSysId)) {
+            var autoProvStatus = svReqBase.getValue('u_01_automatic_provisioning_status');
+            var reqStatus = svReqBase.getValue('u_01_request_status');
+            var classification = svReqBase.getValue('u_01_classification');
+            var serverType = svReqBase.getValue('u_01_server_type');
+            if (autoProvStatus === '10' && reqStatus === '40' && classification === this.CLASSIFICATION_CREATE && (serverType === this.SERVER_TYPE_IA_GR || serverType === this.SERVER_TYPE_CORE_OS)) {
+                isShowBtn = true;
+            }
+        }
+
+        return isShowBtn;
+    },
+
+    type: 'camdev_ValidationServerRequest'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 04:36:30</sys_created_on>
+        <sys_id>99bdbb342f589510ea364ae72799b66e</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>camdev_ValidationServerRequest</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_include_99bdbb342f589510ea364ae72799b66e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-09-09 04:06:39</sys_updated_on>
+    </sys_script_include>
+</record_update>

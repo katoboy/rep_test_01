@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_761427_campusdev.camdev_ValidationUtils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Script Include「camdev_ValidationServerRequestFieldValue」から呼び出される。&#13;
+Script Includeから渡された引数に対して基本的な入力値のチェックを行う。</description>
+        <name>camdev_ValidationUtils</name>
+        <script><![CDATA[var camdev_ValidationUtils = Class.create();
+camdev_ValidationUtils.prototype = {
+	
+    initialize: function() {
+    },
+	
+	/**
+	 * 空チェック
+	 * ＜機能＞
+	 * 指定された値が空かどうかを判定する。
+	 * 
+	 * @param 値
+	 * @return true：空／false：空以外
+	 */
+	isEmpty: function(value) {
+		return (value === null || value === '');
+	},
+
+	/**
+	 * 空以外かどうかのチェック
+	 * ＜機能＞
+	 * 指定された値が空でないかどうかを判定する。
+	 * 
+	 * @param 値
+	 * @return true：空以外／false：空
+	 */
+	isNotEmpty: function(value) {
+
+		var result = true;
+		if (this.isEmpty(value)) {
+			result = false;
+		}
+
+		return result;
+	},
+
+	/**
+	 * 数値かどうかのチェック
+	 * ＜機能＞
+	 * 指定された値が数値かどうかのチェックを行う
+	 * 
+	 * @param value：値
+	 * @return true：数値／false：数値以外の文字を含む
+	 */
+	isNumeric: function(value) {
+		var result = false;
+		if (this.isNotEmpty(value) && isFinite(value)) {
+			result = true;
+		}
+		return result;
+	},
+
+	/**
+	 * 数値の範囲チェック
+	 * ＜機能＞
+	 * 指定された値が範囲内に含まれるかどうかを判定する。
+	 * ※値が空や数字以外の場合は、範囲外とみなす
+	 * 
+	 * @param value：値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true：範囲内／false：範囲外
+	 */
+	isNumericRange: function(value, min, max) {
+		var result = false;
+		if (this.isNotEmpty(value) && isFinite(value)) {
+			var intValue = parseInt(value);
+			if (intValue >= min && intValue <= max) {
+				result = true;
+			}
+		}
+		return result;
+	},
+
+	/**
+	 * 数値の刻みチェック
+	 * ＜機能＞
+	 * 指定された値が、指定された刻みの整数値であるかをを判定する。
+	 * ※値が空や数字以外の場合は、対象外とみなす
+	 * 
+	 * @param value：値
+	 * @param increments：刻み値
+	 * @return true：刻み値の値／false：刻み値の値となっていない
+	 */
+	isNumericIncrements: function(value, increments) {
+		var result = false;
+		if ((this.isNotEmpty(value) && isFinite(value)) 
+			&& (this.isNotEmpty(increments) && isFinite(increments))) {
+			var intValue      = parseInt(value);
+			var intIncrements = parseInt(increments);
+			if (intValue != 0 && (intValue % intIncrements == 0)) {
+				result = true;
+			}
+		}
+		return result;
+	},
+
+	/**
+	 * 数値の最小値チェック
+	 * ＜機能＞
+	 * 指定された値が最小値を超えているかどうかを判定する。
+	 * ※値が空や数字以外の場合は、最小値未満とみなす
+	 * 
+	 * @param value：値
+	 * @param min：最小値
+	 * @param max：最大値
+	 * @return true：範囲内／false：範囲外
+	 */
+	isNumericMin: function(value, min) {
+		var result = false;
+		if (this.isNotEmpty(value) && isFinite(value)) {
+			var intValue = parseInt(value);
+			if (intValue >= min) {
+				result = true;
+			}
+		}
+		return result;
+	},
+
+	/**
+	 * 日付の比較
+	 * ＜機能＞
+	 * 指定された日付の値と対象日を比較し、以下のいずれかを返却する。
+	 *  0    ：同日
+	 *  0以下：指定された日付が対象日より過去
+	 *  1以上：指定された日付が対象日より未来
+	 * 
+	 * @param date：日付の値
+	 * @param target：対象日
+	 * @return 0：同日/0以下：指定された日付が対象日より過去/1以上：指定された日付が対象日より未来
+	 */
+	compareDate: function(date, target) {
+		var durationDays  = 0;
+		var dataGdt   = new GlideDateTime(date);
+		var targetGdt = new GlideDateTime(target);
+		var durations = new GlideDuration();
+		durations = GlideDateTime.subtract(targetGdt, dataGdt);
+
+		return durations.getDayPart();
+	},
+	//★add
+	/**
+	 * ディスクNo.1の存在チェック
+	 * ＜機能＞
+	 * ディスクNo.1の存在有無を確認し、結果を返却する。
+	 * 
+	 * @param date：ディスクNo.1の値
+	 * 
+	 * @return true：存在／false：存在しない
+	 */
+	existDiskNo1: function(diskNo){
+	var result = false;
+		if(diskNo == 1){
+	result = true;
+			return result;
+		}else{
+	return result;
+		}
+},
+	/**
+	 * ディスクNo.の重複チェック
+	 * ＜機能＞
+	 * ディスクNo.の重複を確認し、結果を返却する。
+	 * 
+	 * @param date：ディスクNo.の値
+	 * 
+	 * @return true：存在／false：存在しない
+	 */	
+	duplicationDiskNo: function(diskNo){
+	
+		
+	},
+	//★add
+	
+    type: 'camdev_ValidationUtils'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 02:22:12</sys_created_on>
+        <sys_id>282fd3782fd49510ea364ae72799b616</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>camdev_ValidationUtils</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_include_282fd3782fd49510ea364ae72799b616</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-09-09 00:21:20</sys_updated_on>
+    </sys_script_include>
+</record_update>
