@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="col_3" label="Col 3" language="en" table="x_761427_campusdev_test_table_git_01">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>col_3</element>
+            <help/>
+            <hint/>
+            <label>Col 3</label>
+            <language>en</language>
+            <name>x_761427_campusdev_test_table_git_01</name>
+            <plural>Col 3s</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-11-15 09:10:41</sys_created_on>
+            <sys_id>269be727474b1110733afb42e36d4310</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Col 3</sys_name>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_documentation_x_761427_campusdev_test_table_git_01_col_3_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-11-15 09:10:41</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>
