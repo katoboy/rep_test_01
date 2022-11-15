@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_761427_campusdev.camdev_NoInputCheckNewBareMetal</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>区分「新規」かつサーバ種別「ベアメタル」の場合かつ、&#13;
+「camdevRequest」クリック時かつ確認メッセージのOKをクリックした時、&#13;
+入力不要項目の値を確認し、入力されていた場合はクリアする。</description>
+        <name>camdev_NoInputCheckNewBareMetal</name>
+        <script><![CDATA[var camdev_NoInputCheckNewBareMetal = Class.create();
+camdev_NoInputCheckNewBareMetal.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+	
+    /**
+     * UI Action「camdevRequest」により、
+     * 区分「新規」かつサーバ種別「ベアメタル」が判定された場合呼び出される。
+     * 呼び出し時、該当レコードのsys_idが渡される。
+     * それを元に各テーブルを検索する。
+     * 入力不要項目に入力があった場合、クリアし更新する。
+     * 但し、07テーブルに関しては該当レコードの削除となる。
+     * クリアもしくは削除があった場合、各テーブル毎に対象の項目名（文字列）等を配列にpushする。
+     * 各テーブルの検索が終わった際に上記配列を呼び出し元に返却する。
+     * ※開発規約の文字数制限により、他のClient Script側でのNameを「Create」ではなく「New」としている。
+     * その為、本Script Includeも上記に準じた命名としている。
+     */
+
+    noInputCheck: function() {
+        var sysid = this.getParameter('sysparm_sysid');
+
+        //サーバ情報（x_nttm8_campus_dev_02_server）の検索※Reference：u_02_request_form_number
+        var gr_table_02 = new GlideRecord('x_761427_campusdev_02_server');
+        gr_table_02.addQuery('u_02_request_form_number', sysid);
+        gr_table_02.query();
+
+        //該当レコード入力不要項目チェック※対象：u_02_cpu_socket_count、u_02_virtual_nic_count、u_02_affinity_rule
+        while (gr_table_02.next()) {
+            var table_02_sysid = gr_table_02.sys_id;
+            if (gr_table_02.u_02_cpu_socket_count != '' ||
+                gr_table_02.u_02_virtual_nic_count != '' ||
+                gr_table_02.u_02_affinity_rule != '') {
+                gr_table_02.setValue('u_02_cpu_socket_count', '');
+                gr_table_02.setValue('u_02_virtual_nic_count', '');
+                gr_table_02.setValue('u_02_affinity_rule', '');
+                gr_table_02.update();
+            }
+
+			//ディスク（x_nttm8_campus_dev_03_disk）の検索※Reference：u_03_server_info
+			var gr_table_03 = new GlideRecord('x_761427_campusdev_03_disk');
+			gr_table_03.addQuery('u_03_server_info', table_02_sysid);
+			gr_table_03.query();
+			//該当レコード入力不要項目チェック※対象：u_03_iops
+			while (gr_table_03.next()) {
+				if (gr_table_03.u_03_iops != '') {
+					gr_table_03.setValue('u_03_iops', '');
+					gr_table_03.update();
+				}
+			}
+
+			//RDM（x_nttm8_campus_dev_04_rdm_disk）ディスクの検索※Reference：u_04_server_info
+			var gr_table_04 = new GlideRecord('x_761427_campusdev_04_rdm_disk');
+			gr_table_04.addQuery('u_04_server_info', table_02_sysid);
+			gr_table_04.query();
+
+			//該当レコード入力不要項目チェック※対象：u_04_iops
+			while (gr_table_04.next()) {
+				if (gr_table_04.u_04_iops != '') {
+					gr_table_04.setValue('u_04_iops', '');
+					gr_table_04.update();
+				}
+			}
+
+			//ネットワーク（x_nttm8_campus_dev_05_nic）の検索※Reference：u_05_server_info
+			var gr_table_05 = new GlideRecord('x_761427_campusdev_05_nic');
+			gr_table_05.addQuery('u_05_server_info', table_02_sysid);
+			gr_table_05.query();
+			//該当レコード入力不要項目チェック※対象：u_05_max_nw_band
+			while (gr_table_05.next()) {
+				if (gr_table_05.u_05_max_nw_band != '') {
+					gr_table_05.setValue('u_05_max_nw_band', '');
+					gr_table_05.update();
+				}
+			}
+		}
+
+        //アフィニティルール（x_nttm8_campus_dev_07_affinity_rule）の検索※Reference：u_07_request_form_number
+        var gr_table_07 = new GlideRecord('x_761427_campusdev_07_affinity_rule');
+        gr_table_07.addQuery('u_07_request_form_number', sysid);
+        gr_table_07.query();
+        //該当レコード入力不要項目チェック※対象：u_07_placement_classification、u_07_server_info_list
+        while (gr_table_07.next()) {
+            if (gr_table_07.u_07_placement_classification != '' ||
+                gr_table_07.u_07_server_info_list != '') {
+                gr_table_07.deleteMultiple();
+            }
+        }
+
+        return true;
+
+    },	
+    type: 'camdev_NoInputCheckNewBareMetal'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 02:54:34</sys_created_on>
+        <sys_id>5b866fbc2fd49510ea364ae72799b660</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_NoInputCheckNewBareMetal</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_include_5b866fbc2fd49510ea364ae72799b660</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-23 02:54:34</sys_updated_on>
+    </sys_script_include>
+</record_update>

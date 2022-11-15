@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="RDM Disk" max_length="40" name="x_761427_campusdev_04_rdm_disk" sizeclass="70" type="collection">
+        <element label="Domain" max_length="32" name="domain" type="domain_id"/>
+        <element label="Capacity(GiB)" max_length="40" name="u_04_capacity" type="integer"/>
+        <element choice="1" label="Disk No." max_length="40" name="u_04_disk_no" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="1" sequence="10" value="1"/>
+                <element inactive_on_update="false" label="2" sequence="20" value="2"/>
+                <element inactive_on_update="false" label="3" sequence="30" value="3"/>
+                <element inactive_on_update="false" label="4" sequence="40" value="4"/>
+                <element inactive_on_update="false" label="5" sequence="50" value="5"/>
+                <element inactive_on_update="false" label="6" sequence="60" value="6"/>
+                <element inactive_on_update="false" label="7" sequence="70" value="7"/>
+                <element inactive_on_update="false" label="8" sequence="80" value="8"/>
+                <element inactive_on_update="false" label="9" sequence="90" value="9"/>
+                <element inactive_on_update="false" label="10" sequence="100" value="10"/>
+            </choice>
+        </element>
+        <element label="IOPS" max_length="40" name="u_04_iops" type="integer"/>
+        <element choice="1" label="RW Rate Read" max_length="40" name="u_04_rw_rate_read" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="1" sequence="10" value="1"/>
+                <element inactive_on_update="false" label="2" sequence="20" value="2"/>
+                <element inactive_on_update="false" label="3" sequence="30" value="3"/>
+                <element inactive_on_update="false" label="4" sequence="40" value="4"/>
+                <element inactive_on_update="false" label="5" sequence="50" value="5"/>
+                <element inactive_on_update="false" label="6" sequence="60" value="6"/>
+                <element inactive_on_update="false" label="7" sequence="70" value="7"/>
+                <element inactive_on_update="false" label="8" sequence="80" value="8"/>
+                <element inactive_on_update="false" label="9" sequence="90" value="9"/>
+            </choice>
+        </element>
+        <element label="RW Rate Write" max_length="40" name="u_04_rw_rate_write" type="integer"/>
+        <element label="Server Info" max_length="32" name="u_04_server_info" reference="x_761427_campusdev_02_server" type="reference"/>
+        <element label="Sharing Disk" max_length="40" name="u_04_sharing_disk" type="string"/>
+        <index name="index">
+            <element name="u_04_server_info"/>
+        </index>
+        <index name="index2">
+            <element name="domain"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_761427_campusdev.camdev_FormMessageNewBareMetal</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>区分「新規」かつサーバ種別「ベアメタル」の場合は各項目の入力不要の旨、メッセージを表示する為の処理。</description>
+        <name>camdev_FormMessageNewBareMetal</name>
+        <script><![CDATA[var camdev_FormMessageNewBareMetal = Class.create();
+camdev_FormMessageNewBareMetal.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+    /**
+     * 区分「新規」かつサーバ種別「ベアメタル」を判定
+     * 上記に一致する場合はtrue、それ以外はfalseを返却
+     * ※02及び07テーブルは下記「judgement_func」、03～05テーブルは「judgement_func_other」を使用。
+     * ※開発規約の文字数制限により、呼び出し元のClient Script側でのNameを「Create」ではなく「New」としている。
+     * その為、本Script Includeも上記に準じた命名としている。
+     */
+
+    judgement_func: function() {
+        var sysid = this.getParameter('sysparm_sysid');
+        var tablename = this.getParameter('sysparm_tablename');
+
+        var gr = new GlideRecord(tablename);
+        gr.addQuery('sys_id', '=', sysid);
+        gr.query();
+
+        while (gr.next()) {
+            var classification_value = gr.u_01_classification;
+            var server_type_value = gr.u_01_server_type;
+            if (classification_value == 'create' && server_type_value == 'bare-metal') {
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+    },
+
+    judgement_func_other: function() {
+
+        var sysid = this.getParameter('sysparm_sysid');
+        var tablename = this.getParameter('sysparm_tablename');
+        var gr = new GlideRecord(tablename);
+        gr.addQuery('sys_id', '=', sysid);
+        gr.query();
+
+        while (gr.next()) {
+            var dotwalk_sysid = gr.u_02_request_form_number;
+            var classification_value = dotwalk_sysid.u_01_classification;
+            var server_type_value = dotwalk_sysid.u_01_server_type;
+
+            if (classification_value == 'create' && server_type_value == 'bare-metal') {
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+    },	
+	
+    type: 'camdev_FormMessageNewBareMetal'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 02:27:26</sys_created_on>
+        <sys_id>967063f42fd49510ea364ae72799b66c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_FormMessageNewBareMetal</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_include_967063f42fd49510ea364ae72799b66c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-23 02:27:26</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Resource Match" max_length="40" name="x_761427_campusdev_10_resource_match" sizeclass="0" type="collection">
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="ID" max_length="40" name="number" type="string"/>
+        <element label="Active" max_length="40" name="u_10_active" type="boolean"/>
+        <element label="Bitmask" max_length="40" name="u_10_bitmask" type="integer"/>
+        <element label="Catalog Name" max_length="40" name="u_10_catalog_name" type="string"/>
+        <element label="Cluster Name" max_length="40" name="u_10_cluster_name" type="string"/>
+        <element label="Datastore Name" max_length="40" name="u_10_datastore_name" type="string"/>
+        <element choice="1" label="Environment" max_length="40" name="u_10_environment" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Product" sequence="10" value="product"/>
+                <element inactive_on_update="false" label="BCP" sequence="20" value="bcp"/>
+                <element inactive_on_update="false" label="Develop" sequence="30" value="develop"/>
+                <element inactive_on_update="false" label="Verification" sequence="40" value="verification"/>
+            </choice>
+        </element>
+        <element label="ESXi Server Name" max_length="40" name="u_10_esxi_server_name" type="string"/>
+        <element choice="1" label="File System" max_length="40" name="u_10_file_system" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="XFS" sequence="10" value="xfs"/>
+                <element inactive_on_update="false" label="ext4" sequence="20" value="ext4"/>
+            </choice>
+        </element>
+        <element choice="1" label="High Availability Cluster" max_length="40" name="u_10_high_availability_cluster" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="False" sequence="10"/>
+                <element inactive_on_update="false" label="True" sequence="20" value="true"/>
+            </choice>
+        </element>
+        <element choice="1" label="Match Sheet Type" max_length="40" name="u_10_match_sheet_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Cluster" sequence="10" value="cluster"/>
+                <element inactive_on_update="false" label="Catalog" sequence="20" value="catalog"/>
+                <element inactive_on_update="false" label="Reserve" sequence="30" value="reserve"/>
+                <element inactive_on_update="false" label="Network Path" sequence="40" value="network_path"/>
+                <element inactive_on_update="false" label="Except Resource" sequence="50" value="except_resource"/>
+            </choice>
+        </element>
+        <element label="Network Path" max_length="40" name="u_10_network_path" type="string"/>
+        <element label="Network Segment" max_length="40" name="u_10_network_segment" type="ip_addr"/>
+        <element label="Note" max_length="40" name="u_10_note" type="string"/>
+        <element choice="1" label="OS Type" max_length="100" name="u_10_os_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Red Hat Enterprise Linux 7.2" value="Red Hat Enterprise Linux 7.2"/>
+                <element inactive_on_update="false" label="Red Hat Enterprise Linux 7.3" value="Red Hat Enterprise Linux 7.3"/>
+                <element inactive_on_update="false" label="Red Hat Enterprise Linux 7.6" value="Red Hat Enterprise Linux 7.6"/>
+                <element inactive_on_update="false" label="Red Hat Enterprise Linux 8.2" value="Red Hat Enterprise Linux 8.2"/>
+                <element inactive_on_update="false" label="Windows Server 2008 R2 Datacenter Edition" value="Windows Server 2008 R2 Datacenter Edition"/>
+                <element inactive_on_update="false" label="Windows Server 2008 R2 Standard Edition" value="Windows Server 2008 R2 Standard Edition"/>
+                <element inactive_on_update="false" label="Windows Server 2012 R2 Datacenter Edition" value="Windows Server 2012 R2 Datacenter Edition"/>
+                <element inactive_on_update="false" label="Windows Server 2012 R2 Standard Edition" value="Windows Server 2012 R2 Standard Edition"/>
+                <element inactive_on_update="false" label="Windows Server 2016 Datacenter Edition" value="Windows Server 2016 Datacenter Edition"/>
+                <element inactive_on_update="false" label="Windows Server 2016 Standard Edition" value="Windows Server 2016 Standard Edition"/>
+                <element inactive_on_update="false" label="Windows Server 2019 Datacenter Edition" value="Windows Server 2019 Datacenter Edition"/>
+                <element inactive_on_update="false" label="Windows Server 2019 Standard Edition" value="Windows Server 2019 Standard Edition"/>
+            </choice>
+        </element>
+        <element label="Reserve Name" max_length="40" name="u_10_reserve_name" type="string"/>
+        <element choice="1" label="Resource Type" max_length="40" name="u_10_resource_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="ESXiServer" sequence="10" value="esxiserver"/>
+                <element inactive_on_update="false" label="Datastore" sequence="20" value="datastore"/>
+            </choice>
+        </element>
+        <element choice="1" label="Service Type" max_length="40" name="u_10_service_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Small" sequence="10" value="small"/>
+                <element inactive_on_update="false" label="Medium" sequence="20" value="medium"/>
+                <element inactive_on_update="false" label="Large" sequence="30" value="large"/>
+                <element inactive_on_update="false" label="-" sequence="40" value="-"/>
+            </choice>
+        </element>
+        <element label="Sub System" max_length="40" name="u_10_sub_system" type="string"/>
+        <element label="Update Reason" max_length="4000" name="u_10_update_reason" type="journal_input"/>
+        <element choice="1" label="Usage" max_length="40" name="u_10_usage" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Normal" sequence="10" value="normal"/>
+                <element inactive_on_update="false" label="Bridge" sequence="20" value="bridge"/>
+            </choice>
+        </element>
+        <element label="Usage for NW" max_length="40" name="u_10_usage_for_nw" type="string"/>
+        <element choice="1" label="Usage System" max_length="40" name="u_10_usage_system" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="ALADIN" sequence="10" value="aladin"/>
+                <element inactive_on_update="false" label="MoBills" sequence="20" value="mobills"/>
+                <element inactive_on_update="false" label="NWJyoho" sequence="30" value="nwjyoho"/>
+                <element inactive_on_update="false" label="dCard" sequence="40" value="dcard"/>
+            </choice>
+        </element>
+    </element>
+</database>

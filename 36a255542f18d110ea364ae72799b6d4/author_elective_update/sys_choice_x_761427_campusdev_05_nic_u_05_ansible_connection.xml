@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="u_05_ansible_connection" table="x_761427_campusdev_05_nic" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>u_05_ansible_connection</element>
+            <name>x_761427_campusdev_05_nic</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:45:23</sys_created_on>
+            <sys_id>fe4bdea02f105510ea364ae72799b6db</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>u_05_ansible_connection</sys_name>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_choice_x_761427_campusdev_05_nic_u_05_ansible_connection</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:45:23</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_05_ansible_connection</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>-</label>
+            <language>en</language>
+            <name>x_761427_campusdev_05_nic</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:45:23</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>cf3b16a02f105510ea364ae72799b677</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:45:53</sys_updated_on>
+            <value>1</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_05_ansible_connection</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>With Connection</label>
+            <language>en</language>
+            <name>x_761427_campusdev_05_nic</name>
+            <sequence>20</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:45:36</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>8f4b16ec2fdc1510ea364ae72799b622</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:45:58</sys_updated_on>
+            <value>2</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

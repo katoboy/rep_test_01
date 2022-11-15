@@ -6,7 +6,7 @@
         <annotation/>
         <callable_by_client_api>false</callable_by_client_api>
         <category/>
-        <compiler_build/>
+        <compiler_build>glide-sandiego-12-22-2021__patch0-hotfix1-02-01-2022_02-01-2022_2323.zip</compiler_build>
         <copied_from/>
         <copied_from_name/>
         <description/>
@@ -160,7 +160,7 @@
         <action_type display_value="Log">5bc1bcc6531003003bf1d9109ec587d4</action_type>
         <action_type_parent/>
         <comment/>
-        <compiled_snapshot/>
+        <compiled_snapshot>5bc1bcc6531003003bf1d9109ec587d4</compiled_snapshot>
         <display_text/>
         <flow display_value="will_del_flow">9c469ace47f51110733afb42e36d4343</flow>
         <order>1</order>
@@ -169,10 +169,10 @@
         <sys_created_by>will_del_user</sys_created_by>
         <sys_created_on>2022-09-09 07:49:14</sys_created_on>
         <sys_id>5076d20247391110733afb42e36d43c5</sys_id>
-        <sys_mod_count>6</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
-        <sys_updated_by>will_del_user</sys_updated_by>
-        <sys_updated_on>2022-09-09 07:49:19</sys_updated_on>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2022-09-09 08:15:03</sys_updated_on>
         <ui_id>de54fb41-a033-4129-979d-5b90ffb42087</ui_id>
     </sys_hub_action_instance>
     <sys_variable_value action="delete_multiple" query="document_key=5076d20247391110733afb42e36d43c5"/>
@@ -204,9 +204,9 @@
     <sys_flow_trigger_plan action="delete_multiple" query="plan_id=9c469ace47f51110733afb42e36d4343^sys_idNOT IN6176160247391110733afb42e36d4399"/>
     <sys_flow_trigger_plan action="INSERT_OR_UPDATE">
         <binding_strategy>com.snc.process_flow.engine.binding.RunAlways</binding_strategy>
-        <plan/>
+        <plan>{"persistor":{"@class":".ChunkingPlanPersistor","table":"sys_flow_trigger_plan","id":"6176160247391110733afb42e36d4399","name":"plan","plan_signature":null}}</plan>
         <plan_id>9c469ace47f51110733afb42e36d4343</plan_id>
-        <snapshot>1d76160247391110733afb42e36d437f</snapshot>
+        <snapshot>9a5c1e4a47391110733afb42e36d43cb</snapshot>
         <sys_created_by>will_del_user</sys_created_by>
         <sys_created_on>2022-09-09 07:49:19</sys_created_on>
         <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>

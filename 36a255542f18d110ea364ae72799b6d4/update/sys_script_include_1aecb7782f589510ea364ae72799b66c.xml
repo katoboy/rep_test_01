@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_761427_campusdev.camdev_AutoSetAutomationFlg</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>与えられたパラメータを基に「自動化対象フラグ」を更新する。</description>
+        <name>camdev_AutoSetAutomationFlg</name>
+        <script><![CDATA[var camdev_AutoSetAutomationFlg = Class.create();
+camdev_AutoSetAutomationFlg.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+    autoSetAutomationFlg: function() {
+        // パラメータ取得
+        var target_tbl_name = this.getParameter('sysparm_table_name'); //02テーブル
+        var target_sysids = this.getParameter('sysparm_system_ids'); //02テーブルのsysid（更新対象）
+        var target_feild = this.getParameter('sysparm_target_feild'); //変更されたフィールド
+        var newValue = this.getParameter('sysparm_new_value'); //変更後の値
+
+        var targetArray = target_sysids.split(',');
+        for (var i = 0; i < targetArray.length; i++) {
+
+            var targetSysId = targetArray[i];
+            var gr_02 = new GlideRecord(target_tbl_name);
+            gr_02.get(targetSysId);
+
+            // チェックパラメータ設定
+            var gr_01 = new GlideRecord('x_761427_campusdev_01_server_request_base');
+            gr_01.get(gr_02.u_02_request_form_number);
+
+            var classification = gr_01.getValue('u_01_classification');
+            var serverType = gr_01.getValue('u_01_server_type');
+            var osType = gr_02.getValue('u_02_os_type');
+            var usage = gr_02.getValue('u_02_usage');
+
+            if ('u_02_os_type' == target_feild) {
+                osType = newValue;
+            } else if ('u_02_usage' == target_feild) {
+                usage = newValue;
+            }
+
+            // チェック実施
+            var checkUtil = new camdev_ValidationServerRequest();
+            var automation = checkUtil.isAutomation(classification, serverType, osType, usage);
+            var automaionFlag = 'false';
+            if (true == automation) {
+                automaionFlag = 'true';
+            }
+
+            // 自動化対象フラグ 更新
+            gr_02.setValue('u_02_automation_flag', automaionFlag);
+            gr_02.update();
+        }
+    },	
+	
+    type: 'camdev_AutoSetAutomationFlg'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 04:32:46</sys_created_on>
+        <sys_id>1aecb7782f589510ea364ae72799b66c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_AutoSetAutomationFlg</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_include_1aecb7782f589510ea364ae72799b66c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-23 04:32:46</sys_updated_on>
+    </sys_script_include>
+</record_update>

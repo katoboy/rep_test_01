@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="u_10_high_availability_cluster" table="x_761427_campusdev_10_resource_match" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>u_10_high_availability_cluster</element>
+            <name>x_761427_campusdev_10_resource_match</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-09-27 02:34:26</sys_created_on>
+            <sys_id>d40b39f747821110733afb42e36d4396</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>u_10_high_availability_cluster</sys_name>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_choice_x_761427_campusdev_10_resource_match_u_10_high_availability_cluster</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-09-27 02:34:26</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_10_high_availability_cluster</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>False</label>
+            <language>en</language>
+            <name>x_761427_campusdev_10_resource_match</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-09-27 02:34:26</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>9cdaf5fb47821110733afb42e36d43d1</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-09-27 02:34:40</sys_updated_on>
+            <value>false</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_10_high_availability_cluster</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>True</label>
+            <language>en</language>
+            <name>x_761427_campusdev_10_resource_match</name>
+            <sequence>20</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-09-27 02:34:50</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e40bf5fb47821110733afb42e36d43bf</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-09-27 02:36:07</sys_updated_on>
+            <value>true</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="u_06_wakeup_triger" table="x_761427_campusdev_06_data_backup" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>u_06_wakeup_triger</element>
+            <name>x_761427_campusdev_06_data_backup</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:56:52</sys_created_on>
+            <sys_id>97ed9a642f105510ea364ae72799b600</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>u_06_wakeup_triger</sys_name>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_choice_x_761427_campusdev_06_data_backup_u_06_wakeup_triger</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:56:52</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_06_wakeup_triger</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Daily Batch</label>
+            <language>en</language>
+            <name>x_761427_campusdev_06_data_backup</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:56:52</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>77dd1aa42f105510ea364ae72799b680</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:57:26</sys_updated_on>
+            <value>1</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_06_wakeup_triger</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Weekly Batch</label>
+            <language>en</language>
+            <name>x_761427_campusdev_06_data_backup</name>
+            <sequence>20</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:56:59</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>57ed5ee02f105510ea364ae72799b662</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:57:32</sys_updated_on>
+            <value>2</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_06_wakeup_triger</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Run Any Time</label>
+            <language>en</language>
+            <name>x_761427_campusdev_06_data_backup</name>
+            <sequence>30</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:57:07</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>f8fd5a642f105510ea364ae72799b68f</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:57:38</sys_updated_on>
+            <value>3</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

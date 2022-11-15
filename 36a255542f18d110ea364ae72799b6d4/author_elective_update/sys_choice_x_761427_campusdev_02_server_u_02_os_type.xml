@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="u_02_os_type" table="x_761427_campusdev_02_server" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>u_02_os_type</element>
+            <name>x_761427_campusdev_02_server</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:40:15</sys_created_on>
+            <sys_id>1ea072142fdcd110ea364ae72799b62b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>u_02_os_type</sys_name>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_choice_x_761427_campusdev_02_server_u_02_os_type</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 09:40:15</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_02_os_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Red Hat Enterprise Linux 7.2</label>
+            <language>en</language>
+            <name>x_761427_campusdev_02_server</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:40:15</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>7490b6942fdcd110ea364ae72799b68d</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:56:54</sys_updated_on>
+            <value>Red Hat Enterprise Linux 7.2</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_02_os_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Red Hat Enterprise Linux 7.3</label>
+            <language>en</language>
+            <name>x_761427_campusdev_02_server</name>
+            <sequence>20</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:40:23</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>22a03a902fdcd110ea364ae72799b61c</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:56:47</sys_updated_on>
+            <value>Red Hat Enterprise Linux 7.3</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_02_os_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Red Hat Enterprise Linux 7.6</label>
+            <language>en</language>
+            <name>x_761427_campusdev_02_server</name>
+            <sequence>30</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:40:33</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>64b0fa542fdcd110ea364ae72799b640</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:56:41</sys_updated_on>
+            <value>Red Hat Enterprise Linux 7.6</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_02_os_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Red Hat Enterprise Linux 7.7</label>
+            <language>en</language>
+            <name>x_761427_campusdev_02_server</name>
+            <sequence>40</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:40:41</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>3eb0ba502fdcd110ea364ae72799b657</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:56:35</sys_updated_on>
+            <value>Red Hat Enterprise Linux 7.7</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_02_os_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Red Hat Enterprise Linux 8.2</label>
+            <language>en</language>
+            <name>x_761427_campusdev_02_server</name>
+            <sequence>50</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:40:49</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>11c03e942fdcd110ea364ae72799b6d1</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:56:30</sys_updated_on>
+            <value>Red Hat Enterprise Linux 8.2</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_02_os_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Windows Server 2008</label>
+            <language>en</language>
+            <name>x_761427_campusdev_02_server</name>
+            <sequence>60</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:40:56</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>0bc03a902fdcd110ea364ae72799b610</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:56:24</sys_updated_on>
+            <value>Windows Server 2008</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_02_os_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Windows Server 2012</label>
+            <language>en</language>
+            <name>x_761427_campusdev_02_server</name>
+            <sequence>70</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:41:08</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>a0d07e942fdcd110ea364ae72799b6ca</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:56:14</sys_updated_on>
+            <value>Windows Server 2012</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_02_os_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Windows Server 2016</label>
+            <language>en</language>
+            <name>x_761427_campusdev_02_server</name>
+            <sequence>80</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:41:16</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>67d07a942fdcd110ea364ae72799b647</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:56:07</sys_updated_on>
+            <value>Windows Server 2016</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_02_os_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Windows Server 2019</label>
+            <language>en</language>
+            <name>x_761427_campusdev_02_server</name>
+            <sequence>90</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:41:25</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>11e07e942fdcd110ea364ae72799b6cb</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:55:55</sys_updated_on>
+            <value>Windows Server 2019</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

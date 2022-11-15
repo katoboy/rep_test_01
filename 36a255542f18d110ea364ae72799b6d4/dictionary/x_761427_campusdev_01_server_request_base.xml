@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="x_761427_assproduc_abstract_external_for_task" label="Server Request Base" max_length="40" name="x_761427_campusdev_01_server_request_base" sizeclass="33" type="collection">
+        <element choice="1" label="Approval Request Flag" max_length="40" name="u_01_approval_request_flag" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Hidden" sequence="10" value="10"/>
+                <element inactive_on_update="false" label="Displaying" sequence="20" value="20"/>
+                <element inactive_on_update="false" label="Pressed" sequence="30" value="30"/>
+            </choice>
+        </element>
+        <element choice="1" label="Automatic Design Item Update Flag" max_length="40" name="u_01_automatic_design_item_update_flag" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Off" sequence="10" value="10"/>
+                <element inactive_on_update="false" label="On" sequence="20" value="20"/>
+            </choice>
+        </element>
+        <element choice="1" label="Automatic Provisioning Status" max_length="40" name="u_01_automatic_provisioning_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="In Preparation" sequence="10" value="10"/>
+                <element inactive_on_update="false" label="Before Execution" sequence="20" value="20"/>
+                <element inactive_on_update="false" label="In Transfer" sequence="30" value="30"/>
+                <element inactive_on_update="false" label="Distribution Failure" sequence="40" value="40"/>
+                <element inactive_on_update="false" label="Provisioning In Progress" sequence="50" value="50"/>
+                <element inactive_on_update="false" label="Provisioning Successfully" sequence="60" value="60"/>
+                <element inactive_on_update="false" label="Provisioning Unsuccessfully" sequence="70" value="70"/>
+            </choice>
+        </element>
+        <element label="CAMPUS Manager" max_length="32" name="u_01_campus_manager" reference="sys_user" type="reference"/>
+        <element choice="1" label="Classification" max_length="40" name="u_01_classification" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Create" sequence="10" value="create"/>
+                <element inactive_on_update="false" label="Change" sequence="20" value="change"/>
+            </choice>
+        </element>
+        <element label="Complete Date" max_length="40" name="u_01_complete_date" type="glide_date"/>
+        <element choice="1" label="Completion Flag" max_length="40" name="u_01_completion_flag" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Hidden" sequence="10" value="10"/>
+                <element inactive_on_update="false" label="Displaying" sequence="20" value="20"/>
+                <element inactive_on_update="false" label="Pressed" sequence="30" value="30"/>
+            </choice>
+        </element>
+        <element choice="1" label="Deployment Flag" max_length="40" name="u_01_deployment_flag" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Hidden" sequence="10" value="10"/>
+                <element inactive_on_update="false" label="Displaying" sequence="20" value="20"/>
+                <element inactive_on_update="false" label="Pressed" sequence="30" value="30"/>
+            </choice>
+        </element>
+        <element choice="1" label="Environment Classification" max_length="40" name="u_01_environment_classification" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Product" sequence="10" value="product"/>
+                <element inactive_on_update="false" label="BCP" sequence="20" value="bcp"/>
+                <element inactive_on_update="false" label="Develop" sequence="30" value="develop"/>
+                <element inactive_on_update="false" label="Verification" sequence="40" value="verification"/>
+            </choice>
+        </element>
+        <element choice="1" label="Link Display Flag" max_length="40" name="u_01_link_display_flag" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Hidden" sequence="10" value="10"/>
+                <element inactive_on_update="false" label="Displaying" sequence="20" value="20"/>
+            </choice>
+        </element>
+        <element label="Manager" max_length="32" name="u_01_manager" reference="sys_user" type="reference"/>
+        <element choice="1" label="Network Cable Connection" max_length="40" name="u_01_network_cable_connection" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="False" sequence="10"/>
+                <element inactive_on_update="false" label="True" sequence="20" value="true"/>
+            </choice>
+        </element>
+        <element choice="1" label="New Network" max_length="40" name="u_01_new_network" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="False" sequence="10"/>
+                <element inactive_on_update="false" label="True" sequence="20" value="true"/>
+            </choice>
+        </element>
+        <element choice="1" label="OpenShift Affinity Rule" max_length="40" name="u_01_openshift_affinity_rule" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="No" sequence="10"/>
+                <element inactive_on_update="false" label="Yes" sequence="20" value="true"/>
+            </choice>
+        </element>
+        <element label="OpenShift Cluster Name" max_length="40" name="u_01_openshift_cluster_name" type="string"/>
+        <element label="OpenShift Disk Datastore Name" max_length="40" name="u_01_openshift_datastore_name" type="string"/>
+        <element label="OpenShift Disk Count" max_length="40" name="u_01_openshift_disk_count" type="integer"/>
+        <element label="OpenShift Disk Size" max_length="40" name="u_01_openshift_disk_size" type="integer"/>
+        <element label="Other Entries" max_length="40" name="u_01_other_entries" type="string"/>
+        <element label="OVA File Name" max_length="40" name="u_01_ova_file_name" type="string"/>
+        <element label="Request Date" max_length="40" name="u_01_request_date" type="glide_date"/>
+        <element display="true" label="Request Form Number" max_length="40" name="u_01_request_form_number" type="string"/>
+        <element label="Request Owner" max_length="32" name="u_01_request_owner" reference="sys_user" type="reference"/>
+        <element choice="1" label="Request Status" max_length="40" name="u_01_request_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Draft" sequence="10" value="10"/>
+                <element inactive_on_update="false" label="Request" sequence="20" value="20"/>
+                <element inactive_on_update="false" label="Reception" sequence="30" value="30"/>
+                <element inactive_on_update="false" label="Payout" sequence="40" value="40"/>
+                <element inactive_on_update="false" label="Complete" sequence="50" value="50"/>
+            </choice>
+        </element>
+        <element choice="1" label="Server Type" max_length="40" name="u_01_server_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="IA-Gr" sequence="10" value="IA-Gr"/>
+                <element inactive_on_update="false" label="Bare Metal" sequence="20" value="bare-metal"/>
+                <element inactive_on_update="false" label="CoreOS" sequence="30" value="CoreOS"/>
+            </choice>
+        </element>
+        <element label="Sub System" max_length="40" name="u_01_sub_system" type="string"/>
+        <element choice="1" label="Usage System" max_length="40" name="u_01_usage_system" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="ALADIN" sequence="10" value="aladin"/>
+                <element inactive_on_update="false" label="MoBills" sequence="20" value="mobills"/>
+                <element inactive_on_update="false" label="NWjyoho" sequence="30" value="nwjyoho"/>
+                <element inactive_on_update="false" label="Other" sequence="40" value="other"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="u_01_request_owner"/>
+        </index>
+        <index name="index2">
+            <element name="u_01_campus_manager"/>
+        </index>
+        <index name="index3">
+            <element name="u_01_manager"/>
+        </index>
+    </element>
+</database>

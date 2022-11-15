@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="u_06_backup_unit" table="x_761427_campusdev_06_data_backup" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>u_06_backup_unit</element>
+            <name>x_761427_campusdev_06_data_backup</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:52:19</sys_created_on>
+            <sys_id>e8ec52642f105510ea364ae72799b6c7</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>u_06_backup_unit</sys_name>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_choice_x_761427_campusdev_06_data_backup_u_06_backup_unit</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:52:19</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_06_backup_unit</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Directory</label>
+            <language>en</language>
+            <name>x_761427_campusdev_06_data_backup</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:52:19</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>a9cc56242f105510ea364ae72799b65e</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:52:41</sys_updated_on>
+            <value>1</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_06_backup_unit</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>File</label>
+            <language>en</language>
+            <name>x_761427_campusdev_06_data_backup</name>
+            <sequence>20</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:52:25</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>70ec56642f105510ea364ae72799b69e</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:52:46</sys_updated_on>
+            <value>2</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

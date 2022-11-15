@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_761427_campusdev.camdev_GetReferenceAnsibleNicNo</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>サーバ情報テーブルの参照項目「Ansible接続用NIC番号」について、フォーム画面から開く際（虫眼鏡クリック）、自レコードに紐づくレコードのみ表示させる為の処理。</description>
+        <name>camdev_GetReferenceAnsibleNicNo</name>
+        <script><![CDATA[function camdev_GetReferenceAnsibleNicNo() {
+
+    /**
+     * 05テーブルのレコードを検索し02テーブルとsys_idが一致するものを抽出。
+     * 一致したものがあった場合、05レコードのsys_idに'sys_idIN'を付加して返却。
+     * ※u_02_ansible_nic_noのAdvanced viewのReference Specification-Reference qualに
+     * 「javascript:camdev_GetReferenceAnsibleNicNo()」と記載し、本Script Includeを使用。
+     */
+
+    var return_sys_id = '';
+    var this_sys_id = current.getUniqueValue();
+
+    var gr = new GlideRecord('x_761427_campusdev_05_nic');
+    gr.addQuery('u_05_server_info', '=', this_sys_id);
+    gr.query();
+
+    while (gr.next()) {
+        return_sys_id = return_sys_id + ',' + gr.sys_id;
+    }
+    return 'sys_idIN' + return_sys_id;
+
+}]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 02:24:59</sys_created_on>
+        <sys_id>f8df93f42fd49510ea364ae72799b614</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_GetReferenceAnsibleNicNo</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_include_f8df93f42fd49510ea364ae72799b614</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-23 02:24:59</sys_updated_on>
+    </sys_script_include>
+</record_update>

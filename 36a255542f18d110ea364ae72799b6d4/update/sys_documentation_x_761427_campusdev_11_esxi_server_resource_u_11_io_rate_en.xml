@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="u_11_io_rate" label="IO_Rate" language="en" table="x_761427_campusdev_11_esxi_server_resource">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>u_11_io_rate</element>
+            <help/>
+            <hint/>
+            <label>IO_Rate</label>
+            <language>en</language>
+            <name>x_761427_campusdev_11_esxi_server_resource</name>
+            <plural>IO_Rates</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-07-26 07:21:14</sys_created_on>
+            <sys_id>db70ea232f309514ea364ae72799b689</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>IO_Rate</sys_name>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_documentation_x_761427_campusdev_11_esxi_server_resource_u_11_io_rate_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-07-26 07:21:14</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_761427_campusdev.camdev_AutoSetRwRateRead</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>RW比率(Read)の値をもとにRW比率(Write)を自動計算する（10からRW比率(Read)の値を引いた値）。</description>
+        <name>camdev_AutoSetRwRateRead</name>
+        <script><![CDATA[var camdev_AutoSetRwRateRead = Class.create();
+camdev_AutoSetRwRateRead.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+   autoSetRwRateRead: function() {
+        // パラメータ取得
+        var target_tbl_name = this.getParameter("sysparm_table_name");
+        var target_sysids = this.getParameter("sysparm_system_ids");
+        var read_num = this.getParameter("sysparm_read_num");
+
+		var target_Field = '';
+		if( 'x_761427_campusdev_03_disk' == target_tbl_name){
+			target_Field = 'u_03_rw_rate_write';
+		}else if('x_761427_campusdev_04_rdm_disk' == target_tbl_name){
+			target_Field = 'u_04_rw_rate_write';			
+		}else{
+			return;
+		}
+		
+		var set_value = ''; 
+		if(read_num != ''){
+			set_value = 10 - parseInt(read_num, 10); 
+		}
+		
+        var target_array = target_sysids.split(',');
+        for (var i = 0; i < target_array.length; i++) {
+            var gr = new GlideRecord(target_tbl_name);
+            gr.get(target_array[i]);
+            gr.setValue(target_Field, set_value);
+            gr.update();
+        }
+    },
+    type: 'camdev_AutoSetRwRateRead'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 04:29:53</sys_created_on>
+        <sys_id>d92cbb342f589510ea364ae72799b669</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_AutoSetRwRateRead</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_include_d92cbb342f589510ea364ae72799b669</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-23 04:29:53</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_761427_campusdev.camdev_ValidationServerRequestClient</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>UI Action「camdevInputComplete」、「camdevRequest」、Client Script「camdev_SetAutomationFlag」から呼び出される。&#13;
+現在開いているレコードやその配下のレコードの入力内容をチェックする。&#13;
+チェックに問題があればエラーメッセージを返す。&#13;
+※クライアント系処理からの呼び出し用</description>
+        <name>camdev_ValidationServerRequestClient</name>
+        <script><![CDATA[var camdev_ValidationServerRequestClient = Class.create();
+camdev_ValidationServerRequestClient.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+	/**
+	 * サーバ払出申請依頼時チェック処理
+	 * ＜機能＞
+	 * 申請者がサーバ払出申請依頼を行う際のチェック処理を行う
+	 * 
+	 * @return エラー無しの場合：空／エラーの場合：エラーメッセージのKeyの配列
+	 */
+	validationForServerRequest: function() {
+		// パラメータ取得
+		var svReqBaseSysId             = this.getParameter('sysparm_svreqbase_sysid');
+		var classification             = this.getParameter('sysparm_classification');
+		var classificationDisplayValue = this.getParameter('sysparm_classification_display_value');
+		var serverType                 = this.getParameter('sysparm_server_type');
+		var newNw                      = this.getParameter('sysparm_new_nw');
+		var nwCableConnection          = this.getParameter('sysparm_nw_cable_connection');
+		
+		// チェック実施
+		var checkUtil = new camdev_ValidationServerRequest();
+		var errorMsgs = checkUtil.validationForServerRequest(svReqBaseSysId, classification, classificationDisplayValue, serverType, newNw, nwCableConnection);
+		
+		return JSON.stringify(errorMsgs);
+	},
+	
+	/**
+	 * サーバ払出申請依頼時チェック処理（警告メッセージ用）
+	 * ＜機能＞
+	 * 申請者がサーバ払出申請依頼を行う際の警告チェック処理を行う
+	 * 
+	 * @return エラー無しの場合：空／エラーの場合：エラーメッセージのKeyの配列
+	 */
+	validationForServerRequestWarning: function() {
+		// パラメータ取得
+		var svReqBaseSysId             = this.getParameter('sysparm_svreqbase_sysid');
+		var classification             = this.getParameter('sysparm_classification');
+		var classificationDisplayValue = this.getParameter('sysparm_classification_display_value');
+		var serverType                 = this.getParameter('sysparm_server_type');
+		
+		// チェック実施
+		var checkUtil = new camdev_ValidationServerRequest();
+		var warningMsgs = checkUtil.validationForServerRequestWarning(svReqBaseSysId, classification, classificationDisplayValue, serverType);
+		
+		return JSON.stringify(warningMsgs);
+	},
+	
+	/**
+	 * プロビジョニング情報入力完了時チェック処理
+	 * ＜機能＞
+	 * プロビジョニング担当がプロビジョニング情報入力完了を行う際のチェック処理を行う
+	 * 
+	 * @return エラー無しの場合：空／エラーの場合：エラーメッセージのKeyの配列
+	 */
+	validationForProvisioningInputComplete: function() {
+		// パラメータ取得
+		var svReqBaseSysId = this.getParameter('sysparm_svreqbase_sysid');
+		var classification = this.getParameter('sysparm_classification');
+		var serverType     = this.getParameter('sysparm_server_type');
+		
+		// チェック実施
+		var checkUtil = new camdev_ValidationServerRequest();
+		var errorMsgs = checkUtil.validationForProvisioningInputComplete(svReqBaseSysId, classification, serverType);
+		
+		return JSON.stringify(errorMsgs);
+	},
+	
+	/**
+	 * プロビジョニング情報入力完了時チェック処理
+	 * ＜機能＞
+	 * プロビジョニング担当が申請情報の配布失敗およびプロビジョニング実行異常終了時にサーバ払出情報の再入力完了を行う際のチェック処理を行う
+	 * 
+	 * @return エラー無しの場合：空／エラーの場合：エラーメッセージのKeyの配列
+	 */
+	validationForProvisioningReInputComplete: function() {
+		// パラメータ取得
+		var svReqBaseSysId             = this.getParameter('sysparm_svreqbase_sysid');
+		var classification             = this.getParameter('sysparm_classification');
+		var classificationDisplayValue = this.getParameter('sysparm_classification_display_value');
+		var serverType                 = this.getParameter('sysparm_server_type');
+		var newNw                      = this.getParameter('sysparm_new_nw');
+		var nwCableConnection          = this.getParameter('sysparm_nw_cable_connection');
+		
+		// チェック実施
+		var checkUtil = new camdev_ValidationServerRequest();
+		var serverRequestErrMsgs             = checkUtil.validationForServerRequest(svReqBaseSysId, classification, classificationDisplayValue, serverType, newNw, nwCableConnection);
+		var provisioningInputCompleteErrMsgs = checkUtil.validationForProvisioningInputComplete(svReqBaseSysId, classification, serverType);
+		var resourceInputCompleteErrorMsgs   = checkUtil.validationForResourceInputComplete(svReqBaseSysId, classification, serverType);
+		
+		var errorMsgs = [];
+		if (serverRequestErrMsgs.length > 0) errorMsgs = errorMsgs.concat(serverRequestErrMsgs);
+		if (provisioningInputCompleteErrMsgs.length > 0) errorMsgs = errorMsgs.concat(provisioningInputCompleteErrMsgs);
+		if (resourceInputCompleteErrorMsgs.length > 0) errorMsgs = errorMsgs.concat(resourceInputCompleteErrorMsgs);
+		
+		return JSON.stringify(errorMsgs);
+	},
+	
+	/**
+	 * リソース割当情報入力完了時チェック処理
+	 * ＜機能＞
+	 * キャパシティ担当がリソース割当情報入力完了を行う際のチェック処理を行う
+	 * 
+	 * @return エラー無しの場合：空／エラーの場合：エラーメッセージのKeyの配列
+	 */
+	validationForResourceInputComplete: function() {
+		// パラメータ取得
+		var svReqBaseSysId = this.getParameter('sysparm_svreqbase_sysid');
+		var classification = this.getParameter('sysparm_classification');
+		var serverType     = this.getParameter('sysparm_server_type');
+
+		// チェック実施
+		var checkUtil = new camdev_ValidationServerRequest();
+		var errorMsgs = checkUtil.validationForResourceInputComplete(svReqBaseSysId, classification, serverType);
+		
+		return JSON.stringify(errorMsgs);
+	},
+	
+	/**
+	 * 自動化対象判定処理
+	 * ＜機能＞
+	 * 対象サーバが自動化対象かどうかを判定する。
+	 * 
+	 * @param svReqBaseSysId：サーバリクエスト基本情報のSysID
+	 * @param classification：区分の値
+	 * @param serverType：サーバ種別の値
+	 * @param osType：使用OSの値
+	 * @param usage：用途の値
+	 * @return true：自動化対象／false:非自動化対象
+	 */
+	isAutomation: function() {
+		// パラメータ取得
+		var classification = this.getParameter('sysparm_classification');
+		var serverType     = this.getParameter('sysparm_server_type');
+		var osType     = this.getParameter('sysparm_ostype');
+		var usage     = this.getParameter('sysparm_usage');
+
+		// チェック実施
+		var checkUtil = new camdev_ValidationServerRequest();
+		var automation = checkUtil.isAutomation(classification, serverType, osType, usage);
+		
+		return global.JSON.parse(automation);
+	},
+    type: 'camdev_ValidationServerRequestClient'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 02:56:12</sys_created_on>
+        <sys_id>8e1763f02f189510ea364ae72799b6a3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_ValidationServerRequestClient</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_include_8e1763f02f189510ea364ae72799b6a3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-23 02:56:12</sys_updated_on>
+    </sys_script_include>
+</record_update>

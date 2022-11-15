@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="deb7691c2f58d110ea364ae72799b62a" table="sys_app_module">
+    <sys_app_module action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <application/>
+        <assessment/>
+        <device_type/>
+        <filter/>
+        <hint/>
+        <homepage/>
+        <image/>
+        <link_type>LIST</link_type>
+        <map_page/>
+        <mobile_title>Disks</mobile_title>
+        <mobile_view_name>Mobile</mobile_view_name>
+        <name>x_761427_campusdev_03_disk</name>
+        <order/>
+        <override_menu_roles>false</override_menu_roles>
+        <query/>
+        <report/>
+        <roles>x_761427_campusdev.server_request_user</roles>
+        <sys_class_name>sys_app_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-21 07:16:16</sys_created_on>
+        <sys_domain>deb7691c2f58d110ea364ae72799b62a</sys_domain>
+        <sys_domain_path>!!!/!!,/!!!/!!!/</sys_domain_path>
+        <sys_id>1dbf4e5c2f1cd110ea364ae72799b68c</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Disks</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_app_module_1dbf4e5c2f1cd110ea364ae72799b68c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 06:54:28</sys_updated_on>
+        <timeline_page/>
+        <title>Disks</title>
+        <uncancelable>false</uncancelable>
+        <view_name/>
+        <window_name/>
+    </sys_app_module>
+</record_update>

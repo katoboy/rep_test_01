@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 08:43:11</sys_created_on>
+        <sys_id>8d2d959a2f545110ea364ae72799b657</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_761427_campusdev_08_server_request.snc_internal</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_security_acl display_value="x_761427_campusdev_08_server_request">70de21d42f98d110ea364ae72799b614</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_8d2d959a2f545110ea364ae72799b657</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 08:43:11</sys_updated_on>
+        <sys_user_role display_value="snc_internal" name="snc_internal">7fcaa702933002009c8579b4f47ffbde</sys_user_role>
+        <transaction_id>f02d995e2fd05110ea364ae72799b697</transaction_id>
+    </sys_security_acl_role>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</application>
+        <file_path/>
+        <instance_id>26def98adbeb5b4852e3f70fbf961907</instance_id>
+        <instance_name>dev67636</instance_name>
+        <name>sys_security_acl_role_8d2d959a2f545110ea364ae72799b657</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role"><sys_security_acl_role action="INSERT_OR_UPDATE"><sys_class_name>sys_security_acl_role</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-06-27 08:43:11</sys_created_on><sys_id>8d2d959a2f545110ea364ae72799b657</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_761427_campusdev_08_server_request.snc_internal</sys_name><sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package><sys_policy/><sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope><sys_security_acl display_value="x_761427_campusdev_08_server_request">70de21d42f98d110ea364ae72799b614</sys_security_acl><sys_update_name>sys_security_acl_role_8d2d959a2f545110ea364ae72799b657</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-06-27 08:43:11</sys_updated_on><sys_user_role display_value="snc_internal" name="snc_internal">7fcaa702933002009c8579b4f47ffbde</sys_user_role><transaction_id>f02d995e2fd05110ea364ae72799b697</transaction_id></sys_security_acl_role></record_update>]]></payload>
+        <payload_hash>-1318547596</payload_hash>
+        <record_name>x_761427_campusdev_08_server_request.snc_internal</record_name>
+        <reverted_from/>
+        <source>44676b022f210110ea364ae72799b634</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by/>
+        <sys_created_on>2022-02-10 07:16:00</sys_created_on>
+        <sys_id>8885a9162f945110ea364ae72799b6f1</sys_id>
+        <sys_mod_count/>
+        <sys_recorded_at>17ee27d27800000000</sys_recorded_at>
+        <sys_updated_by/>
+        <sys_updated_on/>
+        <type>Access Roles</type>
+        <update_guid>4885a91653945110594ae276528ec3f1</update_guid>
+        <update_guid_history>4885a91653945110594ae276528ec3f1:-1318547596</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="x_761427_campusdev_08_server_request.snc_internal">4885a9162f945110ea364ae72799b6f3</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 09:19:42</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>06417ee16b524e85832fa8614d13a479</sys_id>
+        <sys_metadata>8d2d959a2f545110ea364ae72799b657</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_761427_campusdev_08_server_request.snc_internal</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_parent display_value="x_761427_campusdev_08_server_request">70de21d42f98d110ea364ae72799b614</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_scope_delete display_value="">69e115b1350d43c99305887649eaa6e1</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_8d2d959a2f545110ea364ae72799b657</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_8d2d959a2f545110ea364ae72799b657">8885a9162f945110ea364ae72799b6f1</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 09:19:42</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

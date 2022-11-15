@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="x_761427_assproduc_abstract_external_for_configuration_item" label="ESXi Server Resource" max_length="40" name="x_761427_campusdev_11_esxi_server_resource" sizeclass="0" type="collection">
+        <element label="Cluster" max_length="40" name="u_11_cluster" type="string"/>
+        <element label="CPU_Assigned" max_length="20" name="u_11_cpu_assigned" type="decimal"/>
+        <element label="CPU_Capacity" max_length="20" name="u_11_cpu_capacity" type="decimal"/>
+        <element label="CPU_Free" max_length="20" name="u_11_cpu_free" type="decimal"/>
+        <element label="CPU_Rate" max_length="15" name="u_11_cpu_rate" type="percent_complete"/>
+        <element label="Date" max_length="40" name="u_11_date" type="glide_date_time"/>
+        <element choice="1" label="Environment" max_length="40" name="u_11_environment" type="choice">
+            <choice/>
+        </element>
+        <element label="IO_Assigned_IOPS" max_length="20" name="u_11_io_assigned_iops" type="decimal"/>
+        <element label="IO_Capacity_IOPS" max_length="20" name="u_11_io_capacity_iops" type="decimal"/>
+        <element label="IO_Free_IOPS" max_length="20" name="u_11_io_free_iops" type="decimal"/>
+        <element label="IO_Rate" max_length="15" name="u_11_io_rate" type="percent_complete"/>
+        <element label="Memory_Assigned_GB" max_length="20" name="u_11_memory_assigned_gb" type="decimal"/>
+        <element label="Memory_Capacity_GB" max_length="20" name="u_11_memory_capacity_gb" type="decimal"/>
+        <element label="Memory_Free_GB" max_length="20" name="u_11_memory_free_gb" type="decimal"/>
+        <element label="Memory_Rate" max_length="15" name="u_11_memory_rate" type="percent_complete"/>
+        <element label="Name" max_length="40" name="u_11_name" type="string"/>
+        <element label="NW_Assigned_Mbps" max_length="20" name="u_11_nw_assigned_mbps" type="decimal"/>
+        <element label="NW_Capacity_Mbps" max_length="20" name="u_11_nw_capacity_mbps" type="decimal"/>
+        <element label="NW_Free_Mbps" max_length="20" name="u_11_nw_free_mbps" type="decimal"/>
+        <element label="NW_Rate" max_length="15" name="u_11_nw_rate" type="percent_complete"/>
+    </element>
+</database>

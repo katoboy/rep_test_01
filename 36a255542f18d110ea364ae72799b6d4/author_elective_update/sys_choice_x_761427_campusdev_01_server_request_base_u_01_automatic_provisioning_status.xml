@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="u_01_automatic_provisioning_status" table="x_761427_campusdev_01_server_request_base" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>u_01_automatic_provisioning_status</element>
+            <name>x_761427_campusdev_01_server_request_base</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:16:48</sys_created_on>
+            <sys_id>324b625c2f9cd110ea364ae72799b6ee</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>u_01_automatic_provisioning_status</sys_name>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_choice_x_761427_campusdev_01_server_request_base_u_01_automatic_provisioning_status</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 09:16:48</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_01_automatic_provisioning_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>In Preparation</label>
+            <language>en</language>
+            <name>x_761427_campusdev_01_server_request_base</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:16:48</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>e73b6adc2f9cd110ea364ae72799b68a</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:58:50</sys_updated_on>
+            <value>10</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_01_automatic_provisioning_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Before Execution</label>
+            <language>en</language>
+            <name>x_761427_campusdev_01_server_request_base</name>
+            <sequence>20</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:16:59</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>474b6a9c2f9cd110ea364ae72799b685</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:58:28</sys_updated_on>
+            <value>20</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_01_automatic_provisioning_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>In Transfer</label>
+            <language>en</language>
+            <name>x_761427_campusdev_01_server_request_base</name>
+            <sequence>30</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:18:49</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>e15bae5c2f9cd110ea364ae72799b6ea</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:58:22</sys_updated_on>
+            <value>30</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_01_automatic_provisioning_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Distribution Failure</label>
+            <language>en</language>
+            <name>x_761427_campusdev_01_server_request_base</name>
+            <sequence>40</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:19:12</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>64cb26102fdcd110ea364ae72799b614</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:58:15</sys_updated_on>
+            <value>40</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_01_automatic_provisioning_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Provisioning In Progress</label>
+            <language>en</language>
+            <name>x_761427_campusdev_01_server_request_base</name>
+            <sequence>50</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:19:31</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>c2db26102fdcd110ea364ae72799b615</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:58:07</sys_updated_on>
+            <value>50</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_01_automatic_provisioning_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Provisioning Successfully</label>
+            <language>en</language>
+            <name>x_761427_campusdev_01_server_request_base</name>
+            <sequence>60</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:19:47</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>72ebae5c2f9cd110ea364ae72799b6eb</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:57:54</sys_updated_on>
+            <value>60</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_01_automatic_provisioning_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Provisioning Unsuccessfully</label>
+            <language>en</language>
+            <name>x_761427_campusdev_01_server_request_base</name>
+            <sequence>70</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-21 09:20:02</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>26fba2d82f9cd110ea364ae72799b64d</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-21 23:57:47</sys_updated_on>
+            <value>70</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

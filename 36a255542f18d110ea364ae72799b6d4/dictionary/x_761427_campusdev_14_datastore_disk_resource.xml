@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="x_761427_assproduc_abstract_external_for_configuration_item" label="Datastore Disk Resource" max_length="40" name="x_761427_campusdev_14_datastore_disk_resource" sizeclass="0" type="collection">
+        <element label="Disk_Capacity_GB" max_length="20" name="u_14_disk_capacity_gb" type="decimal"/>
+        <element label="Disk_hostVM" max_length="40" name="u_14_disk_hostvm" type="string"/>
+        <element label="Disk_IO_IOPS" max_length="20" name="u_14_disk_io_iops" type="decimal"/>
+        <element label="Disk_Memory_GB" max_length="20" name="u_14_disk_memory_gb" type="decimal"/>
+        <element label="Disk_Sum_GB" max_length="20" name="u_14_disk_sum_gb" type="decimal"/>
+        <element label="Disk_Usage" max_length="40" name="u_14_disk_usage" type="string"/>
+        <element label="Name" max_length="32" name="u_14_name" reference="x_761427_campusdev_13_datastore_resource" type="reference"/>
+        <index name="index">
+            <element name="u_14_name"/>
+        </index>
+    </element>
+</database>

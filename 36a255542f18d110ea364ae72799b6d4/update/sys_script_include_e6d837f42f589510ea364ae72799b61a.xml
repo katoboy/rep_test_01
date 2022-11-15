@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_761427_campusdev.camdev_RequestInfoCopy</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>UI Action「camdevCopy」から呼び出される。&#13;
+サーバ払出申請レコード、サーバ払出申請基本情報レコード（関連リスト含む）をコピーする。&#13;
+サーバ情報レコード（関連リスト含む）をコピーする。</description>
+        <name>camdev_RequestInfoCopy</name>
+        <script><![CDATA[var camdev_RequestInfoCopy = Class.create();
+camdev_RequestInfoCopy.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    funcCopyRecords: function() {
+        var tbl_name_01_sv_request_base = "x_761427_campusdev_01_server_request_base";
+        var tbl_name_02_server = "x_761427_campusdev_02_server";
+        var tbl_name_03_disk = "x_761427_campusdev_03_disk";
+        var tbl_name_04_rdm_disk = "x_761427_campusdev_04_rdm_disk";
+        var tbl_name_05_nic = "x_761427_campusdev_05_nic";
+        var tbl_name_06_data_backup = "x_761427_campusdev_06_data_backup";
+        var tbl_name_07_affinity_rule = "x_761427_campusdev_07_affinity_rule";
+        var tbl_name_08_server_request = "x_761427_campusdev_08_server_request";
+
+        // パラメータ取得
+        var target_tbl_name = this.getParameter("sysparm_table_name");
+        var original_sysid = this.getParameter("sysparm_system_id");
+
+        // copy処理
+        switch (target_tbl_name) {
+            case tbl_name_08_server_request:
+                copyTargetServerRequest(original_sysid);
+                break;
+            case tbl_name_02_server:
+                copyTargetServer(original_sysid);
+                break;
+            default:
+                break;
+        }
+
+        // 起点コピー処理（起点：サーバ払出申請テーブル）
+        function copyTargetServerRequest(original_sysid) {
+
+            var org_gr = new GlideRecord(tbl_name_08_server_request);
+            org_gr.get(original_sysid);
+			//myadd str
+			var aa = org_gr.getValue('number');
+			var bb = org_gr.getValue('short_description');
+			gs.info('ろぐ＋' + aa);
+			//myadd end
+			
+            // サーバー払出申請 コピー
+            var new_gr = new GlideRecord(tbl_name_08_server_request);
+            new_gr.initialize();
+            new_gr.short_description = org_gr.short_description;
+			//myadd str
+			new_gr.setValue('short_description',aa + 'のコピー_' + bb);
+			//myadd end
+			
+            new_gr.insert();
+
+            // サーバー払出申請基本情報 コピー
+            var created_sysid = copyServerRequestBase(org_gr.u_74_external_ref, new_gr.number);
+            if (created_sysid) {
+                // サーバー払出申請 参照項目設定
+                new_gr.u_74_external_ref = created_sysid;
+                new_gr.update();
+            }
+        }
+
+        // 起点コピー処理（起点：サーバ情報テーブル）
+        function copyTargetServer(original_sysid) {
+
+            // コピー元取得
+            var gr = new GlideRecord(tbl_name_02_server);
+            gr.get(original_sysid);
+
+            // コピー不要フィールド初期化
+            gr.setValue("u_02_usage", "");
+            gr.setValue("u_02_hostserver_name", "");
+            gr.setValue("u_02_cluster_name", "");
+            gr.setValue("u_02_ansible_nic_no", "");
+            gr.setValue("u_02_ansible_gw", "");
+            gr.setValue("u_02_catalog_name", "");
+            gr.setValue("u_02_reserve_name", "");
+            gr.setValue("u_02_provisioning_execution", "1");
+
+            var gr_01 = new GlideRecord(tbl_name_01_sv_request_base);
+            gr_01.get(gr.getValue("u_02_request_form_number"));
+            if (gr_01.u_01_server_type == "IA-Gr") {
+                gr.setValue("u_02_automation_flag", "false");
+            }
+
+            // サーバー情報 コピー
+            var created_sysid = gr.insert();
+
+            // 関連リストコピー
+            if (created_sysid) {
+                // ディスク
+                copyDiskRecords(original_sysid, created_sysid);
+                // RDMディスク
+                copyRdmDiskRecords(original_sysid, created_sysid);
+                // ネットワーク コピー
+                copyNetworkRecords(original_sysid, created_sysid);
+                // データバックアップ機能 コピー
+                copyDataBackupRecords(original_sysid, created_sysid);
+            }
+        }
+
+        // サーバー払出申請基本情報レコード コピー
+        function copyServerRequestBase(original_sysid, new_number) {
+
+            // コピー元取得
+            var gr_srb = new GlideRecord(tbl_name_01_sv_request_base);
+            gr_srb.get(original_sysid);
+
+            // コピー不要フィールド初期化
+            gr_srb.setValue("number", "");
+            gr_srb.setValue("u_01_request_status", "10");
+            gr_srb.setValue("u_01_request_date", "");
+            gr_srb.setValue("u_01_request_form_number", new_number);
+            gr_srb.setValue("u_01_automatic_provisioning_status", "10");
+            gr_srb.setValue("u_01_completion_flag", "10");
+            gr_srb.setValue("u_01_deployment_flag", "10");
+            gr_srb.setValue("u_01_approval_request_flag", "10");
+            gr_srb.setValue("u_01_campus_manager", "");
+
+            // サーバー払出申請基本情報 コピー
+            var created_sysid = gr_srb.insert();
+
+            // 関連リストコピー
+            if (created_sysid) {
+                // サーバー情報
+                copyServerRecords(original_sysid, created_sysid);
+                // アフィニティルール
+                copyAffinityRuleRecords(original_sysid, created_sysid);
+            }
+
+            return created_sysid.toString();
+        }
+
+        // サーバ情報 コピー
+        function copyServerRecords(original_sysid, new_sysid) {
+            var gr = new GlideRecord(tbl_name_02_server);
+            gr.addQuery("u_02_request_form_number", original_sysid);
+            gr.query();
+
+            while (gr.next()) {
+
+                var original_server_sysid = gr.getValue("sys_id");
+
+                // コピー不要フィールド初期化
+                gr.setValue("u_02_usage", "");
+                gr.setValue("u_02_hostserver_name", "");
+                gr.setValue("u_02_cluster_name", "");
+                gr.setValue("u_02_ansible_nic_no", "");
+                gr.setValue("u_02_ansible_gw", "");
+                gr.setValue("u_02_catalog_name", "");
+                gr.setValue("u_02_reserve_name", "");
+                gr.setValue("u_02_provisioning_execution", "1");
+
+                var gr_01 = new GlideRecord(tbl_name_01_sv_request_base);
+                gr_01.get(gr.getValue("u_02_request_form_number"));
+                if (gr_01.u_01_server_type == "IA-Gr") {
+                    gr.setValue("u_02_automation_flag", "false");
+                }
+
+                // 新しいサーバー払出申請基本情報レコードに紐づけ
+                gr.setValue("u_02_request_form_number", new_sysid);
+
+                // サーバー情報 コピー
+                var created_sysid = gr.insert();
+
+                // 関連リストコピー
+                if (created_sysid) {
+                    // ディスク
+                    copyDiskRecords(original_server_sysid, created_sysid);
+                    // RDMディスク
+                    copyRdmDiskRecords(original_server_sysid, created_sysid);
+                    // ネットワーク コピー
+                    copyNetworkRecords(original_server_sysid, created_sysid);
+                    // データバックアップ機能 コピー
+                    copyDataBackupRecords(original_server_sysid, created_sysid);
+                }
+            }
+        }
+
+        // ディスク コピー
+        function copyDiskRecords(original_sysid, new_sysid) {
+            var gr = new GlideRecord(tbl_name_03_disk);
+            gr.addQuery("u_03_server_info", original_sysid);
+            gr.query();
+
+            while (gr.next()) {
+                gr.setValue("u_03_server_info", new_sysid);
+                gr.setValue("u_03_storage_path_virtual_disk", "");
+                gr.insert();
+            }
+        }
+
+        // RDMディスク コピー
+        function copyRdmDiskRecords(original_sysid, new_sysid) {
+            var gr = new GlideRecord(tbl_name_04_rdm_disk);
+            gr.addQuery("u_04_server_info", original_sysid);
+            gr.query();
+
+            while (gr.next()) {
+                gr.setValue("u_04_server_info", new_sysid);
+                gr.insert();
+            }
+        }
+
+        // ネットワーク コピー
+        function copyNetworkRecords(original_sysid, new_sysid) {
+            var gr = new GlideRecord(tbl_name_05_nic);
+            gr.addQuery("u_05_server_info", original_sysid);
+            gr.query();
+
+            while (gr.next()) {
+                gr.setValue("u_05_server_info", new_sysid);
+                gr.setValue("u_05_network_path_nic", "");
+                gr.setValue("u_05_dgw_vlan", "no");
+                gr.setValue("u_05_ansible_connection", "1");
+                gr.setValue("u_05_bonding_if_no", "");
+                gr.setValue("u_05_vlan_id", "");
+                gr.insert();
+            }
+        }
+
+        // データバックアップ機能 コピー
+        function copyDataBackupRecords(original_sysid, new_sysid) {
+            var gr = new GlideRecord(tbl_name_06_data_backup);
+            gr.addQuery("u_06_server_info", original_sysid);
+            gr.query();
+
+            while (gr.next()) {
+                gr.setValue("u_06_server_info", new_sysid);
+                gr.insert();
+            }
+        }
+
+        // アフィニティルール コピー
+        function copyAffinityRuleRecords(original_sysid, new_sysid) {
+            var gr = new GlideRecord(tbl_name_07_affinity_rule);
+            gr.addQuery("u_07_request_form_number", original_sysid);
+            gr.query();
+
+            while (gr.next()) {
+                gr.setValue("u_07_request_form_number", new_sysid);
+                gr.insert();
+            }
+        }
+    },
+    type: 'camdev_RequestInfoCopy'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 04:22:49</sys_created_on>
+        <sys_id>e6d837f42f589510ea364ae72799b61a</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>camdev_RequestInfoCopy</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_include_e6d837f42f589510ea364ae72799b61a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-30 00:25:49</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_message">
+    <sys_ui_message action="INSERT_OR_UPDATE">
+        <application/>
+        <code/>
+        <commented_message/>
+        <key>camdev_00_ErrorMessage007</key>
+        <language>en</language>
+        <message>ホスト名({0})： サーバ種別がベアメタルの場合は、{1}は[小・大]のどちらかを選択してください。</message>
+        <sys_class_name>sys_ui_message</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 05:08:29</sys_created_on>
+        <sys_id>cb85cc452f989510ea364ae72799b6e3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_00_ErrorMessage007</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_ui_message_cb85cc452f989510ea364ae72799b6e3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-23 05:08:29</sys_updated_on>
+    </sys_ui_message>
+</record_update>

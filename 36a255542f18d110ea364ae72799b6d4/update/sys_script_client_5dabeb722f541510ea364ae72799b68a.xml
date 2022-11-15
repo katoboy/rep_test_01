@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="deb7691c2f58d110ea364ae72799b62a" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>●常時&#13;
+・「共用ディスク利用」に注釈メッセージを表示する。</description>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>camdev_RdmDisk_OnLoad</name>
+        <order/>
+        <script><![CDATA[function onLoad() {
+
+	var nmessage_str = '共有する場合は、共有するサーバホスト名を記入してください。';
+    g_form.showFieldMsg('u_04_sharing_disk', nmessage_str, 'info');
+
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-29 08:24:21</sys_created_on>
+        <sys_domain>deb7691c2f58d110ea364ae72799b62a</sys_domain>
+        <sys_domain_path>!!!/!!,/!!!/!!!/</sys_domain_path>
+        <sys_id>5dabeb722f541510ea364ae72799b68a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_RdmDisk_OnLoad</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_client_5dabeb722f541510ea364ae72799b68a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-29 08:24:21</sys_updated_on>
+        <table>x_761427_campusdev_04_rdm_disk</table>
+        <type>onLoad</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

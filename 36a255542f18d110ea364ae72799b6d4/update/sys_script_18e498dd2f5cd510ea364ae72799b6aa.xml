@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="deb7691c2f58d110ea364ae72799b62a" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>true</action_delete>
+        <action_insert>false</action_insert>
+        <action_query>false</action_query>
+        <action_update>false</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_761427_campusdev_08_server_request</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>tst_del_relate_record</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
+
+    //申請者・管理者のみ、申請ステータスが起票中の場合に削除可
+    //Adminは常に可
+    var num = current.number;
+    var srv_info = '';
+
+    var gr_1 = new GlideRecord('x_761427_campusdev_01_server_request_base');
+    gr_1.addQuery('u_01_request_form_number', num);
+    gr_1.query();
+
+    var gr_2 = new GlideRecord('x_761427_campusdev_02_server');
+    gr_2.addQuery('u_02_request_form_number.u_01_request_form_number', num);
+    gr_2.query();
+
+    var gr_7 = new GlideRecord('x_761427_campusdev_07_affinity_rule');
+    gr_7.addQuery('u_07_request_form_number.u_01_request_form_number', num);
+    gr_7.query();
+
+    //とれない↓	
+    //srv_info = gr_2.getUniqueValue();
+    //		gs.info('ろぐ２' + srv_info);
+
+
+    while (gr_2.next()) {
+        //getUniqueValueは引数不要
+       // srv_info = gr_2.getUniqueValue();
+ srv_info = gr_2.sys_id;
+		
+        var gr_3 = new GlideRecord('x_761427_campusdev_03_disk');
+        gr_3.addQuery('u_03_server_info', srv_info);
+        gr_3.query();
+
+        var gr_4 = new GlideRecord('x_761427_campusdev_04_rdm_disk');
+        gr_4.addQuery('u_04_server_info', srv_info);
+        gr_4.query();
+
+        var gr_5 = new GlideRecord('x_761427_campusdev_05_nic');
+        gr_5.addQuery('u_05_server_info', srv_info);
+        gr_5.query();
+
+        var gr_6 = new GlideRecord('x_761427_campusdev_06_data_backup');
+        gr_6.addQuery('u_06_server_info', srv_info);
+        gr_6.query();
+
+        while (gr_3.next()) {
+			gs.info('gr_3ろぐ：' + gr_3.getUniqueValue());
+            gr_3.deleteMultiple();
+            gs.info('03削除');
+        }
+        while (gr_4.next()) {
+            gr_4.deleteMultiple();
+            gs.info('04削除');
+        }
+        while (gr_5.next()) {
+            gr_5.deleteMultiple();
+            gs.info('05削除');
+        }
+        while (gr_6.next()) {
+            gr_6.deleteMultiple();
+            gs.info('06削除');
+        }
+        gr_2.deleteMultiple();
+    }
+    while (gr_7.next()) {
+        gr_7.deleteMultiple();
+        gs.info('07削除');
+    }
+    if (gr_1.next()) {
+        gr_1.deleteMultiple();
+
+    }
+
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-24 01:01:08</sys_created_on>
+        <sys_domain>deb7691c2f58d110ea364ae72799b62a</sys_domain>
+        <sys_domain_path>!!!/!!,/!!!/!!!/</sys_domain_path>
+        <sys_id>18e498dd2f5cd510ea364ae72799b6aa</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>tst_del_relate_record</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_18e498dd2f5cd510ea364ae72799b6aa</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 01:45:12</sys_updated_on>
+        <template/>
+        <when>after</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=18e498dd2f5cd510ea364ae72799b6aa"/>
+</record_update>

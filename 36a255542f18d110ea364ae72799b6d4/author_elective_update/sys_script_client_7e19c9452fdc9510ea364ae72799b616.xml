@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="deb7691c2f58d110ea364ae72799b62a" table="sys_script_client">
+    <sys_script_client action="DELETE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>●常時&#13;
+・一部の項目に必須入力設定をする&#13;
+●新規レコード作成時&#13;
+・サーバー情報を入力する為の操作説明メッセージを表示する。&#13;
+・「申請オーナー」フィールド、「申請ステータス」フィールドに初期値を設定する&#13;
+●作成済みレコードオープン時&#13;
+・「申請ステータス」が「申請起票中」でかつログインユーザと「申請オーナー」が異なる場合、注意メッセージを表示する。&#13;
+・サーバー情報に自動化対象と自動化対象外が混在している場合、警告メッセージを表示する。</description>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages>camdev_08_RequestOwnerDifferentMessage</messages>
+        <name>camdev_ServerRequest_Onload</name>
+        <order/>
+        <script><![CDATA[function onLoad() {
+    //Type appropriate comment here, and begin script below
+
+    //一部の項目に必須入力設定をする
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_usage_system', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_environment_classification', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_network_cable_connection', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_new_network', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_classification', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_server_type', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_sub_system', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_manager', true);
+
+    if (g_form.isNewRecord()) { //新規レコード作成時
+		
+		// サーバー情報を入力する為の操作説明メッセージを表示する。
+        g_form.addInfoMessage(getMessage('camdev_08_InfoMessage001'));
+
+        //「申請オーナー」フィールド、「申請ステータス」フィールドに初期値を設定する
+        g_form.setValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_request_owner', g_user.userID);
+        g_form.setValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_request_status', 10);
+
+    } else if (!g_form.isNewRecord()) { //作成済みレコードオープン時
+        //「申請ステータス」が「申請起票中」でかつログインユーザと「申請オーナー」が異なる場合、注意メッセージを表示する。
+        var request_status = g_form.getValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_request_status');
+        var RequestOwner = g_form.getValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_request_owner');
+        if (request_status == 10 && RequestOwner != g_user.userID) {
+            g_form.addErrorMessage(getMessage('camdev_08_RequestOwnerDifferentMessage'));
+        }
+
+        //サーバー情報に自動化対象と自動化対象外が混在している場合、警告メッセージを表示する。
+        var ajax = new GlideAjax('camdev_AutomatedMixedCheck');
+        ajax.addParam('sysparm_name', 'funcAutoFlgMixedCheck');
+        ajax.addParam('sysparm_system_id', g_form.getValue('u_74_external_ref'));
+
+        ajax.getXMLAnswer(function(answer) {
+            if ('true' == answer) {
+                g_form.addWarningMessage(getMessage('camdev_00_WarningMessage001'));
+            }
+        });
+    }
+   
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 10:09:00</sys_created_on>
+        <sys_domain>deb7691c2f58d110ea364ae72799b62a</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>7e19c9452fdc9510ea364ae72799b616</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_ServerRequest_Onload</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_client_7e19c9452fdc9510ea364ae72799b616</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-23 10:09:00</sys_updated_on>
+        <table>x_761427_campusdev_08_server_request</table>
+        <type>onLoad</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</application>
+        <file_path/>
+        <instance_id>26def98adbeb5b4852e3f70fbf961907</instance_id>
+        <instance_name>dev67636</instance_name>
+        <name>sys_script_client_7e19c9452fdc9510ea364ae72799b616</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="deb7691c2f58d110ea364ae72799b62a" table="sys_script_client"&gt;&lt;sys_script_client action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;applies_extended&gt;false&lt;/applies_extended&gt;&lt;condition/&gt;&lt;description&gt;●常時&amp;#13;
+・一部の項目に必須入力設定をする&amp;#13;
+●新規レコード作成時&amp;#13;
+・サーバー情報を入力する為の操作説明メッセージを表示する。&amp;#13;
+・「申請オーナー」フィールド、「申請ステータス」フィールドに初期値を設定する&amp;#13;
+●作成済みレコードオープン時&amp;#13;
+・「申請ステータス」が「申請起票中」でかつログインユーザと「申請オーナー」が異なる場合、注意メッセージを表示する。&amp;#13;
+・サーバー情報に自動化対象と自動化対象外が混在している場合、警告メッセージを表示する。&lt;/description&gt;&lt;field/&gt;&lt;global&gt;true&lt;/global&gt;&lt;isolate_script&gt;true&lt;/isolate_script&gt;&lt;messages&gt;camdev_08_RequestOwnerDifferentMessage&lt;/messages&gt;&lt;name&gt;camdev_ServerRequest_Onload&lt;/name&gt;&lt;order/&gt;&lt;script&gt;&lt;![CDATA[function onLoad() {
+    //Type appropriate comment here, and begin script below
+
+    //一部の項目に必須入力設定をする
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_usage_system', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_environment_classification', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_network_cable_connection', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_new_network', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_classification', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_server_type', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_sub_system', true);
+    g_form.setMandatory('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_manager', true);
+
+    if (g_form.isNewRecord()) { //新規レコード作成時
+		
+		// サーバー情報を入力する為の操作説明メッセージを表示する。
+        g_form.addInfoMessage(getMessage('camdev_08_InfoMessage001'));
+
+        //「申請オーナー」フィールド、「申請ステータス」フィールドに初期値を設定する
+        g_form.setValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_request_owner', g_user.userID);
+        g_form.setValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_request_status', 10);
+
+    } else if (!g_form.isNewRecord()) { //作成済みレコードオープン時
+        //「申請ステータス」が「申請起票中」でかつログインユーザと「申請オーナー」が異なる場合、注意メッセージを表示する。
+        var request_status = g_form.getValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_request_status');
+        var RequestOwner = g_form.getValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_request_owner');
+        if (request_status == 10 &amp;&amp; RequestOwner != g_user.userID) {
+            g_form.addErrorMessage(getMessage('camdev_08_RequestOwnerDifferentMessage'));
+        }
+
+        //サーバー情報に自動化対象と自動化対象外が混在している場合、警告メッセージを表示する。
+        var ajax = new GlideAjax('camdev_AutomatedMixedCheck');
+        ajax.addParam('sysparm_name', 'funcAutoFlgMixedCheck');
+        ajax.addParam('sysparm_system_id', g_form.getValue('u_74_external_ref'));
+
+        ajax.getXMLAnswer(function(answer) {
+            if ('true' == answer) {
+                g_form.addWarningMessage(getMessage('camdev_00_WarningMessage001'));
+            }
+        });
+    }
+   
+}]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_client&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-06-23 10:09:00&lt;/sys_created_on&gt;&lt;sys_domain&gt;deb7691c2f58d110ea364ae72799b62a&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;7e19c9452fdc9510ea364ae72799b616&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;camdev_ServerRequest_Onload&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="CampusDevApplication" source="x_761427_campusdev"&gt;36a255542f18d110ea364ae72799b6d4&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="CampusDevApplication"&gt;36a255542f18d110ea364ae72799b6d4&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_client_7e19c9452fdc9510ea364ae72799b616&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-06-23 10:09:00&lt;/sys_updated_on&gt;&lt;table&gt;x_761427_campusdev_08_server_request&lt;/table&gt;&lt;type&gt;onLoad&lt;/type&gt;&lt;ui_type&gt;0&lt;/ui_type&gt;&lt;view/&gt;&lt;/sys_script_client&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1731758976</payload_hash>
+        <record_name>camdev_ServerRequest_Onload</record_name>
+        <reverted_from/>
+        <source>7ea255542f18d110ea364ae72799b6d6</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 10:09:00</sys_created_on>
+        <sys_id>766a0d452fdc9510ea364ae72799b6b6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181900956d30000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-23 10:09:00</sys_updated_on>
+        <type>Client Script</type>
+        <update_guid>be6a0d4543dc951098402e2f774706b5</update_guid>
+        <update_guid_history>be6a0d4543dc951098402e2f774706b5:-1731758976</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-29 08:40:10</sys_created_on>
+        <sys_db_object display_value="" name="sys_script_client">sys_script_client</sys_db_object>
+        <sys_id>0b401a9c376e41e0817df18a970a23a4</sys_id>
+        <sys_metadata>7e19c9452fdc9510ea364ae72799b616</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_ServerRequest_Onload</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_parent display_value="Server Request">4a2e25942f98d110ea364ae72799b685</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_scope_delete display_value="">69e115b1350d43c99305887649eaa6e1</sys_scope_delete>
+        <sys_update_name>sys_script_client_7e19c9452fdc9510ea364ae72799b616</sys_update_name>
+        <sys_update_version display_value="sys_script_client_7e19c9452fdc9510ea364ae72799b616">766a0d452fdc9510ea364ae72799b6b6</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-29 08:40:10</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

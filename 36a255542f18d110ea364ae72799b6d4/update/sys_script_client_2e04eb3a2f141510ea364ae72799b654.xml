@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="deb7691c2f58d110ea364ae72799b62a" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>●サーバ種別「IA-Gr」の場合は下記項目の入力不要の旨、以下の項目にメッセージを表示。&#13;
+　・ハイパースレッド&#13;
+●ロール種別「申請者ロールのみ」且つ、申請ステータス「申請起票中」の場合、メッセージを表示する。</description>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>camdev_Server_OnLoad</name>
+        <order/>
+        <script><![CDATA[function onLoad() {
+
+    /* サーバ種別「IA-Gr」か判定し、trueの場合は項目下にメッセージを表示する  */
+    var server_type = g_form.getValue('u_02_request_form_number.u_01_server_type');
+    if (server_type == 'IA-Gr') {
+        var no_input_message = 'サーバ種別「IA-Gr」の場合は入力不要です。';
+        g_form.showFieldMsg('u_02_hyper_threading', no_input_message, 'info');
+    }
+
+    /* ロール種別「申請者ロールのみ」且つ、申請ステータス「申請起票中」の場合、メッセージを表示する  */
+    if (g_user.hasRole('x_nttm8_campus_dev.individual_system_requester')) {
+        //sys_idの取得
+        var sysid = g_form.getValue('u_02_request_form_number');
+
+        //Script Includeの呼び出し
+        var ga = new GlideAjax('camdev_FormMessageJudgment');
+        ga.addParam('sysparm_name', 'func_judge_requestStatus_parenttable');
+        ga.addParam('sysparm_sysid', sysid);
+        ga.addParam('sysparm_judgment_status', 10);
+
+        ga.getXMLAnswer(function(answer) {
+            if (answer == 'true') {
+                g_form.addWarningMessage(getMessage('camdev_02_WarningMessage001'));
+            }
+        });
+    }
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-29 07:50:48</sys_created_on>
+        <sys_domain>deb7691c2f58d110ea364ae72799b62a</sys_domain>
+        <sys_domain_path>!!!/!!,/!!!/!!!/</sys_domain_path>
+        <sys_id>2e04eb3a2f141510ea364ae72799b654</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_Server_OnLoad</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_client_2e04eb3a2f141510ea364ae72799b654</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-29 07:50:48</sys_updated_on>
+        <table>x_761427_campusdev_02_server</table>
+        <type>onLoad</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

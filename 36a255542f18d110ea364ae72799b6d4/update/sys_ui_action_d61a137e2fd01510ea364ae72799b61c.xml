@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name/>
+        <active>true</active>
+        <client>false</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments>実行ボタンをフォームに表示する&#13;
+・自動プロビジョニング実行ステータスが「実行前」の場合に表示する&#13;
+・ボタン押下後、紐づくタスクのうちUser Inputフィールドにexecute_flagが立っているタスクを完了してクローズに変更する。また自動プロビジョニング実行ステータスを「申請情報の転送中」に変更する</comments>
+        <condition>current.u_74_external_ref.u_01_automatic_provisioning_status == 20 &amp;&amp; current.canWrite()</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint/>
+        <isolate_script>false</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>camdevExecute</name>
+        <onclick/>
+        <order>100</order>
+        <script><![CDATA[action.setRedirectURL(current);
+var gr = new GlideRecord('x_761427_campusdev_09_server_request_task');
+gr.addQuery('parent', current.sys_id);
+gr.addQuery('state', '1');//ステータスがオープン
+gr.addQuery('user_input', 'execute_flag');//User_inputフィールドにexecute_flagが立っているもの
+gr.query();
+if(gr.next()){
+	gr.state = 3;//ステータスを完了してクローズに変更
+	gr.update();
+}
+var ref = current.u_74_external_ref.getRefRecord();
+ref.u_01_automatic_provisioning_status = "30";//自動プロビジョニング実行ステータスを「申請情報の転送中」に変更
+ref.update();]]></script>
+        <show_insert>false</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-29 07:08:17</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>d61a137e2fd01510ea364ae72799b61c</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>camdevExecute</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_ui_action_d61a137e2fd01510ea364ae72799b61c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-09-27 06:39:11</sys_updated_on>
+        <table>x_761427_campusdev_08_server_request</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

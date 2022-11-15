@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name/>
+        <active>true</active>
+        <client>true</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments>プロビジョニング担当者がプロビジョニング情報の入力完了操作を行うボタンをフォームに表示する&#13;
+・新規レコードではないかつ自動プロビジョニング実行ステータスが準備中かつ申請ステータスが払出処理中かつ区分が新規の場合に表示する&#13;
+・レコードを更新して自画面に遷移する。</comments>
+        <condition>new camdev_ValidationServerRequest().isShowProvisioningInputCompleteBtn(current.u_74_external_ref) == true &amp;&amp; current.canWrite()</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint/>
+        <isolate_script>true</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>camdevInputComplete</name>
+        <onclick>provisioning_inputcomplete()</onclick>
+        <order>100</order>
+        <script><![CDATA[function provisioning_inputcomplete() {
+	// 画面項目値の取得
+	var svReqBaseSysId        = g_form.getValue('u_74_external_ref');
+	var classification        = g_form.getValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_classification');
+	var serverType            = g_form.getValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_server_type');
+
+	// チェック処理を実施し、エラーがない場合のみ更新
+	var validationSrc = new GlideAjax('camdev_ValidationServerRequestClient');
+	validationSrc.addParam('sysparm_name',                         'validationForProvisioningInputComplete');
+	validationSrc.addParam('sysparm_svreqbase_sysid',              svReqBaseSysId);
+	validationSrc.addParam('sysparm_classification',               classification);
+	validationSrc.addParam('sysparm_server_type',                  serverType);
+	validationSrc.getXMLAnswer(function(answer) {
+		var errorMsgs = JSON.parse(answer);
+		if (errorMsgs != null && errorMsgs.length > 0) {
+			g_form.clearMessages();
+			g_form.addErrorMessage(errorMsgs.join('<br/>'));
+		} else {
+			gsftSubmit(null, g_form.getFormElement(), "camdevinputcomplete_fromprovisioning");
+		}
+	});
+}
+
+if (typeof window == 'undefined')
+   setRedirect();
+
+function setRedirect() {
+	current.update();
+    action.setRedirectURL(current);
+	var refRecord         = current.u_74_external_ref.getRefRecord();
+	var refSysId          = current.u_74_external_ref;
+	var refClassification = refRecord.getValue('u_01_classification');
+	var refServerType     = refRecord.getValue('u_01_server_type');
+	var postValidMsgs     = new camdev_ValidationServerRequest().postValidationForProvisioningInputComplete(refSysId, refClassification, refServerType);
+	var message           = "入力内容の必須チェック・妥当性チェックが完了しました。解消しなければならないエラーはありません。";
+	if (postValidMsgs != null && postValidMsgs.length > 0) {
+		message = "以下を除き、入力内容の必須チェック・妥当性チェックが完了しました。必ず解消しなければならないエラーではありませんが、必要に応じて修正してください。<br/>"
+					+ "<b><font style='background-color:#fff3cd;border-color:#ffeeba'>"
+					+ postValidMsgs.join('<br/>')
+					+ "</font></b>";
+	}
+	gs.addInfoMessage(message);
+}]]></script>
+        <show_insert>false</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-29 07:41:34</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>0381eb762f141510ea364ae72799b68c</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>camdevInputComplete</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_ui_action_0381eb762f141510ea364ae72799b68c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-09-27 06:38:51</sys_updated_on>
+        <table>x_761427_campusdev_08_server_request</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

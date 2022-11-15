@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_761427_campusdev.camdev_CreateServerRequestBase</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Client Script「camdev_CreateServerRequestBase_OnSubmit」から呼び出される。&#13;
+サーバ払出申請基本情報テーブルにレコードを作成する。&#13;
+またその際のsys_idを戻り値として返す。</description>
+        <name>camdev_CreateServerRequestBase</name>
+        <script><![CDATA[var camdev_CreateServerRequestBase = Class.create();
+camdev_CreateServerRequestBase.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+	CreateRecord:function(){
+		//サーバ払出申請基本情報テーブルにレコードを作成
+		var gr = new GlideRecord('x_761427_campusdev_01_server_request_base');
+		gr.initialize();
+		gr.u_01_request_form_number = this.getParameter('sysparm_number');
+		gr.u_01_request_owner = this.getParameter('sysparm_request_owner');
+		gr.u_01_environment_classification = this.getParameter('sysparm_environment_classification');
+		gr.u_01_usage_system = this.getParameter('sysparm_usage_system');
+		gr.u_01_sub_system = this.getParameter('sysparm_sub_system');
+		gr.u_01_other_entries = this.getParameter('sysparm_other_entries');
+		gr.u_01_request_status = this.getParameter('sysparm_request_status');
+		gr.u_01_request_date = this.getParameter('sysparm_request_date');
+		gr.u_01_classification = this.getParameter('sysparm_classification');
+		gr.u_01_server_type = this.getParameter('sysparm_server_type');
+		gr.u_01_new_network = this.getParameter('sysparm_new_network');
+		gr.u_01_network_cable_connection = this.getParameter('sysparm_network_cable_connection');
+		gr.u_01_manager = this.getParameter('sysparm_manager');
+		var sysid = gr.insert();
+		return sysid;
+	},
+    type: 'camdev_CreateServerRequestBase'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 02:20:07</sys_created_on>
+        <sys_id>329e53b02fd49510ea364ae72799b6db</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_CreateServerRequestBase</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_include_329e53b02fd49510ea364ae72799b6db</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-23 02:20:07</sys_updated_on>
+    </sys_script_include>
+</record_update>

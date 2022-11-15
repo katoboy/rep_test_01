@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>false</action_update>
+        <active>false</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>ecc_queue</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>tst_br_01</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
+
+    var currentName = current.getValue('name');
+    var currentQueue = current.getValue('queue');
+    var textStart = '<stdout>';
+    var textEnd = '</stdout>';
+    var lengthPayload = '';
+    var positionStart = '';
+    var positionEnd = '';
+    var payloadSlice = '';
+    var filePathEncode = 'base64 /home/ec2-user/snmid/agent/tst01.csv';
+    var currentPayload = current.getValue('payload');
+    var tableName = 'sys_data_source';
+    var tableRecordSysId = '8d72ad722fa09550ea364ae72799b63a';
+	
+    var stringUtil = GlideStringUtil;
+    var attachment = new camdevAttachment();
+
+
+    if (currentName == filePathEncode && currentQueue == 'input') {
+        lengthPayload = (currentPayload.match(new RegExp(textStart, "g")) || []).length;
+
+        if (0 != lengthPayload) {
+
+            if (lengthPayload == 1) {
+
+                positionStart = currentPayload.indexOf(textStart, 0);
+                positionEnd = currentPayload.indexOf(textEnd, 0);
+                payloadSlice = currentPayload.slice(positionStart + 8, positionEnd);
+             //   gs.info(payloadSlice + 'ペイロード');
+                //var stringUtil = GlideStringUtil;
+                //  var stringUtil = new GlideStringUtil();
+                //               var attachment = new camdevAttachment();
+                var base64Decode = stringUtil.base64DecodeAsBytes(payloadSlice);
+                //attachment.write('sys_data_source', '8d72ad722fa09550ea364ae72799b63a', 'aaa.csv', 'text/csv', stringUtil.base64DecodeAsBytes(payloadSlice));
+                attachment.write('sys_data_source', '8d72ad722fa09550ea364ae72799b63a', 'aaa.csv', 'text/csv', base64Decode);
+
+            } else {
+
+                for (var ii = 0; ii < lengthPayload; ii++) {
+
+                    positionStart = currentPayload.indexOf(textStart, ii);
+                    positionEnd = currentPayload.indexOf(textEnd, ii);
+                    payloadSlice = currentPayload.slice(positionStart + 8, positionEnd);
+
+                    //attachment.write(tableName, tableRecordSysId, 'aaa.csv', 'text/csv', stringUtil.base64DecodeAsBytes(payloadSlice));				
+                }
+            }
+        }
+    }
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-11 08:50:07</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>dac4e5762fa09550ea364ae72799b6e1</sys_id>
+        <sys_mod_count>28</sys_mod_count>
+        <sys_name>tst_br_01</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_dac4e5762fa09550ea364ae72799b6e1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-12 05:35:16</sys_updated_on>
+        <template/>
+        <when>after</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=dac4e5762fa09550ea364ae72799b6e1"/>
+</record_update>

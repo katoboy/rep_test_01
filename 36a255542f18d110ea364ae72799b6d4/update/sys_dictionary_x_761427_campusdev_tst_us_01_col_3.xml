@@ -14,7 +14,7 @@
         <choice/>
         <choice_field/>
         <choice_table/>
-        <column_label>col_3</column_label>
+        <column_label>Col 3</column_label>
         <comments/>
         <create_roles/>
         <default_value/>

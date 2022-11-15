@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>tst_mid_file_pull_01_scoped</name>
+        <record_for_rollback>true</record_for_rollback>
+        <script><![CDATA[var probe = SncProbe.get("Command");
+probe.setName( "base64 /home/ec2-user/snmid/agent/tst01.csv");
+//probe.setName( "/home/ec2-user/snmid/agent/tst01.csv");
+//probe.setName( "/home/ec2-user/snmid/agent/tst01.csv | base64");
+//probe.setName( "/home/ec2-user/snmid/agent/logs/agent0.log.0 | base64");
+probe.create( "Snmidlinuxaws");]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-12 08:58:07</sys_created_on>
+        <sys_id>65503a432fa8d550ea364ae72799b618</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>tst_mid_file_pull_01_scoped</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_fix_65503a432fa8d550ea364ae72799b618</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-12 08:58:07</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

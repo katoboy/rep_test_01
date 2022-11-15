@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_package_dependency_m2m">
+    <sys_package_dependency_m2m action="INSERT_OR_UPDATE">
+        <dependency display_value="AssProduct" source="x_761427_assproduc">7f6355942f18d110ea364ae72799b6ff</dependency>
+        <min_version>1.0.0</min_version>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-21 05:30:35</sys_created_on>
+        <sys_id>5d87b5502fd8d110ea364ae72799b681</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-21 05:30:35</sys_updated_on>
+    </sys_package_dependency_m2m>
+</record_update>

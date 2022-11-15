@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Affinity Rule" max_length="40" name="x_761427_campusdev_07_affinity_rule" sizeclass="38" type="collection">
+        <element label="Domain" max_length="32" name="domain" type="domain_id"/>
+        <element choice="1" label="Adding Type" max_length="40" name="u_07_adding_type" type="choice">
+            <choice/>
+        </element>
+        <element label="Affinity Rule Name" max_length="40" name="u_07_affinity_rule_name" type="string"/>
+        <element label="Note" max_length="40" name="u_07_note" type="string"/>
+        <element choice="1" label="Placement Classification" max_length="40" name="u_07_placement_classification" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Comprehensive" sequence="10" value="1"/>
+                <element inactive_on_update="false" label="Split" sequence="20" value="2"/>
+            </choice>
+        </element>
+        <element label="Request Form Number" max_length="32" name="u_07_request_form_number" reference="x_761427_campusdev_01_server_request_base" type="reference"/>
+        <element label="Server01" max_length="40" name="u_07_server01" type="string"/>
+        <element label="Server02" max_length="40" name="u_07_server02" type="string"/>
+        <element label="Server03" max_length="40" name="u_07_server03" type="string"/>
+        <element label="Server04" max_length="40" name="u_07_server04" type="string"/>
+        <element label="Server05" max_length="40" name="u_07_server05" type="string"/>
+        <element label="Server06" max_length="40" name="u_07_server06" type="string"/>
+        <element label="Server07" max_length="40" name="u_07_server07" type="string"/>
+        <element label="Server08" max_length="40" name="u_07_server08" type="string"/>
+        <element label="Server09" max_length="40" name="u_07_server09" type="string"/>
+        <element label="Server10" max_length="40" name="u_07_server10" type="string"/>
+        <element label="Server11" max_length="40" name="u_07_server11" type="string"/>
+        <element label="Server12" max_length="40" name="u_07_server12" type="string"/>
+        <element label="Server Info List" max_length="4000" name="u_07_server_info_list" reference="x_761427_campusdev_02_server" type="glide_list"/>
+        <index name="index">
+            <element name="u_07_request_form_number"/>
+        </index>
+        <index name="index2">
+            <element name="domain"/>
+        </index>
+    </element>
+</database>

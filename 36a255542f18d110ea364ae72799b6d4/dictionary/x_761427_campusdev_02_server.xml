@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Server" max_length="40" name="x_761427_campusdev_02_server" sizeclass="66" type="collection">
+        <element label="Domain" max_length="32" name="domain" type="domain_id"/>
+        <element choice="1" label="Affinity Rule" max_length="40" name="u_02_affinity_rule" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="False" sequence="10"/>
+                <element inactive_on_update="false" label="True" sequence="20" value="true"/>
+            </choice>
+        </element>
+        <element label="Ansible GW" max_length="40" name="u_02_ansible_gw" type="ip_addr"/>
+        <element label="Ansible NIC No." max_length="32" name="u_02_ansible_nic_no" reference="x_761427_campusdev_05_nic" type="reference"/>
+        <element choice="1" label="Automation Flag" max_length="40" name="u_02_automation_flag" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Not Automation" sequence="10"/>
+                <element inactive_on_update="false" label="Target Automation" sequence="20" value="true"/>
+            </choice>
+        </element>
+        <element choice="1" label="Backup Config" max_length="40" name="u_02_backup_config" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="False" sequence="10"/>
+                <element inactive_on_update="false" label="True" sequence="20" value="true"/>
+            </choice>
+        </element>
+        <element label="Backup Job User" max_length="40" name="u_02_backup_job_user" type="string"/>
+        <element label="Catalog Name" max_length="40" name="u_02_catalog_name" type="string"/>
+        <element label="Cluster Name" max_length="40" name="u_02_cluster_name" type="string"/>
+        <element label="CPU Count" max_length="40" name="u_02_cpu_count" type="integer"/>
+        <element label="CPU Socket Count" max_length="40" name="u_02_cpu_socket_count" type="integer"/>
+        <element label="Delivery Date" max_length="40" name="u_02_delivery_date" type="glide_date"/>
+        <element default="0" label="Disk Count" max_length="40" name="u_02_disk_count" type="integer"/>
+        <element choice="1" label="File System" max_length="40" name="u_02_file_system" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="XFS" sequence="10" value="xfs"/>
+                <element inactive_on_update="false" label="ext4" sequence="20" value="ext4"/>
+            </choice>
+        </element>
+        <element choice="1" label="High Availability Cluster" max_length="40" name="u_02_high_availability_cluster" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="False" sequence="10"/>
+                <element inactive_on_update="false" label="True" sequence="20" value="true"/>
+            </choice>
+        </element>
+        <element label="Hostserver Name" max_length="40" name="u_02_hostserver_name" type="string"/>
+        <element choice="1" label="Hyper Threading" max_length="40" name="u_02_hyper_threading" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="False" sequence="10"/>
+                <element inactive_on_update="false" label="True" sequence="20" value="true"/>
+            </choice>
+        </element>
+        <element label="Memory(GiB)" max_length="40" name="u_02_memory_gib" type="integer"/>
+        <element choice="1" label="Node Type" max_length="40" name="u_02_node_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Bootstrap" sequence="10" value="bootstrap"/>
+                <element inactive_on_update="false" label="Master" sequence="20" value="master"/>
+                <element inactive_on_update="false" label="Worker" sequence="30" value="worker"/>
+            </choice>
+        </element>
+        <element label="Note" max_length="40" name="u_02_note" type="string"/>
+        <element choice="1" label="OS Type" max_length="40" name="u_02_os_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Red Hat Enterprise Linux 7.2" sequence="10" value="Red Hat Enterprise Linux 7.2"/>
+                <element inactive_on_update="false" label="Red Hat Enterprise Linux 7.3" sequence="20" value="Red Hat Enterprise Linux 7.3"/>
+                <element inactive_on_update="false" label="Red Hat Enterprise Linux 7.6" sequence="30" value="Red Hat Enterprise Linux 7.6"/>
+                <element inactive_on_update="false" label="Red Hat Enterprise Linux 7.7" sequence="40" value="Red Hat Enterprise Linux 7.7"/>
+                <element inactive_on_update="false" label="Red Hat Enterprise Linux 8.2" sequence="50" value="Red Hat Enterprise Linux 8.2"/>
+                <element inactive_on_update="false" label="Windows Server 2008" sequence="60" value="Windows Server 2008"/>
+                <element inactive_on_update="false" label="Windows Server 2012" sequence="70" value="Windows Server 2012"/>
+                <element inactive_on_update="false" label="Windows Server 2016" sequence="80" value="Windows Server 2016"/>
+                <element inactive_on_update="false" label="Windows Server 2019" sequence="90" value="Windows Server 2019"/>
+            </choice>
+        </element>
+        <element choice="1" label="Provisioning Execution" max_length="40" name="u_02_provisioning_execution" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Pass" sequence="10"/>
+                <element inactive_on_update="false" label="Execution" sequence="20" value="true"/>
+            </choice>
+        </element>
+        <element default="0" label="RDM / Shared Disk" max_length="40" name="u_02_rdm_shared_disk" type="integer"/>
+        <element label="Request Form Number" max_length="32" name="u_02_request_form_number" reference="x_761427_campusdev_01_server_request_base" type="reference"/>
+        <element label="Reserve Name" max_length="40" name="u_02_reserve_name" type="string"/>
+        <element label="Resource Pool" max_length="40" name="u_02_resource_pool" type="string"/>
+        <element display="true" label="Server Name（English）" max_length="40" name="u_02_server_name_english" type="string"/>
+        <element label="Server Name（Japanese）" max_length="40" name="u_02_server_name_japanese" type="string"/>
+        <element choice="1" label="Service Severity" max_length="40" name="u_02_service_severity" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="-" sequence="10" value="-"/>
+                <element inactive_on_update="false" label="S" sequence="20" value="s"/>
+                <element inactive_on_update="false" label="A" sequence="30" value="a"/>
+            </choice>
+        </element>
+        <element choice="1" label="Service Type" max_length="40" name="u_02_service_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Small" sequence="10" value="small"/>
+                <element inactive_on_update="false" label="Medium" sequence="20" value="medium"/>
+                <element inactive_on_update="false" label="Large" sequence="30" value="large"/>
+            </choice>
+        </element>
+        <element choice="1" label="Usage" max_length="40" name="u_02_usage" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Normal" sequence="10" value="normal"/>
+                <element inactive_on_update="false" label="Bridge" sequence="20" value="bridge"/>
+            </choice>
+        </element>
+        <element default="0" label="Virtual NIC Count" max_length="40" name="u_02_virtual_nic_count" type="integer"/>
+        <index name="index">
+            <element name="u_02_ansible_nic_no"/>
+        </index>
+        <index name="index2">
+            <element name="domain"/>
+        </index>
+        <index name="index3">
+            <element name="u_02_request_form_number"/>
+        </index>
+    </element>
+</database>

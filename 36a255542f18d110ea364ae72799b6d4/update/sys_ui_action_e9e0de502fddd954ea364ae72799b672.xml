@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name>serverrequestbase_request</action_name>
+        <active>true</active>
+        <client>true</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments>払出申請をするボタンをフォームに表示する&#13;
+・新規レコードではないかつ申請ステータスが申請起票中の場合に表示する。&#13;
+・申請ステータスを申請処理中に変更してレコードを更新する。&#13;
+・区分「新規」かつサーバ種別「ベアメタル」の場合において、入力不要項目に入力があった場合は確認のメッセージを表示し、&#13;
+入力不要項目を削除した上で更新する。</comments>
+        <condition>current.u_74_external_ref.u_01_request_status == 10 &amp;&amp; current.canWrite()</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint>_</hint>
+        <isolate_script>true</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>camdevRequest</name>
+        <onclick>srb_request()</onclick>
+        <order>100</order>
+        <script><![CDATA[function srb_request() {
+    // 画面項目値の取得
+    var srbSysId = g_form.getValue('u_74_external_ref');
+    var classification = g_form.getValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_classification');
+    var classificationDisplay = g_form.getOption('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_classification', classification).text;
+    var serverType = g_form.getValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_server_type');
+    var serverTypeDisplay = g_form.getOption('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_server_type', serverType).text;
+    var nweNw = g_form.getValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_new_network');
+    var nwCableConnection = g_form.getValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_network_cable_connection');
+
+
+    // チェック処理を実施し、エラーがない場合のみ更新
+    var validationSrc = new GlideAjax('camdev_ValidationServerRequestClient');
+    validationSrc.addParam('sysparm_name', 'validationForServerRequest');
+    validationSrc.addParam('sysparm_svreqbase_sysid', srbSysId);
+    validationSrc.addParam('sysparm_classification', classification);
+    validationSrc.addParam('sysparm_classification_display_value', classificationDisplay);
+    validationSrc.addParam('sysparm_server_type', serverType);
+    validationSrc.addParam('sysparm_new_nw', nweNw);
+    validationSrc.addParam('sysparm_nw_cable_connection', nwCableConnection);
+    validationSrc.getXMLAnswer(function(answer) {
+        var errorMsgs = JSON.parse(answer);
+        if (errorMsgs != null && errorMsgs.length > 0) {
+            g_form.clearMessages();
+            g_form.addErrorMessage(errorMsgs.join('<br/>'));
+			return false;
+        } else {
+			validationWarning(srbSysId, classification, classificationDisplay, serverType);
+        }
+    });
+	
+	// 警告チェック処理を実施
+	function validationWarning(srbSysId, classification, classificationDisplay, serverType) {
+		var validationSrc = new GlideAjax('camdev_ValidationServerRequestClient');
+		validationSrc.addParam('sysparm_name', 'validationForServerRequestWarning');
+		validationSrc.addParam('sysparm_svreqbase_sysid', srbSysId);
+		validationSrc.addParam('sysparm_classification', classification);
+		validationSrc.addParam('sysparm_classification_display_value', classificationDisplay);
+		validationSrc.addParam('sysparm_server_type', serverType);
+		validationSrc.getXMLAnswer(function(answer) {
+			var warningMsgs = JSON.parse(answer);
+			if (warningMsgs != null && warningMsgs.length > 0) {
+				var isWarning = confirm(warningMsgs.join('\n'));
+				if(!isWarning) {
+					return false;
+				} else {
+					//区分「新規」かつサーバ種別「ベアメタル」の場合、入力不要項目チェック
+					if (classification == 'create' && serverType == 'bare-metal') {
+						var clearItemMsg = 	'　CPUソケット数' + '\n'
+										+ '　仮想NIC数' + '\n'
+										+ '　配置制御設定アフィニティルール設定希望有無' + '\n'
+										+ '　仮想ディスク詳細情報[IOPS]' + '\n'
+										+ '　RDMディスク詳細情報[IOPS]' + '\n'
+										+ '　NIC詳細情報[最大使用NW帯域(Mbps)]' + '\n'
+										+ '　配置制御設定アフィニティルール' + '\n';
+
+						var clearConfirmMsg = '区分が' + classificationDisplay + 'の' + serverTypeDisplay + 'の申請時、以下の項目は入力不要です。' + '\n'
+											+ 'クリアして申請依頼を行いますがよろしいですか？' + '\n'
+											+ clearItemMsg;
+						var isUpdate = confirm(clearConfirmMsg);
+						if (!isUpdate) {
+							return false;
+						} else {
+							var noInputCheckSrc = new GlideAjax('camdev_NoInputCheckNewBareMetal');
+							noInputCheckSrc.addParam('sysparm_name', 'noInputCheck');
+							noInputCheckSrc.addParam('sysparm_sysid', srbSysId);
+							noInputCheckSrc.getXMLAnswer(function(answer) {
+								var messages = '以下の項目をクリアしました。\n' + clearItemMsg;
+								alert(messages);
+							});
+						}
+					}
+				}
+			}
+			g_form.setValue('user_input', 'flow_start');
+			g_form.setValue('u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_request_status', '20'); //申請ステータスを申請処理中に変更
+			gsftSubmit(null, g_form.getFormElement(), "serverrequestbase_request");
+		});
+	}
+}
+
+if (typeof window == 'undefined')
+    setRedirect();
+
+function setRedirect() {
+    current.update();
+    action.setRedirectURL(current);
+}]]></script>
+        <show_insert>false</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-10 00:26:56</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>e9e0de502fddd954ea364ae72799b672</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>camdevRequest</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_ui_action_e9e0de502fddd954ea364ae72799b672</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-08-10 00:31:16</sys_updated_on>
+        <table>x_761427_campusdev_08_server_request</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

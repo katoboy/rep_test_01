@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="u_04_iops" table="x_761427_campusdev_04_rdm_disk" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>u_04_iops</element>
+            <name>x_761427_campusdev_04_rdm_disk</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:08:48</sys_created_on>
+            <sys_id>cfe296682fdc1510ea364ae72799b679</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>u_04_iops</sys_name>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_choice_x_761427_campusdev_04_rdm_disk_u_04_iops</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:08:48</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_04_iops</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>1,000</label>
+            <language>en</language>
+            <name>x_761427_campusdev_04_rdm_disk</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:08:48</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>98a296682fdc1510ea364ae72799b678</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:10:52</sys_updated_on>
+            <value>1,000</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_04_iops</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>2,000</label>
+            <language>en</language>
+            <name>x_761427_campusdev_04_rdm_disk</name>
+            <sequence>20</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:08:55</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>0be2d2682fdc1510ea364ae72799b6e0</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:10:55</sys_updated_on>
+            <value>2,000</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_04_iops</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>3,000</label>
+            <language>en</language>
+            <name>x_761427_campusdev_04_rdm_disk</name>
+            <sequence>30</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:09:01</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>fcf296682fdc1510ea364ae72799b632</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:10:59</sys_updated_on>
+            <value>3,000</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_04_iops</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>4,000</label>
+            <language>en</language>
+            <name>x_761427_campusdev_04_rdm_disk</name>
+            <sequence>40</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:09:09</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>a2f216682fdc1510ea364ae72799b642</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:11:03</sys_updated_on>
+            <value>4,000</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_04_iops</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>5,000</label>
+            <language>en</language>
+            <name>x_761427_campusdev_04_rdm_disk</name>
+            <sequence>50</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:09:16</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>100396682fdc1510ea364ae72799b683</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:11:06</sys_updated_on>
+            <value>5,000</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_04_iops</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>6,000</label>
+            <language>en</language>
+            <name>x_761427_campusdev_04_rdm_disk</name>
+            <sequence>60</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:09:23</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>710392682fdc1510ea364ae72799b603</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:11:10</sys_updated_on>
+            <value>6,000</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_04_iops</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>7,000</label>
+            <language>en</language>
+            <name>x_761427_campusdev_04_rdm_disk</name>
+            <sequence>70</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:09:30</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>af0392682fdc1510ea364ae72799b675</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:11:14</sys_updated_on>
+            <value>7,000</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_04_iops</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>8,000</label>
+            <language>en</language>
+            <name>x_761427_campusdev_04_rdm_disk</name>
+            <sequence>80</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:09:37</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>2d139a282fdc1510ea364ae72799b6fa</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:11:19</sys_updated_on>
+            <value>8,000</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_04_iops</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>9,000</label>
+            <language>en</language>
+            <name>x_761427_campusdev_04_rdm_disk</name>
+            <sequence>90</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:09:45</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>97139e282fdc1510ea364ae72799b609</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:11:22</sys_updated_on>
+            <value>9,000</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_04_iops</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>10,000</label>
+            <language>en</language>
+            <name>x_761427_campusdev_04_rdm_disk</name>
+            <sequence>100</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-22 02:09:52</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>85231e682fdc1510ea364ae72799b636</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-22 02:11:27</sys_updated_on>
+            <value>10,000</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="f11685a747c21110733afb42e36d4305" sys_domain="global" table="x_761427_campusdev_08_server_request" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-09-26 04:04:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>421685a747c21110733afb42e36d4307</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_761427_campusdev_08_server_request" name="x_761427_campusdev_08_server_request" sys_domain="global" view="Default view">f11685a747c21110733afb42e36d4305</sys_ui_form>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="global" view="Default view">2a599ae62f1c9110ea364ae72799b680</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-09-26 04:04:46</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-09-27 06:01:24</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>c86a667347861110733afb42e36d435f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_761427_campusdev_08_server_request" name="x_761427_campusdev_08_server_request" sys_domain="global" view="Default view">f11685a747c21110733afb42e36d4305</sys_ui_form>
+            <sys_ui_section caption="New Section" display_value="New Section" name="x_761427_campusdev_08_server_request" sys_domain="global" view="Default view">c06a267347861110733afb42e36d43ff</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-09-27 06:01:24</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_761427_campusdev_08_server_request</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-09-26 04:04:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f11685a747c21110733afb42e36d4305</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_761427_campusdev_08_server_request</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_ui_form_sections_f11685a747c21110733afb42e36d4305</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-09-26 04:04:46</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

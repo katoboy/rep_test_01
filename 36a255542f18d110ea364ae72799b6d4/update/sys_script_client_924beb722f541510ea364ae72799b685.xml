@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="deb7691c2f58d110ea364ae72799b62a" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>区分「新規」かつサーバ種別「ベアメタル」の場合は下記項目の入力不要の旨、メッセージを表示。&#13;
+・IOPS</description>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>camdev_FormMessageNewBareMetal_OnLoad</name>
+        <order/>
+        <script><![CDATA[function onLoad() {
+
+    /**
+     * 区分「新規」かつサーバ種別「ベアメタル」かどうかを判定
+     * 上記と一致する場合はtrue、それ以外をfalseとする
+     * trueの場合はメッセージを表示する
+     * ※開発規約の文字数制限により、呼び出し元のClient Script側でのNameを「Create」ではなく「New」としている。
+     */
+
+    //sys_idの取得
+    var sysid = g_form.getValue('u_04_server_info');
+
+    //テーブル名を定義
+    var table_name = 'x_761427_campusdev_02_server';
+    //Script Includeの呼び出し
+    var ga = new GlideAjax('camdev_FormMessageNewBareMetal');
+    ga.addParam('sysparm_name', 'judgement_func_other');
+    ga.addParam('sysparm_sysid', sysid);
+    ga.addParam('sysparm_tablename', table_name);
+
+    ga.getXMLAnswer(function(answer) {
+
+        if (answer == 'true') {
+            var no_input_message = '区分「新規」かつサーバ種別「ベアメタル」の場合は入力不要です。';
+            g_form.showFieldMsg('u_04_iops', no_input_message, 'info');
+        }
+    });
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-29 08:22:14</sys_created_on>
+        <sys_domain>deb7691c2f58d110ea364ae72799b62a</sys_domain>
+        <sys_domain_path>!!!/!!,/!!!/!!!/</sys_domain_path>
+        <sys_id>924beb722f541510ea364ae72799b685</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_FormMessageNewBareMetal_OnLoad</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_client_924beb722f541510ea364ae72799b685</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-29 08:22:14</sys_updated_on>
+        <table>x_761427_campusdev_04_rdm_disk</table>
+        <type>onLoad</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

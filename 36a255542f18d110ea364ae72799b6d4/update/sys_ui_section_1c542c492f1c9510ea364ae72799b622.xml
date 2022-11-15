@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="1c542c492f1c9510ea364ae72799b622" sys_domain="deb7691c2f58d110ea364ae72799b62a" table="x_761427_campusdev_08_server_request" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:59:14</sys_created_on>
+            <sys_id>abac60812f5c9510ea364ae72799b602</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:00:24</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>number</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:22:32</sys_created_on>
+            <sys_id>2c542c492f1c9510ea364ae72799b624</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 07:39:15</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_request_owner</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:40:23</sys_created_on>
+            <sys_id>10386c492f1c9510ea364ae72799b6bb</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:13:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_manager</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:42:04</sys_created_on>
+            <sys_id>52a8a08d2f1c9510ea364ae72799b6bd</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:13:54</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_campus_manager</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:42:34</sys_created_on>
+            <sys_id>77c8200d2f1c9510ea364ae72799b6ca</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:14:01</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:22:32</sys_created_on>
+            <sys_id>ac542c492f1c9510ea364ae72799b625</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:06:16</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_request_status</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:43:25</sys_created_on>
+            <sys_id>260924cd2f1c9510ea364ae72799b6f5</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:14:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_request_date</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:44:27</sys_created_on>
+            <sys_id>7f3924cd2f1c9510ea364ae72799b6f9</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:14:17</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>assigned_to</element>
+            <position>8</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:22:32</sys_created_on>
+            <sys_id>28542c492f1c9510ea364ae72799b625</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:09:12</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>9</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:22:32</sys_created_on>
+            <sys_id>a4542c492f1c9510ea364ae72799b626</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:04:22</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>10</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 08:02:53</sys_created_on>
+            <sys_id>be7decc12f5c9510ea364ae72799b6d8</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:02:53</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_environment_classification</element>
+            <position>11</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:45:49</sys_created_on>
+            <sys_id>d5892ccd2f1c9510ea364ae72799b661</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:14:54</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_usage_system</element>
+            <position>12</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:46:37</sys_created_on>
+            <sys_id>69b9640d2f1c9510ea364ae72799b699</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:14:58</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_sub_system</element>
+            <position>13</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:49:10</sys_created_on>
+            <sys_id>9c4a208d2f1c9510ea364ae72799b686</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:15:02</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_other_entries</element>
+            <position>14</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:50:21</sys_created_on>
+            <sys_id>929a2c492f1c9510ea364ae72799b668</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:15:09</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_automatic_provisioning_status</element>
+            <position>15</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:51:11</sys_created_on>
+            <sys_id>dddae8012f5c9510ea364ae72799b689</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:15:16</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>16</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 08:06:40</sys_created_on>
+            <sys_id>c06e20812f5c9510ea364ae72799b6e6</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:06:40</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_classification</element>
+            <position>17</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:52:05</sys_created_on>
+            <sys_id>dafae8412f5c9510ea364ae72799b690</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:15:25</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_server_type</element>
+            <position>18</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:52:54</sys_created_on>
+            <sys_id>3c3b64cd2f1c9510ea364ae72799b600</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:15:36</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_new_network</element>
+            <position>19</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:55:48</sys_created_on>
+            <sys_id>85cb64cd2f1c9510ea364ae72799b604</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:15:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref.ref_x_761427_campusdev_01_server_request_base.u_01_network_cable_connection</element>
+            <position>20</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:56:50</sys_created_on>
+            <sys_id>502cec412f5c9510ea364ae72799b6b4</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:15:48</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>21</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 08:04:36</sys_created_on>
+            <sys_id>02ed60452f5c9510ea364ae72799b61c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:04:36</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>short_description</element>
+            <position>22</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:22:32</sys_created_on>
+            <sys_id>28542c492f1c9510ea364ae72799b626</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:09:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>23</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 08:03:32</sys_created_on>
+            <sys_id>1ead2cc12f5c9510ea364ae72799b697</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:03:32</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>sys_created_on</element>
+            <position>24</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 08:10:27</sys_created_on>
+            <sys_id>9e3f6c852f5c9510ea364ae72799b662</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:10:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>sys_created_by</element>
+            <position>25</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 08:09:57</sys_created_on>
+            <sys_id>921f28412f5c9510ea364ae72799b6ec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:09:57</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>26</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 08:07:06</sys_created_on>
+            <sys_id>a97eec812f5c9510ea364ae72799b6f3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:07:06</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>sys_updated_on</element>
+            <position>27</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 08:11:46</sys_created_on>
+            <sys_id>3b8fe0c52f5c9510ea364ae72799b6fe</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:11:46</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>sys_updated_by</element>
+            <position>28</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 08:11:05</sys_created_on>
+            <sys_id>935f60c52f5c9510ea364ae72799b695</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:11:05</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>29</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 08:05:26</sys_created_on>
+            <sys_id>d61eec052f5c9510ea364ae72799b69a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:05:26</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_74_external_ref</element>
+            <position>30</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:22:32</sys_created_on>
+            <sys_id>a0542c492f1c9510ea364ae72799b627</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:12:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>user_input</element>
+            <position>31</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 08:12:12</sys_created_on>
+            <sys_id>8aafa4c52f5c9510ea364ae72799b6fb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_761427_campusdev_08_server_request" sys_domain="deb7691c2f58d110ea364ae72799b62a" view="Default view">1c542c492f1c9510ea364ae72799b622</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 08:12:12</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>x_761427_campusdev_08_server_request</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-23 07:22:32</sys_created_on>
+            <sys_domain>deb7691c2f58d110ea364ae72799b62a</sys_domain>
+            <sys_domain_path>!!!/!!,/!!!/!!!/</sys_domain_path>
+            <sys_id>1c542c492f1c9510ea364ae72799b622</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_761427_campusdev_08_server_request</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_ui_section_1c542c492f1c9510ea364ae72799b622</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-23 07:22:32</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

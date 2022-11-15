@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Data Backup" max_length="40" name="x_761427_campusdev_06_data_backup" sizeclass="74" type="collection">
+        <element label="Domain" max_length="32" name="domain" type="domain_id"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Backup ID" max_length="40" name="number" type="string"/>
+        <element label="Backup Save Duration" max_length="40" name="u_06_backup_save_duration" type="string"/>
+        <element label="Backup Size" max_length="40" name="u_06_backup_size" type="integer"/>
+        <element choice="1" label="Backup Size Unit" max_length="40" name="u_06_backup_size_unit" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="MiB" sequence="10" value="1"/>
+                <element inactive_on_update="false" label="GiB" sequence="20" value="2"/>
+                <element inactive_on_update="false" label="TiB" sequence="30" value="3"/>
+            </choice>
+        </element>
+        <element choice="1" label="Backup Unit" max_length="40" name="u_06_backup_unit" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Directory" sequence="10" value="1"/>
+                <element inactive_on_update="false" label="File" sequence="20" value="2"/>
+            </choice>
+        </element>
+        <element label="Directory Path" max_length="40" name="u_06_directory_path" type="string"/>
+        <element choice="1" label="Replication" max_length="40" name="u_06_replication" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="None" sequence="10" value="1"/>
+                <element inactive_on_update="false" label="Shinagawa→Nanko" sequence="20" value="2"/>
+            </choice>
+        </element>
+        <element label="Server Info" max_length="32" name="u_06_server_info" reference="x_761427_campusdev_02_server" type="reference"/>
+        <element label="Start Time" max_length="40" name="u_06_start_time" type="string"/>
+        <element label="Sum Size" max_length="40" name="u_06_sum_size" type="integer"/>
+        <element choice="1" label="Sum Size Unit" max_length="40" name="u_06_sum_size_unit" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="MiB" sequence="10" value="1"/>
+                <element inactive_on_update="false" label="GiB" sequence="20" value="2"/>
+                <element inactive_on_update="false" label="TiB" sequence="30" value="3"/>
+            </choice>
+        </element>
+        <element choice="1" label="Wakeup Triger" max_length="40" name="u_06_wakeup_triger" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Daily Batch" sequence="10" value="1"/>
+                <element inactive_on_update="false" label="Weekly Batch" sequence="20" value="2"/>
+                <element inactive_on_update="false" label="Run Any Time" sequence="30" value="3"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="domain"/>
+        </index>
+        <index name="index2">
+            <element name="u_06_server_info"/>
+        </index>
+    </element>
+</database>

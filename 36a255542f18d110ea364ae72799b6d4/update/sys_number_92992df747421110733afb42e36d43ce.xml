@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_number">
+    <sys_number action="INSERT_OR_UPDATE">
+        <category display_value="" name="x_761427_campusdev_10_resource_match">x_761427_campusdev_10_resource_match</category>
+        <maximum_digits>7</maximum_digits>
+        <number>1000</number>
+        <prefix>RES</prefix>
+        <sys_class_name>sys_number</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-09-27 01:18:23</sys_created_on>
+        <sys_id>92992df747421110733afb42e36d43ce</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>RES</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_number_92992df747421110733afb42e36d43ce</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-09-27 01:18:23</sys_updated_on>
+    </sys_number>
+</record_update>

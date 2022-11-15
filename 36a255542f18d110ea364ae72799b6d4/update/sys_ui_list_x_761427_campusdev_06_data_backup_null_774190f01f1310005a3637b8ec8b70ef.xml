@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="774190f01f1310005a3637b8ec8b70ef" table="x_761427_campusdev_06_data_backup" version="2" view="">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_06_server_info.u_02_request_form_number.u_01_request_form_number</element>
+            <list_id display_value="x_761427_campusdev_06_data_backup" element="NULL" name="x_761427_campusdev_06_data_backup" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">7d1c473e2f901510ea364ae72799b6f0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_id>b51c473e2f901510ea364ae72799b6f1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>number</element>
+            <list_id display_value="x_761427_campusdev_06_data_backup" element="NULL" name="x_761427_campusdev_06_data_backup" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">7d1c473e2f901510ea364ae72799b6f0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_id>391c473e2f901510ea364ae72799b6f1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_06_backup_unit</element>
+            <list_id display_value="x_761427_campusdev_06_data_backup" element="NULL" name="x_761427_campusdev_06_data_backup" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">7d1c473e2f901510ea364ae72799b6f0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_id>b91c473e2f901510ea364ae72799b6f1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_06_directory_path</element>
+            <list_id display_value="x_761427_campusdev_06_data_backup" element="NULL" name="x_761427_campusdev_06_data_backup" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">7d1c473e2f901510ea364ae72799b6f0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_id>3d1c473e2f901510ea364ae72799b6f1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_06_wakeup_triger</element>
+            <list_id display_value="x_761427_campusdev_06_data_backup" element="NULL" name="x_761427_campusdev_06_data_backup" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">7d1c473e2f901510ea364ae72799b6f0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_id>bd1c473e2f901510ea364ae72799b6f1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_06_start_time</element>
+            <list_id display_value="x_761427_campusdev_06_data_backup" element="NULL" name="x_761427_campusdev_06_data_backup" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">7d1c473e2f901510ea364ae72799b6f0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_id>311c473e2f901510ea364ae72799b6f2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_06_backup_save_duration</element>
+            <list_id display_value="x_761427_campusdev_06_data_backup" element="NULL" name="x_761427_campusdev_06_data_backup" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">7d1c473e2f901510ea364ae72799b6f0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>6</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_id>b11c473e2f901510ea364ae72799b6f2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_06_backup_size</element>
+            <list_id display_value="x_761427_campusdev_06_data_backup" element="NULL" name="x_761427_campusdev_06_data_backup" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">7d1c473e2f901510ea364ae72799b6f0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>7</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_id>351c473e2f901510ea364ae72799b6f2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_06_backup_size_unit</element>
+            <list_id display_value="x_761427_campusdev_06_data_backup" element="NULL" name="x_761427_campusdev_06_data_backup" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">7d1c473e2f901510ea364ae72799b6f0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>8</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_id>b51c473e2f901510ea364ae72799b6f2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_06_sum_size</element>
+            <list_id display_value="x_761427_campusdev_06_data_backup" element="NULL" name="x_761427_campusdev_06_data_backup" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">7d1c473e2f901510ea364ae72799b6f0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>9</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_id>391c473e2f901510ea364ae72799b6f2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_06_replication</element>
+            <list_id display_value="x_761427_campusdev_06_data_backup" element="NULL" name="x_761427_campusdev_06_data_backup" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">7d1c473e2f901510ea364ae72799b6f0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>10</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_id>b91c473e2f901510ea364ae72799b6f2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_06_sum_size_unit</element>
+            <list_id display_value="x_761427_campusdev_06_data_backup" element="NULL" name="x_761427_campusdev_06_data_backup" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">7d1c473e2f901510ea364ae72799b6f0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>11</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_id>3d1c473e2f901510ea364ae72799b6f2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>x_761427_campusdev_06_data_backup</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-06-29 06:04:54</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>7d1c473e2f901510ea364ae72799b6f0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_761427_campusdev_06_data_backup</sys_name>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_ui_list_x_761427_campusdev_06_data_backup_null_774190f01f1310005a3637b8ec8b70ef</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-06-29 06:04:54</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

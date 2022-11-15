@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="x_761427_assproduc_abstract_external_for_configuration_item" label="ESXi Server VM Resource" max_length="40" name="x_761427_campusdev_12_esxi_server_vm_resource" sizeclass="0" type="collection">
+        <element label="Name" max_length="32" name="u_12_name" reference="x_761427_campusdev_11_esxi_server_resource" type="reference"/>
+        <element label="VM_CPU" max_length="20" name="u_12_vm_cpu" type="decimal"/>
+        <element label="VM_IO_IOPS" max_length="20" name="u_12_vm_io_iops" type="decimal"/>
+        <element label="VM_Memory_GB" max_length="20" name="u_12_vm_memory_gb" type="decimal"/>
+        <element label="VM_Name" max_length="40" name="u_12_vm_name" type="string"/>
+        <element label="VM_NW_Mbps" max_length="20" name="u_12_vm_nw_mbps" type="decimal"/>
+        <index name="index">
+            <element name="u_12_name"/>
+        </index>
+    </element>
+</database>

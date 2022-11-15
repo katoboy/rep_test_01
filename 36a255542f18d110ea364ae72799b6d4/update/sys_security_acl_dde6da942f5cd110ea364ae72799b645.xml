@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl">
+    <sys_security_acl action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <admin_overrides>true</admin_overrides>
+        <advanced>true</advanced>
+        <condition/>
+        <description>Default access control on x_761427_campusdev_06_data_backup</description>
+        <name>x_761427_campusdev_06_data_backup</name>
+        <operation display_value="delete">delete</operation>
+        <script><![CDATA[var result = false;
+
+gs.info('06rogu:' + current.u_06_server_info.u_02_request_form_number.u_01_request_status);
+
+if (10 == current.u_06_server_info.u_02_request_form_number.u_01_request_status) {
+    result = true;
+}]]></script>
+        <sys_class_name>sys_security_acl</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-21 07:47:41</sys_created_on>
+        <sys_id>dde6da942f5cd110ea364ae72799b645</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>x_761427_campusdev_06_data_backup</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_security_acl_dde6da942f5cd110ea364ae72799b645</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 09:10:41</sys_updated_on>
+        <type display_value="record">record</type>
+    </sys_security_acl>
+</record_update>

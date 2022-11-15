@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>test_del_kakunin_dev2_2</name>
+        <record_for_rollback>true</record_for_rollback>
+        <script><![CDATA[var ary = [
+//↓にエクセルで抽出・加工したsys_idをコピー＆ペースト 開始
+'cb5e52f41be8dd10c5fc73c9cc4bcb68',
+'4b5e52f41be8dd10c5fc73c9cc4bcb69',
+'075e52f41be8dd10c5fc73c9cc4bcb6a',
+'0b5e52f41be8dd10c5fc73c9cc4bcb6c',
+'0f5e52f41be8dd10c5fc73c9cc4bcb6b',
+'475e52f41be8dd10c5fc73c9cc4bcb6d',
+'c35e52f41be8dd10c5fc73c9cc4bcb6f',
+'c75e52f41be8dd10c5fc73c9cc4bcb6e',
+'035e52f41be8dd10c5fc73c9cc4bcb70',
+'835e52f41be8dd10c5fc73c9cc4bcb71',
+'8f5e52f41be8dd10c5fc73c9cc4bcb71',
+'435e52f41be8dd10c5fc73c9cc4bcb73',
+'c35e52f41be8dd10c5fc73c9cc4bcb73',
+'cb5e52f41be8dd10c5fc73c9cc4bcb72',
+'875e52f41be8dd10c5fc73c9cc4bcb73',
+'475e52f41be8dd10c5fc73c9cc4bcb75',
+'4b5e52f41be8dd10c5fc73c9cc4bcb74',
+'4f5e52f41be8dd10c5fc73c9cc4bcb73',
+'835e52f41be8dd10c5fc73c9cc4bcb76',
+'8b5e52f41be8dd10c5fc73c9cc4bcb77',
+'8f5e52f41be8dd10c5fc73c9cc4bcb76',
+'c35e52f41be8dd10c5fc73c9cc4bcb79',
+'c75e52f41be8dd10c5fc73c9cc4bcb78',
+'cf5e52f41be8dd10c5fc73c9cc4bcb79',
+'035e52f41be8dd10c5fc73c9cc4bcb7b',
+'0f5e52f41be8dd10c5fc73c9cc4bcb7a',
+'8f5e52f41be8dd10c5fc73c9cc4bcb7a',
+'c35e52f41be8dd10c5fc73c9cc4bcb7b',
+'835e52f41be8dd10c5fc73c9cc4bcb7d',
+'875e52f41be8dd10c5fc73c9cc4bcb7c',
+'8b5e52f41be8dd10c5fc73c9cc4bcb7b',
+'c75e52f41be8dd10c5fc73c9cc4bcb7f',
+'cb5e52f41be8dd10c5fc73c9cc4bcb7e',
+'cf5e52f41be8dd10c5fc73c9cc4bcb7d',
+'035e52f41be8dd10c5fc73c9cc4bcb81',
+'075e52f41be8dd10c5fc73c9cc4bcb80',
+'0f5e52f41be8dd10c5fc73c9cc4bcb81',
+'4b5e52f41be8dd10c5fc73c9cc4bcb82',
+'4f5e52f41be8dd10c5fc73c9cc4bcb82',
+'cb5e52f41be8dd10c5fc73c9cc4bcb82',
+
+
+//↑にエクセルで抽出・加工したsys_idをコピー＆ペースト 終了
+//本行以降の入力は不要
+];
+
+//sys_idのカウント
+var ary_count = ary.length;
+
+//01テーブルLoop
+for(var i = 0; i < ary_count; i++){
+var gr_1 = new GlideRecord('x_nttm8_campus_dev_01_server_request_base');
+gr_1.addQuery('sys_id', ary[i]);
+gr_1.query();
+
+	if(gr_1.next()){
+		gs.info('01テーブル（サーバ払出申請基本情報）存在、sys_id：' + ary[i]);
+	}else{
+		
+	gs.info('01テーブル（サーバ払出申請基本情報）存在無し');
+	}
+}
+
+//02テーブルLoop
+for(var ii = 0; ii < ary_count; ii++){
+var gr_2 = new GlideRecord('x_nttm8_campus_dev_02_server');
+gr_2.addQuery('sys_id', ary[ii]);
+gr_2.query();
+
+	if(gr_2.next()){
+		gs.info('02テーブル（サーバ情報）存在、sys_id：' + ary[ii]);
+	}else{
+		
+	gs.info('02テーブル（サーバ情報）存在無し');
+	}
+}
+//03テーブルLoop
+for(var iii = 0; iii < ary_count; iii++){
+var gr_3 = new GlideRecord('x_nttm8_campus_dev_03_disk');
+gr_3.addQuery('sys_id', ary[iii]);
+gr_3.query();
+
+	if(gr_3.next()){
+		gs.info('03テーブル（ディスク）存在、sys_id：' + ary[iii]);
+	}else{
+		
+	gs.info('01テーブル（サーバ払出申請基本情報）存在無し');
+	}
+}
+//04テーブルLoop
+for(var iiii = 0; iiii < ary_count; iiii++){
+var gr_4 = new GlideRecord('x_nttm8_campus_dev_04_rdm_disk');
+gr_4.addQuery('sys_id', ary[iiii]);
+gr_4.query();
+
+	if(gr_4.next()){
+		gs.info('04テーブル（RDMディスク）存在、sys_id：' + ary[iiii]);
+	}else{
+		
+	gs.info('04テーブル（RDMディスク）存在無し');
+	}
+}
+//05テーブルLoop
+for(var iiiii = 0; iiiii < ary_count; iiiii++){
+var gr_5 = new GlideRecord('x_nttm8_campus_dev_05_nic');
+gr_5.addQuery('sys_id', ary[iiiii]);
+gr_5.query();
+
+	if(gr_5.next()){
+		gs.info('05テーブル（ネットワーク）存在、sys_id：' + ary[iiiii]);
+	}else{
+		
+	gs.info('05テーブル（ネットワーク）存在無し');
+	}
+}
+//06テーブルLoop
+for(var iiiiii = 0; iiiiii < ary_count; iiiiii++){
+var gr_6 = new GlideRecord('x_nttm8_campus_dev_06_data_backup');
+gr_6.addQuery('sys_id', ary[iiiiii]);
+gr_6.query();
+
+	if(gr_6.next()){
+		gs.info('06テーブル（データバックアップ機能）存在、sys_id：' + ary[iiiiii]);
+	}else{
+		
+	gs.info('06テーブル（データバックアップ機能）存在無し');
+	}
+}
+//07テーブルLoop
+for(var iiiiiii = 0; iiiiiii < ary_count; iiiiiii++){
+var gr_7 = new GlideRecord('x_nttm8_campus_dev_07_affinity_rule');
+gr_7.addQuery('sys_id', ary[iiiiiii]);
+gr_7.query();
+
+	if(gr_7.next()){
+		gs.info('07テーブル（アフィニティルール）存在、sys_id：' + ary[iiiiiii]);
+	}else{
+		
+	gs.info('07テーブル（アフィニティルール）存在無し');
+	}
+}
+]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-05 09:01:08</sys_created_on>
+        <sys_id>0fdde6702f245d10ea364ae72799b6c4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>test_del_kakunin_dev2_2</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_fix_0fdde6702f245d10ea364ae72799b6c4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-05 09:01:08</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

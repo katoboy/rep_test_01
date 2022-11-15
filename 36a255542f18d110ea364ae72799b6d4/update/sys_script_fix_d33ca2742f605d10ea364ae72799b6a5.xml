@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>test_del_kakunin_dev2_1</name>
+        <record_for_rollback>true</record_for_rollback>
+        <script><![CDATA[//申請ステータス：起票中、削除対象の申請番号を入力（例.var req_form_number = 'STRY00107';）
+var req_form_number = 'RN000000002238';
+
+//本行以降の入力は不要
+var gr_1_sys_id = '';
+var gr_1_count = 0;
+var gr_2_sys_id = '';
+var gr_2_count = 0;
+var gr_3_sys_id = '';
+var gr_3_count = 0;
+var gr_4_sys_id = '';
+var gr_4_count = 0;
+var gr_5_sys_id = '';
+var gr_5_count = 0;
+var gr_6_sys_id = '';
+var gr_6_count = 0;
+var gr_7_sys_id = '';
+var gr_7_count = 0;
+
+var gr_1 = new GlideRecord('x_nttm8_campus_dev_01_server_request_base');
+gr_1.addQuery('u_01_request_form_number', req_form_number);
+gr_1.query();
+
+if (gr_1.next()) {
+
+    gr_1_sys_id = gr_1.sys_id;
+    gr_1_count++;
+    //01テーブルsys_idログ
+    gs.info('01テーブル（サーバ払出申請基本情報）レコードsys_id：' + gr_1_sys_id);
+}
+
+var gr_2 = new GlideRecord('x_nttm8_campus_dev_02_server');
+gr_2.addQuery('u_02_request_form_number.u_01_request_form_number', req_form_number);
+gr_2.query();
+
+while (gr_2.next()) {
+
+    gr_2_sys_id = gr_2.sys_id;
+    gr_2_count++;
+    //02テーブルsys_idログ
+    gs.info('02テーブル（サーバ情報）レコードsys_id：' + gr_2_sys_id);
+
+    var gr_3 = new GlideRecord('x_nttm8_campus_dev_03_disk');
+    gr_3.addQuery('u_03_server_info', gr_2_sys_id);
+    gr_3.query();
+
+    while (gr_3.next()) {
+        gr_3_sys_id = gr_3.sys_id;
+        gr_3_count++;
+        //03テーブルsys_idログ
+        gs.info('03テーブル（ディスク）レコードsys_id：' + gr_3_sys_id);
+    }
+    var gr_4 = new GlideRecord('x_nttm8_campus_dev_04_rdm_disk');
+    gr_4.addQuery('u_04_server_info', gr_2_sys_id);
+    gr_4.query();
+
+    while (gr_4.next()) {
+        gr_4_sys_id = gr_4.sys_id;
+        gr_4_count++;
+        //04テーブルsys_idログ
+        gs.info('04テーブル（RDMディスク）レコードsys_id：' + gr_4_sys_id);
+    }
+    var gr_5 = new GlideRecord('x_nttm8_campus_dev_05_nic');
+    gr_5.addQuery('u_05_server_info', gr_2_sys_id);
+    gr_5.query();
+
+    while (gr_5.next()) {
+        gr_5_sys_id = gr_5.sys_id;
+        gr_5_count++;
+        //05テーブルsys_idログ
+        gs.info('05テーブル（ネットワーク）レコードsys_id：' + gr_5_sys_id);
+    }
+    var gr_6 = new GlideRecord('x_nttm8_campus_dev_06_data_backup');
+    gr_6.addQuery('u_06_server_info', gr_2_sys_id);
+    gr_6.query();
+
+    while (gr_6.next()) {
+        gr_6_sys_id = gr_6.sys_id;
+        gr_6_count++;
+        //06テーブルsys_idログ
+        gs.info('06テーブル（データバックアップ機能）レコードsys_id：' + gr_6_sys_id);
+    }
+}
+
+var gr_7 = new GlideRecord('x_nttm8_campus_dev_07_affinity_rule');
+gr_7.addQuery('u_07_request_form_number.u_01_request_form_number', req_form_number);
+gr_7.query();
+
+while (gr_7.next()) {
+    gr_7_sys_id = gr_7.sys_id;
+    gr_7_count++;
+    //07テーブルsys_idログ
+    gs.info('07テーブル（アフィニティルール）レコードsys_id：' + gr_7_sys_id);
+
+}
+
+//01テーブルレコード数ログ
+gs.info('01テーブル（サーバ払出申請基本情報）レコード数：' + gr_1_count);
+//02テーブルレコード数ログ
+gs.info('02テーブル（サーバ情報）レコード数：' + gr_2_count);
+//03テーブルレコード数ログ
+gs.info('03テーブル（ディスク）レコード数：' + gr_3_count);
+//04テーブルレコード数ログ
+gs.info('04テーブル（RDMディスク）レコード数：' + gr_4_count);
+//05テーブルレコード数ログ
+gs.info('05テーブル（ネットワーク）レコード数：' + gr_5_count);
+//06テーブルレコード数ログ
+gs.info('06テーブル（データバックアップ機能）レコード数：' + gr_6_count);
+//07テーブルレコード数ログ
+gs.info('07テーブル（アフィニティルール）レコード数：' + gr_7_count);]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-05 08:56:22</sys_created_on>
+        <sys_id>d33ca2742f605d10ea364ae72799b6a5</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>test_del_kakunin_dev2_1</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_fix_d33ca2742f605d10ea364ae72799b6a5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-05 09:00:26</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

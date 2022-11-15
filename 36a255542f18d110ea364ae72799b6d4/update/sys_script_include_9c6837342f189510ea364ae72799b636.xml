@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_761427_campusdev.camdev_FormMessageJudgment</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>メッセージを表示する等の条件判定の関数。</description>
+        <name>camdev_FormMessageJudgment</name>
+        <script><![CDATA[var camdev_FormMessageJudgment = Class.create();
+camdev_FormMessageJudgment.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+   /**
+     * パラメータで指定されたjudgment_statusと01テーブルの申請ステータスが一致するかを判定
+     * 上記に一致する場合はtrue、それ以外はfalseを返却
+	 * ※02,07テーブルから判定する場合は当関数を使用すること	 
+     * ※パラメータのSYS-ID は、referenceのSYS-ID（01テーブルのSYS-ID）であること
+     */
+    func_judge_requestStatus_parenttable: function() {
+        var sysid = this.getParameter('sysparm_sysid');
+        var judgment_status = this.getParameter('sysparm_judgment_status');
+
+        var gr = new GlideRecord('x_761427_campusdev_01_server_request_base');
+        gr.addQuery('sys_id', '=', sysid);
+        gr.query();
+
+        while (gr.next()) {
+            var request_status = gr.u_01_request_status;
+            if (judgment_status == request_status) {
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+    },
+
+    /**
+     * パラメータで指定されたjudgment_statusと01テーブルの申請ステータスが一致するかを判定
+     * 上記に一致する場合はtrue、それ以外はfalseを返却
+	 * ※03~06テーブルから判定する場合は当関数を使用すること	 
+     * ※パラメータのSYS-ID は、referenceのSYS-ID（02テーブルのSYS-ID）であること
+     */
+    func_judge_requestStatus_grandparenttable: function() {
+        var sysid = this.getParameter('sysparm_sysid');
+        var tablename = this.getParameter('sysparm_tablename');
+        var judgment_status = this.getParameter('sysparm_judgment_status');
+
+		var gr = new GlideRecord('x_761427_campusdev_02_server');
+        gr.addQuery('sys_id', '=', sysid);
+        gr.query();
+
+        while (gr.next()) {
+            var dotwalk_sysid = gr.u_02_request_form_number;
+            var request_status = dotwalk_sysid.u_01_request_status;
+
+            if (judgment_status == request_status) {
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+    },	
+	
+    type: 'camdev_FormMessageJudgment'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-23 04:12:16</sys_created_on>
+        <sys_id>9c6837342f189510ea364ae72799b636</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>camdev_FormMessageJudgment</sys_name>
+        <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+        <sys_update_name>sys_script_include_9c6837342f189510ea364ae72799b636</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-23 04:12:16</sys_updated_on>
+    </sys_script_include>
+</record_update>

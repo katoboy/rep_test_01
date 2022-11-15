@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="u_02_node_type" table="x_761427_campusdev_02_server" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>u_02_node_type</element>
+            <name>x_761427_campusdev_02_server</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-09-26 06:21:12</sys_created_on>
+            <sys_id>2c5521ab47861110733afb42e36d436e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>u_02_node_type</sys_name>
+            <sys_package display_value="CampusDevApplication" source="x_761427_campusdev">36a255542f18d110ea364ae72799b6d4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="CampusDevApplication">36a255542f18d110ea364ae72799b6d4</sys_scope>
+            <sys_update_name>sys_choice_x_761427_campusdev_02_server_u_02_node_type</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-09-26 06:21:12</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_02_node_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Bootstrap</label>
+            <language>en</language>
+            <name>x_761427_campusdev_02_server</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-09-26 06:21:59</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>426525ab47861110733afb42e36d43e4</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-09-26 06:22:13</sys_updated_on>
+            <value>bootstrap</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_02_node_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Master</label>
+            <language>en</language>
+            <name>x_761427_campusdev_02_server</name>
+            <sequence>20</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-09-26 06:21:12</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>9435652f47861110733afb42e36d43f6</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-09-26 06:21:26</sys_updated_on>
+            <value>master</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_02_node_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Worker</label>
+            <language>en</language>
+            <name>x_761427_campusdev_02_server</name>
+            <sequence>30</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-09-26 06:21:34</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>285525ab47861110733afb42e36d4383</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-09-26 06:21:47</sys_updated_on>
+            <value>worker</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>
